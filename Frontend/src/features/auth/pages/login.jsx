@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "/Users/saurabhyadav/Desktop/Gen-Ai-Project/Frontend/src/features/auth/auth.form.scss"
 import { useNavigate,Link } from 'react-router';
+import { useAuth } from '../hooks/useAuth';
 
 const Login= () => {
 
-    const handleSubmit =(e) =>{
+    const {loading,handleLogin}=useAuth();
+
+    const navigate=useNavigate();
+
+    const[email,setEmail]=useState("")
+    const[password,setPassword]=useState("")
+
+    const handleSubmit =async (e) =>{
         e.preventDefault()
+        await handleLogin({email,password})
+        navigate("/")
     }
+
+    if(loading){
+        return (<main><h1>Signing you in ........</h1></main>)
+    }
+
 
     return (
        <main>
@@ -17,31 +32,33 @@ const Login= () => {
 
          
 
-                  <div className="input-group">
+                    <div className="input-group">
                       <label htmlFor="email">Email</label>
                       <input
+                       onChange={(e)=>{setEmail(e.target.value) }}
                        type="email" 
                        id="email"
                        name="email"
                        placeholder='enter you email'
                       />
-                  </div>
+                    </div>
                  
                
                 
-                 <div className="input-group">
+                    <div className="input-group">
                       <label htmlFor="password">Password</label>
                       <input
+                      onChange={(e)=>{setPassword(e.target.value) }}
                        type="string" 
                        id="password"
                        name="password"
                        placeholder='enter your password'
                       />
-                  </div>
+                    </div>
 
                  
 
-                  <button className='button primary-button'> Login</button>
+                    <button className='button primary-button'> Login</button>
 
                </form>
 
