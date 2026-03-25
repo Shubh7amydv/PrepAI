@@ -1,72 +1,142 @@
 @use "sass:color";
 
-
-// ── Variables ────────────────────────────────────────────────────────────────
-$bg-page:        #0d1117;
-$bg-card:        #161b22;
-$bg-panel:       #1c2230;
-$bg-input:       #1e2535;
-$border-color:   #2a3348;
-$text-primary:   #e6edf3;
-$text-muted:     #7d8590;
-$accent:         #ff2d78;
-$accent-alt:     #ff6b9d;
-$badge-required: #ff2d78;
-$badge-best:     #ff2d78;
-$info-bg:        #1b2a4a;
-$info-border:    #2d4a7a;
-$font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+// ── Shared Theme Variables (matching report page) ────────────────────────────
+$bg-page: #0d1117;
+$bg-card: #161b22;
+$bg-panel: #1c2230;
+$bg-input: #1e2535;
+$border-color: #2a3348;
+$text-primary: #e6edf3;
+$text-secondary: #d8edff;
+$text-muted: #7d8590;
+$accent: #ff2d78;
+$accent-light: #ff5fa1;
+$font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
 // ── Page Shell ───────────────────────────────────────────────────────────────
 .home-page {
     width: 100%;
     min-height: 100vh;
-    background-color: $bg-page;
-    color: $text-primary;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem 1.5rem;
+    padding-top: 2.5rem;
+    gap: 2rem;
     font-family: $font-stack;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 3rem 1.5rem;
-    gap: 2rem;
+    justify-content: flex-start;
+
+    background: $bg-page;
+    color: $text-primary;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+            radial-gradient(circle at 15% 25%, rgba(255, 45, 120, 0.08), transparent 30%),
+            radial-gradient(circle at 85% 75%, rgba(255, 45, 120, 0.06), transparent 35%);
+        pointer-events: none;
+    }
 }
 
 // ── Page Header ──────────────────────────────────────────────────────────────
 .page-header {
     text-align: center;
+    z-index: 1;
+    margin-bottom: 1.5rem;
+    position: relative;
 
     h1 {
-        font-size: 2.25rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
+        font-size: clamp(1.8rem, 4vw, 2.3rem);
+        font-weight: 800;
+        margin-bottom: 0.75rem;
         color: $text-primary;
+        letter-spacing: -0.5px;
     }
 
     p {
         color: $text-muted;
         font-size: 0.95rem;
-        max-width: 480px;
+        max-width: 500px;
         margin: 0 auto;
         line-height: 1.6;
+        font-weight: 500;
     }
 
     .highlight {
-        color: $accent;
+        background: linear-gradient(135deg, $accent 0%, $accent-light 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
     }
 }
 
-// ── Main Card ─────────────────────────────────────────────────────────────────
+// ── Quote Section (Two-Column Layout) ──────────────────────────────────────────
 .interview-card {
     width: 100%;
-    max-width: 900px;
-    background-color: $bg-card;
-    border: 1px solid $border-color;
+    max-width: 1000px;
+    display: flex;
+    gap: 0;
     border-radius: 1rem;
     overflow: hidden;
+    z-index: 10;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    position: relative;
 
+    // Card effect container
+    background: $bg-card;
+    border: 1px solid $border-color;
+
+    // Quote panel on the left
+    .quote-panel {
+        flex: 0 0 28%;
+        background: $bg-panel;
+        border-right: 1px solid $border-color;
+        padding: 2rem 1.75rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+
+        .quote-icon {
+            font-size: 2.2rem;
+            opacity: 0.7;
+            color: $accent;
+        }
+
+        .quote-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            line-height: 1.7;
+            color: $text-secondary;
+            font-style: italic;
+        }
+
+        .quote-author {
+            font-size: 0.8rem;
+            color: $text-muted;
+            margin-top: 1rem;
+
+            &::before {
+                content: "— ";
+                opacity: 0.7;
+            }
+        }
+    }
+
+    // Body with panels
     &__body {
+        flex: 1;
         display: flex;
         min-height: 520px;
     }
@@ -75,163 +145,151 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1rem 1.5rem;
+        padding: 1.25rem 1.75rem;
         border-top: 1px solid $border-color;
+        background: $bg-panel;
+        flex-wrap: wrap;
+        gap: 1rem;
 
         .footer-info {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: $text-muted;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            padding: 1rem;
+
+            .footer-info {
+                width: 100%;
+                text-align: center;
+                order: -1;
+            }
         }
     }
 }
 
-// ── Panels ────────────────────────────────────────────────────────────────────
-.panel-divider {
-    width: 1px;
-    background-color: $border-color;
-    flex-shrink: 0;
-}
-
+// ── Panel Styling ─────────────────────────────────────────────────────────────
 .panel {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1.5rem;
+    padding: 1.75rem;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+
+    &:first-child {
+        border-right: 1px solid $border-color;
+    }
 
     &__header {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 0.25rem;
+        gap: 0.75rem;
+        margin-bottom: 0.5rem;
 
         h2 {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
+            margin: 0;
             color: $text-primary;
-            flex: 1;
+        }
+
+        .icon {
+            font-size: 1.3rem;
+            color: $accent;
         }
     }
 
-    &__icon {
-        display: flex;
-        align-items: center;
-        color: $accent;
+    &__subtitle {
+        font-size: 0.75rem;
+        color: $text-muted;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        font-weight: 600;
     }
 
     &__textarea {
         flex: 1;
-        width: 100%;
-        background-color: $bg-input;
+        padding: 1rem;
         border: 1px solid $border-color;
-        border-radius: 0.5rem;
-        padding: 0.75rem 1rem;
+        border-radius: 0.75rem;
+        background: $bg-input;
         color: $text-primary;
-        font-family: $font-stack;
-        font-size: 0.875rem;
+        font-family: inherit;
+        font-size: 0.9rem;
         resize: none;
-        outline: none;
-        transition: border-color 0.2s;
-        line-height: 1.5;
+        transition: all 0.3s ease;
 
         &::placeholder {
             color: $text-muted;
         }
 
         &:focus {
+            outline: none;
             border-color: $accent;
-        }
-
-        &--short {
-            flex: unset;
-            height: 96px;
+            box-shadow: 0 0 0 3px rgba(255, 45, 120, 0.15);
+            background: $bg-panel;
         }
     }
 
-    &--left {
-        position: relative;
-
-        .char-counter {
-            position: absolute;
-            bottom: 2.25rem;
-            right: 2rem;
-            font-size: 0.75rem;
-            color: $text-muted;
-        }
-    }
-
-    &--right {
-        gap: 0.75rem;
+    &__char-counter {
+        align-self: flex-end;
+        font-size: 0.75rem;
+        color: $text-muted;
+        font-weight: 500;
     }
 }
 
-// ── Badges ────────────────────────────────────────────────────────────────────
-.badge {
-    font-size: 0.7rem;
-    font-weight: 600;
-    padding: 0.15rem 0.5rem;
-    border-radius: 0.3rem;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-
-    &--required {
-        background-color: rgba($badge-required, 0.15);
-        color: $badge-required;
-        border: 1px solid rgba($badge-required, 0.3);
-    }
-
-    &--best {
-        background-color: rgba($badge-best, 0.15);
-        color: $badge-best;
-        border: 1px solid rgba($badge-best, 0.3);
-    }
+.panel-divider {
+    width: 1px;
+    background: $border-color;
 }
 
-// ── Section Label ─────────────────────────────────────────────────────────────
 .section-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: $text-primary;
-    margin-bottom: 0.25rem;
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: $accent;
+    margin-bottom: 0.5rem;
 }
 
-// ── Dropzone ──────────────────────────────────────────────────────────────────
-.upload-section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
+// ── Dropzone & Upload ──────────────────────────────────────────────────────────
 .dropzone {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.35rem;
-    padding: 1.5rem 1rem;
-    background-color: $bg-input;
+    padding: 1.5rem;
     border: 2px dashed $border-color;
-    border-radius: 0.6rem;
+    border-radius: 0.75rem;
+    background: $bg-panel;
     cursor: pointer;
-    transition: border-color 0.2s, background-color 0.2s;
+    transition: all 0.3s ease;
+    min-height: 140px;
+    text-align: center;
 
     &:hover {
         border-color: $accent;
-        background-color: rgba($accent, 0.05);
+        background: rgba(255, 45, 120, 0.08);
     }
 
     &__icon {
+        font-size: 2rem;
         color: $accent;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.5rem;
     }
 
     &__title {
-        font-size: 0.875rem;
-        font-weight: 500;
+        font-size: 0.9rem;
+        font-weight: 600;
         color: $text-primary;
+        margin-bottom: 0.3rem;
         margin: 0;
     }
 
@@ -240,57 +298,52 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
         color: $text-muted;
         margin: 0;
     }
+
+    input[type="file"] {
+        display: none;
+    }
 }
 
-// ── OR Divider ────────────────────────────────────────────────────────────────
 .or-divider {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    margin: 0.5rem 0;
     color: $text-muted;
     font-size: 0.75rem;
+    font-weight: 500;
 
     &::before,
     &::after {
-        content: '';
+        content: "";
         flex: 1;
         height: 1px;
-        background-color: $border-color;
-    }
-
-    span {
-        white-space: nowrap;
+        background: $border-color;
     }
 }
 
-// ── Self Description ──────────────────────────────────────────────────────────
-.self-description {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-// ── Info Box ──────────────────────────────────────────────────────────────────
+// ── Info Box ───────────────────────────────────────────────────────────────────
 .info-box {
     display: flex;
-    align-items: flex-start;
-    gap: 0.6rem;
-    padding: 0.75rem 1rem;
-    background-color: $info-bg;
-    border: 1px solid $info-border;
-    border-radius: 0.5rem;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid rgba(255, 45, 120, 0.35);
+    border-radius: 0.75rem;
+    background: rgba(255, 45, 120, 0.1);
+    font-size: 0.8rem;
+    color: $text-secondary;
 
     &__icon {
+        font-size: 1.1rem;
+        color: $accent;
         flex-shrink: 0;
-        color: #4a90e2;
-        margin-top: 1px;
+        margin-top: 0.2rem;
     }
 
     p {
         margin: 0;
-        font-size: 0.8rem;
-        color: #8ab4f8;
-        line-height: 1.5;
+        line-height: 1.4;
+        color: $text-secondary;
 
         strong {
             color: $text-primary;
@@ -298,79 +351,377 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     }
 }
 
+// ── Badge ──────────────────────────────────────────────────────────────────────
+.badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+    background: rgba(255, 45, 120, 0.15);
+    color: $accent;
+    border: 1px solid rgba(255, 45, 120, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
 // ── Generate Button ───────────────────────────────────────────────────────────
 .generate-btn {
+    background: linear-gradient(135deg, $accent 0%, $accent-light 100%);
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.9rem 1.75rem;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 45, 120, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-family: $font-stack;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, $accent 0%, darken($accent, 10%) 100%);
-    color: #fff;
-    font-size: 0.9rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: opacity 0.2s, transform 0.1s;
-    font-family: $font-stack;
 
-    &:hover {
-        opacity: 0.9;
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(255, 45, 120, 0.35);
     }
 
-    &:active {
-        transform: scale(0.98);
+    &:active:not(:disabled) {
+        transform: translateY(0);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    &--secondary {
+        background: rgba(255, 45, 120, 0.15);
+        border: 1px solid rgba(255, 45, 120, 0.35);
+        color: $accent;
+        box-shadow: none;
+
+        &:hover:not(:disabled) {
+            background: rgba(255, 45, 120, 0.25);
+            box-shadow: 0 8px 20px rgba(255, 45, 120, 0.2);
+        }
+
+        &:active:not(:disabled) {
+            transform: scale(0.98);
+        }
     }
 }
 
-.recent-reports{
+.footer-buttons {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+
+    .generate-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        padding: 0.8rem 1.25rem;
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        width: 100%;
+
+        .generate-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+}
+
+// ── Recent Reports ────────────────────────────────────────────────────────────
+.recent-reports {
+    width: 100%;
+    max-width: 1000px;
+    z-index: 5;
+    position: relative;
+
+    .reports-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: $text-primary;
+            margin: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: $text-muted;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+    }
+
+    .reports-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+
+        .report-item {
+            background: $bg-card;
+            border: 1px solid $border-color;
+            border-radius: 0.85rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: inherit;
+
+            &:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+                border-color: rgba(255, 45, 120, 0.35);
+                background: $bg-panel;
+            }
+
+            .report-title {
+                font-size: 0.95rem;
+                font-weight: 600;
+                color: $text-primary;
+                flex-grow: 1;
+            }
+
+            .report-meta {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 0.8rem;
+                color: $text-muted;
+
+                .report-date {
+                    display: block;
+                }
+            }
+
+            .match-score {
+                font-size: 0.85rem;
+                font-weight: 700;
+                padding: 0.4rem 0.8rem;
+                background: rgba(255, 45, 120, 0.15);
+                border: 1px solid rgba(255, 45, 120, 0.35);
+                border-radius: 0.5rem;
+                color: $accent;
+                text-align: center;
+                align-self: flex-start;
+            }
+        }
+    }
+
+    .no-reports {
+        text-align: center;
+        padding: 2rem;
+        color: rgba(230, 247, 255, 0.7);
+        font-size: 0.9rem;
+    }
+}
+
+// ── Upload Section ────────────────────────────────────────────────────────────
+.upload-section {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    width: 100%;
-    max-width: 900px;
+}
 
-    .reports-list{
-        display: flex;
-        gap: 0.75rem;
-        flex-wrap: wrap;
+.self-description {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
 
-        .report-item{
-            background-color: $bg-card;
-            border: 1px solid $border-color;
-            border-radius: 0.5rem;
-            padding: 1rem;
+// ── Page Footer ───────────────────────────────────────────────────────────────
+.page-footer {
+    margin-top: 2rem;
+    text-align: center;
+    color: $text-muted;
+    font-size: 0.8rem;
+    z-index: 1;
+    position: relative;
+
+    a {
+        color: $accent;
+        text-decoration: none;
+        transition: color 0.2s;
+
+        &:hover {
+            color: $accent-light;
+        }
+    }
+}
+
+// ── Responsive Design ─────────────────────────────────────────────────────────
+@media (max-width: 1000px) {
+    .interview-card {
+        max-width: 95%;
+
+        .quote-panel {
+            flex: 0 0 35%;
+            padding: 1.5rem 1.25rem;
+        }
+
+        .panel {
+            padding: 1.25rem;
+        }
+
+        &__body {
+            min-height: 450px;
+        }
+    }
+
+    .recent-reports {
+        .reports-list {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .home-page {
+        padding: 1.5rem 1rem;
+        padding-top: 2.5rem;
+    }
+
+    .page-header {
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            font-size: 0.85rem;
+        }
+    }
+
+    .interview-card {
+        flex-direction: column;
+        max-width: 100%;
+
+        .quote-panel {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            cursor: pointer;
-            flex-shrink: 0;
+            border-right: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 1.5rem;
+            min-height: 150px;
+        }
 
-            .match-score {
+        &__body {
+            flex-direction: column;
+            min-height: auto;
+
+            .panel {
+                padding: 1rem;
+
+                &:first-child {
+                    border-right: none;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+                }
+            }
+        }
+    }
+
+    .recent-reports {
+        .reports-list {
+            grid-template-columns: 1fr;
+        }
+
+        .reports-header {
+            h2 {
+                font-size: 1.1rem;
+            }
+
+            p {
                 font-size: 0.8rem;
-                font-weight: 600;
-                color: $accent;
-                align-items: flex-start;
             }
         }
     }
 }
 
+@media (max-width: 480px) {
+    .home-page {
+        padding: 1rem 0.75rem;
+        padding-top: 2rem;
+    }
 
-// ── Page Footer ───────────────────────────────────────────────────────────────
-.page-footer {
-    display: flex;
-    gap: 1.5rem;
-
-    a {
-        font-size: 0.8rem;
-        color: $text-muted;
-        text-decoration: none;
-        transition: color 0.2s;
-
-        &:hover {
-            color: $text-primary;
+    .page-header {
+        h1 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
         }
+
+        p {
+            font-size: 0.8rem;
+            max-width: 100%;
+        }
+    }
+
+    .interview-card {
+        border-radius: 1rem;
+
+        .quote-panel {
+            padding: 1.25rem;
+
+            .quote-text {
+                font-size: 0.85rem;
+            }
+        }
+
+        &__body {
+            .panel {
+                padding: 1rem 0.75rem;
+                gap: 1rem;
+
+                &__header h2 {
+                    font-size: 0.95rem;
+                }
+
+                &__textarea {
+                    font-size: 0.85rem;
+                    padding: 0.75rem;
+                }
+            }
+        }
+
+        &__footer {
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 1rem;
+
+            .footer-info {
+                font-size: 0.75rem;
+            }
+        }
+    }
+
+    .generate-btn {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .info-box {
+        padding: 0.75rem;
+        font-size: 0.75rem;
+
+        &__icon {
+            font-size: 0.95rem;
+        }
+    }
+
+    .badge {
+        font-size: 0.6rem;
+        padding: 0.25rem 0.5rem;
     }
 }

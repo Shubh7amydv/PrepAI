@@ -2,12 +2,14 @@ import React, { useState, useRef } from 'react'
 import "../style/home.scss"
 import { useInterview } from '../hooks/useInterview.js'
 import { useNavigate } from 'react-router'
+import { generateResumePdf } from '../services/interview.api.js'
 
 const Home = () => {
 
     const { loading, generateReport,reports } = useInterview()
     const [ jobDescription, setJobDescription ] = useState("")
     const [ selfDescription, setSelfDescription ] = useState("")
+    const [ pdfLoading, setPdfLoading ] = useState(false)
     const resumeInputRef = useRef()
 
     const navigate = useNavigate()
@@ -16,6 +18,23 @@ const Home = () => {
         const resumeFile = resumeInputRef.current.files[ 0 ]
         const data = await generateReport({ jobDescription, selfDescription, resumeFile })
         navigate(`/interview/${data._id}`)
+    }
+
+    const handleGeneratePdf = async () => {
+        try {
+            const resumeFile = resumeInputRef.current.files[ 0 ]
+            if (!jobDescription && !selfDescription && !resumeFile) {
+                alert("Please fill in at least job description or provide resume/self description")
+                return
+            }
+            setPdfLoading(true)
+            await generateResumePdf({ jobDescription, selfDescription, resumeFile })
+        } catch (error) {
+            console.error("Error generating PDF:", error)
+            alert("Failed to generate PDF resume. Please try again.")
+        } finally {
+            setPdfLoading(false)
+        }
     }
 
     if (loading) {
@@ -113,12 +132,23 @@ const Home = () => {
                 {/* Card Footer */}
                 <div className='interview-card__footer'>
                     <span className='footer-info'>AI-Powered Strategy Generation &bull; Approx 30s</span>
-                    <button
-                        onClick={handleGenerateReport}
-                        className='generate-btn'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" /></svg>
-                        Generate My Interview Strategy
-                    </button>
+                    <div className='footer-buttons'>
+                        <button
+                            onClick={handleGeneratePdf}
+                            disabled={pdfLoading}
+                            className='generate-btn generate-btn--secondary'
+                            title="Generate a tailored resume PDF">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
+                            {pdfLoading ? 'Generating PDF...' : 'Generate Resume PDF'}
+                        </button>
+                        <button
+                            onClick={handleGenerateReport}
+                            disabled={loading}
+                            className='generate-btn'>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" /></svg>
+                            {loading ? 'Generating...' : 'Generate My Interview Strategy'}
+                        </button>
+                    </div>
                 </div>
             </div>
 

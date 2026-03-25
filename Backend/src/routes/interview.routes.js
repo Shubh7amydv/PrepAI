@@ -16,6 +16,13 @@ const authMiddleware=require("../middlewares/auth.middlewares");
 // We will use upload.single('resume') to handle file upload and expect the file field name to be 'resume' 
 interviewRouter.post('/',authMiddleware.authUser,upload.single('resume'), interviewController.generateInterviewReportController);
 
+/**
+ * @route POST /api/interview/resume-pdf
+ * @description Generate a tailored resume PDF based on job description and candidate profile
+ * @access Private (Requires authentication)
+ */
+interviewRouter.post('/resume-pdf', authMiddleware.authUser, upload.single('resume'), interviewController.generateResumePdfController);
+
 
 
  module.exports=interviewRouter;

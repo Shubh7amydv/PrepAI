@@ -80,26 +80,27 @@ async function loginUserController(req,res) {
     // get the email and Passowrd from the request body
     const { email,password}=req.body;
 
+    if (!email || !password) {
+        return res.status(400).json({
+            message: "Email and password are required"
+        });
+    }
+
     // Check if user exist with given email or not 
     const user= await userModel.findOne({email});
 
     if(!user){
-        res.status(400).json({
+        return res.status(401).json({
             message:"User not found with this email"
-        })
+        });
     }
-    
-
-    console.log("Password from request:", password)
-    console.log("User from DB:", user)
-    console.log("Stored hash:", user?.password)
 
     const isPasswordValid=await bcrypt.compare(password,user.password);
 
     if(!isPasswordValid){
-       res.status(400).json({
+       return res.status(401).json({
             message:"Invalid password"
-       }) 
+       });
     }
 
      const token=jwt.sign(

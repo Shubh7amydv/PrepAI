@@ -46,14 +46,32 @@ export const getAllInterviewReports = async () => {
     return response.data
 }
 
-
 /**
- * @description Service to generate resume pdf based on user self description, resume content and job description.
+ * @description Service to generate a tailored resume PDF based on job description and candidate profile.
  */
-export const generateResumePdf = async ({ interviewReportId }) => {
-    const response = await api.post(`/api/interview/resume/pdf/${interviewReportId}`, null, {
-        responseType: "blob"
+export const generateResumePdf = async ({ jobDescription, selfDescription, resumeFile }) => {
+    const formData = new FormData()
+    formData.append("jobDescription", jobDescription)
+    formData.append("selfDescription", selfDescription)
+    if (resumeFile) {
+        formData.append("resume", resumeFile)
+    }
+
+    const response = await api.post("/api/interview/resume-pdf", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        },
+        responseType: 'arraybuffer'
     })
 
-    return response.data
+    // Create blob and download
+    const blob = new Blob([response.data], { type: 'application/pdf' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'tailored-resume.pdf'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
 }
