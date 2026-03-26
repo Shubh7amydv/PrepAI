@@ -1,27 +1,47 @@
+
 # 🚀 AI-Powered Interview Preparation Platform
 
-An intelligent full-stack web application that helps users prepare for interviews by analyzing their **resume, job description, and self-reflection**. The system leverages **AI (Gemini API)** to generate personalized insights, interview questions, and a structured preparation plan.
+ [![Live Demo](https://img.shields.io/badge/Live-Demo-green?style=for-the-badge)](https://prep-ai-indol.vercel.app/)
+
+ 
+An intelligent full-stack web application that helps users prepare for interviews by analyzing their **resume, job description, and self-reflection**. The system leverages **AI (Groq API)** to generate personalized insights, interview questions, and a structured preparation plan.
+
+---
+
+## 📸 Screenshots
+
+### 🔐 Login Page
+![Login](./login.png)
+
+### 📝 Registration Page
+![Registration](./Registration.png)
+
+### 📥 Input Section
+![Input](./input.png)
+
+### 📊 Report / Output
+![Report](./Report.png)
 
 ---
 
 ## 📌 Features
 
-* 🧠 **AI-Generated Technical Questions**
+* 🧠 **AI-Generated Technical Questions**  
   Get role-specific technical questions based on your resume and job description.
 
-* 💬 **Behavioral Questions**
+* 💬 **Behavioral Questions**  
   Personalized behavioral interview questions tailored to your experience.
 
-* 📊 **ATS / Match Score**
+* 📊 **ATS / Match Score**  
   Evaluate how well your resume matches the job description.
 
-* 📉 **Skill Gap Analysis**
+* 📉 **Skill Gap Analysis**  
   Identify missing skills required for your target role.
 
-* 🗺️ **Preparation Roadmap**
+* 🗺️ **Preparation Roadmap**  
   Receive a structured plan to improve and crack your interview.
 
-* 📝 **Self-Reflection Input**
+* 📝 **Self-Reflection Input**  
   Incorporate personal insights to improve AI recommendations.
 
 ---
@@ -29,22 +49,17 @@ An intelligent full-stack web application that helps users prepare for interview
 ## 🛠️ Tech Stack
 
 ### Frontend
-
 * React.js
-* Tailwind CSS (if used)
 * Axios
 
 ### Backend
-
 * Node.js
 * Express.js
 
 ### AI Integration
-
-* Gemini API (Google Generative AI)
+* Groq API
 
 ### Others
-
 * REST APIs
 * JSON-based data handling
 
@@ -53,15 +68,13 @@ An intelligent full-stack web application that helps users prepare for interview
 ## 🧩 How It Works
 
 1. User inputs:
-
    * Resume
    * Job Description
    * Self-Reflection
 
-2. Backend processes the data and sends it to Gemini API
+2. Backend processes the data and sends it to Groq API
 
 3. AI returns:
-
    * Technical Questions
    * Behavioral Questions
    * Skill Gaps
@@ -73,6 +86,7 @@ An intelligent full-stack web application that helps users prepare for interview
 ---
 
 ## 📂 Project Structure
+
 
 ```
 ├── Frontend/        
@@ -158,7 +172,7 @@ npm run dev
 
 ## 🙌 Acknowledgements
 
-* Google Gemini API
+* Groq API
 * Open-source community
 
 ---
