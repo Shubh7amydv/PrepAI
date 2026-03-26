@@ -3,7 +3,7 @@
 
  [![Live Demo](https://img.shields.io/badge/Live-Demo-green?style=for-the-badge)](https://prep-ai-indol.vercel.app/)
 
- 
+
 An intelligent full-stack web application that helps users prepare for interviews by analyzing their **resume, job description, and self-reflection**. The system leverages **AI (Groq API)** to generate personalized insights, interview questions, and a structured preparation plan.
 
 ---
@@ -11,18 +11,16 @@ An intelligent full-stack web application that helps users prepare for interview
 ## 📸 Screenshots
 
 ### 🔐 Login Page
-![Login](./login.png)
+<img src="./login.png" width="600"/>
 
 ### 📝 Registration Page
-![Registration](./Registration.png)
+<img src="./Registration.png" width="600"/>
 
 ### 📥 Input Section
-![Input](./input.png)
+<img src="./input.png" width="600"/>
 
 ### 📊 Report / Output
-![Report](./Report.png)
-
----
+<img src="./Report.png" width="600"/>
 
 ## 📌 Features
 
