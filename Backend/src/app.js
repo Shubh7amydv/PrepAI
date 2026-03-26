@@ -9,9 +9,12 @@ app.use(express.json());           // This creates the server application and yo
 app.use(cookieParser());
 
 app.use(cors({
-     origin:"http://localhost:5173",
-     credentials:true
-}))
+  origin: [
+    "http://localhost:5173",
+    "https://prep-ai-indol.vercel.app"
+  ],
+  credentials: true
+}));
 
 // Set up API routes here 
 const authRouter=require("./routes/auth.routes");

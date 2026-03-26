@@ -1,10 +1,9 @@
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 dotenv.config();
 
-
-import Groq from "groq-sdk";
-import { z } from "zod";
-import puppeteer from "puppeteer";
+const Groq = require("groq-sdk");
+const { z } = require("zod");
+const puppeteer = require("puppeteer");
 // import chalk from "chalk";
 
 const groq = new Groq({
@@ -344,4 +343,4 @@ REMEMBER:
 
 
 
-export { generateInterviewReport, generateResumePdf, generatePdfFromHtml };
+module.exports = { generateInterviewReport, generateResumePdf, generatePdfFromHtml };

@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "npx nodemon server.js",
-    "type": "module"
+    "start": "node server.js"
   },
   "dependencies": {
     "@google/genai": "^1.46.0",

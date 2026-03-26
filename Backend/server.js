@@ -1,18 +1,21 @@
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 dotenv.config();
 
-import app from "./src/app.js";
-import connectToDB from "./src/config/database.js";
+const app = require("./src/app.js");
+const connectToDB = require("./src/config/database.js");
 
+const PORT = process.env.PORT || 3000;
 
-const PORT = process.env.PORT;
+async function startServer() {
+  try {
+    await connectToDB();
+    app.listen(PORT, () => {
+      console.log(`Server started at port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error.message);
+    process.exit(1);
+  }
+}
 
-console.log(process.env.GOOGLE_API_KEY);
-console.log("KEY:", process.env.GOOGLE_API_KEY);
-connectToDB();
-
-
-
-app.listen(PORT, () => {
-  console.log(`Server started at port ${PORT}`);
-});
+startServer();
