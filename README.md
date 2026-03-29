@@ -11,16 +11,16 @@ An intelligent full-stack web application that helps users prepare for interview
 ## 📸 Screenshots
 
 ### 🔐 Login Page
-<img src="./login.png" width="600"/>
+<img src="./Images/login.png" width="600"/>
 
 ### 📝 Registration Page
-<img src="./Registration.png" width="600"/>
+<img src="./Images/Registration.png" width="600"/>
 
 ### 📥 Input Section
-<img src="./input.png" width="600"/>
+<img src="./Images/input.png" width="600"/>
 
 ### 📊 Report / Output
-<img src="./Report.png" width="600"/>
+<img src="./Images/Report.png" width="600"/>
 
 ## 📌 Features
 
