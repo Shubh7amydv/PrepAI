@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router'
 import "../auth.form.scss"
 import { useAuth } from '../hooks/useAuth'
@@ -11,7 +11,7 @@ const Register = () => {
     const [ password, setPassword ] = useState("")
     const [ authError, setAuthError ] = useState("")
 
-    const {loading,handleRegister} = useAuth()
+    const { user, loading, handleRegister } = useAuth()
     
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -24,8 +24,19 @@ const Register = () => {
         setAuthError(error)
     }
 
+    useEffect(() => {
+        if (user) {
+            navigate('/')
+        }
+    }, [user, navigate])
+
     if(loading){
-        return (<main><h1>Loading.......</h1></main>)
+        return (
+            <main>
+                <h1>Loading.......</h1>
+                <p>Waking up backend from free-plan nap 🥲 Please wait about a minute.</p>
+            </main>
+        )
     }
 
     return (

@@ -6,7 +6,15 @@ export const useAuth =() =>{
 
     const context=useContext(AuthContext);
     
-    const {user,setUser,loading,setLoading}= context;
+    const { user, setUser, loading, setLoading, isInitializing, setIsInitializing } = context;
+
+    const cacheUser = (nextUser) => {
+        if (nextUser) {
+            localStorage.setItem("prepai_user", JSON.stringify(nextUser));
+            return;
+        }
+        localStorage.removeItem("prepai_user");
+    };
 
     const getErrorMessage = (error, fallbackMessage) => {
         return error?.response?.data?.message || fallbackMessage;
@@ -18,10 +26,12 @@ export const useAuth =() =>{
             try {
                 const data = await getMe();
                 setUser(data.user);
+                cacheUser(data.user);
             } catch (error) {
                 setUser(null);
+                cacheUser(null);
             } finally {
-                setLoading(false);
+                setIsInitializing(false);
             }
         };
         initUser();
@@ -35,6 +45,7 @@ export const useAuth =() =>{
                  return { success: false, error: "Unable to login" };
             }
             setUser(data.user);
+              cacheUser(data.user);
               return { success: true, error: "" };
        } catch (error) {
               return { success: false, error: getErrorMessage(error, "Invalid email or password") };
@@ -52,6 +63,7 @@ export const useAuth =() =>{
                 return { success: false, error: "Unable to register" };
               }
               setUser(data.user)
+                            cacheUser(data.user);
               return { success: true, error: "" };
         } catch (error) {
               return { success: false, error: getErrorMessage(error, "Registration failed") };
@@ -65,6 +77,7 @@ export const useAuth =() =>{
              setLoading(true);
              const data=await logout();
              setUser(null)
+             cacheUser(null);
        } catch (error) {
         
        }finally{
@@ -72,7 +85,7 @@ export const useAuth =() =>{
        }
     }
     
-    return {user,loading,handleRegister,handleLogin,handleLogout}
+    return { user, loading, isInitializing, handleRegister, handleLogin, handleLogout }
 
     
 

@@ -37,14 +37,6 @@ const Home = () => {
         }
     }
 
-    if (loading) {
-        return (
-            <main className='loading-screen'>
-                <h1>Loading your interview plan...</h1>
-            </main>
-        )
-    }
-
     return (
         <div className='home-page'>
 
@@ -153,7 +145,14 @@ const Home = () => {
             </div>
 
             {/* Recent Reports List */}
-            {reports.length > 0 && (
+            {loading && reports.length === 0 && (
+                <section className='recent-reports'>
+                    <h2>My Recent Interview Plans</h2>
+                    <p>Waking up backend from free-plan nap 🥲 Please wait about a minute.</p>
+                </section>
+            )}
+
+            {!loading && reports.length > 0 && (
                 <section className='recent-reports'>
                     <h2>My Recent Interview Plans</h2>
                     <ul className='reports-list'>

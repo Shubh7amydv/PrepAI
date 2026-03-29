@@ -74,6 +74,7 @@ const Interview = () => {
         return (
             <main className='loading-screen'>
                 <h1>Loading your interview plan...</h1>
+                <p>Waking up backend from free-plan nap 🥲 Please wait about a minute.</p>
             </main>
         )
     }

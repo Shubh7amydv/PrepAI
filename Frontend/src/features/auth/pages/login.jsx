@@ -1,11 +1,11 @@
-import React,{useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router'
 import "../auth.form.scss"
 import { useAuth } from '../hooks/useAuth'
 
 const Login = () => {
 
-    const { loading, handleLogin } = useAuth()
+    const { user, loading, handleLogin } = useAuth()
     const navigate = useNavigate()
 
     const [ email, setEmail ] = useState("")
@@ -23,8 +23,19 @@ const Login = () => {
         setAuthError(error)
     }
 
+    useEffect(() => {
+        if (user) {
+            navigate('/')
+        }
+    }, [user, navigate])
+
     if(loading){
-        return (<main><h1>Loading.......</h1></main>)
+        return (
+            <main>
+                <h1>Loading.......</h1>
+                <p>Waking up backend from free-plan nap 🥲 Please wait about a minute.</p>
+            </main>
+        )
     }
 
     return (

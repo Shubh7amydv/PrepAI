@@ -16,6 +16,15 @@ app.use(cors({
   credentials: true
 }));
 
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    service: "prep-ai-backend",
+    timestamp: new Date().toISOString(),
+    uptimeSeconds: Math.floor(process.uptime())
+  });
+});
+
 // Set up API routes here 
 const authRouter=require("./routes/auth.routes");
 const interviewRouter=require("./routes/interview.routes");
