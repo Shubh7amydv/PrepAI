@@ -141,7 +141,7 @@ npm run dev
 
 | Variable       | Description           |
 | -------------- | --------------------- |
-| GEMINI_API_KEY | Google Gemini API Key |
+| GROQ_API_KEY   | Groq API Key          |
 | PORT           | Backend server port   |
 | MONGO_URI      | MongoData base        |
 |JWT_SECRET      | JWT secret key        |

@@ -18,7 +18,7 @@ const Register = () => {
         setAuthError("")
         const { success, error } = await handleRegister({username,email,password})
         if (success) {
-            navigate("/")
+            navigate("/app")
             return
         }
         setAuthError(error)
@@ -26,7 +26,7 @@ const Register = () => {
 
     useEffect(() => {
         if (user) {
-            navigate('/')
+            navigate('/app')
         }
     }, [user, navigate])
 

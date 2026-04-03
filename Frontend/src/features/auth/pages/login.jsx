@@ -17,7 +17,7 @@ const Login = () => {
         setAuthError("")
         const { success, error } = await handleLogin({email,password})
         if (success) {
-            navigate('/')
+            navigate('/app')
             return
         }
         setAuthError(error)
@@ -25,7 +25,7 @@ const Login = () => {
 
     useEffect(() => {
         if (user) {
-            navigate('/')
+            navigate('/app')
         }
     }, [user, navigate])
 
