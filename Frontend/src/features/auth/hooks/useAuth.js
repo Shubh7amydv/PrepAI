@@ -90,7 +90,17 @@ export const useAuth =() =>{
        }
     }
     
-    return { user, loading, isInitializing, handleRegister, handleLogin, handleLogout }
+    return {
+        user,
+        loading,
+        isInitializing,
+        handleRegister,
+        handleLogin,
+        handleLogout,
+        register: handleRegister,
+        login: handleLogin,
+        logout: handleLogout
+    }
 
     
 

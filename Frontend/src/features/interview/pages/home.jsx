@@ -1,12 +1,14 @@
 import React, { useState, useRef } from 'react'
 import "../style/home.scss"
 import { useInterview } from '../hooks/useInterview.js'
-import { useNavigate } from 'react-router'
+import { useAuth } from '../../auth/hooks/useAuth.js'
+import { useNavigate, Link } from 'react-router'
 import { generateResumePdf } from '../services/interview.api.js'
 
 const Home = () => {
 
-    const { loading, generateReport,reports } = useInterview()
+    const { user, logout } = useAuth()
+    const { loading, generateReport, reports } = useInterview()
     const [ jobDescription, setJobDescription ] = useState("")
     const [ selfDescription, setSelfDescription ] = useState("")
     const [ pdfLoading, setPdfLoading ] = useState(false)
@@ -15,6 +17,15 @@ const Home = () => {
     const resumeInputRef = useRef()
 
     const navigate = useNavigate()
+
+    const handleLogout = async () => {
+        try {
+            await logout()
+            navigate('/login')
+        } catch (err) {
+            navigate('/login')
+        }
+    }
 
     const handleResumeChange = (e) => {
         const file = e.target.files?.[0]
@@ -80,6 +91,26 @@ const Home = () => {
 
     return (
         <div className='home-page'>
+
+            {/* App Top Navbar */}
+            <header className='app-nav'>
+                <Link to='/' className='app-brand'>
+                    <span className='app-brand__mark'>P</span>
+                    <span className='app-brand__name'>PrepAI</span>
+                </Link>
+                <div className='app-nav__user'>
+                    {user && (
+                        <span className='user-badge'>
+                            <span className='user-dot' />
+                            {user.username || user.email}
+                        </span>
+                    )}
+                    <button onClick={handleLogout} className='logout-btn' title='Sign out'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
+                        Logout
+                    </button>
+                </div>
+            </header>
 
             {/* Page Header */}
             <header className='page-header'>

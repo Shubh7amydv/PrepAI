@@ -14,14 +14,55 @@ const NAV_ITEMS = [
 // ── Sub-components ────────────────────────────────────────────────────────────
 const QuestionCard = ({ item, index }) => {
     const [ open, setOpen ] = useState(false)
+    const [ copied, setCopied ] = useState(false)
+
+    const handleCopy = (e) => {
+        e.stopPropagation()
+        const textToCopy = `Q: ${item.question}\n\nIntention: ${item.intention}\n\nModel Answer: ${item.answer}`
+        navigator.clipboard.writeText(textToCopy)
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+    }
+
     return (
         <div className='q-card'>
             <div className='q-card__header' onClick={() => setOpen(o => !o)}>
                 <span className='q-card__index'>Q{index + 1}</span>
                 <p className='q-card__question'>{item.question}</p>
-                <span className={`q-card__chevron ${open ? 'q-card__chevron--open' : ''}`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
-                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginLeft: 'auto' }}>
+                    <button
+                        onClick={handleCopy}
+                        style={{
+                            background: copied ? 'rgba(63, 185, 80, 0.15)' : 'rgba(255, 255, 255, 0.05)',
+                            border: `1px solid ${copied ? '#3fb950' : '#2a3348'}`,
+                            color: copied ? '#3fb950' : '#7d8590',
+                            borderRadius: '0.35rem',
+                            padding: '0.2rem 0.5rem',
+                            fontSize: '0.72rem',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.3rem',
+                            transition: 'all 0.2s'
+                        }}
+                        title='Copy question and answer'
+                    >
+                        {copied ? (
+                            <>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                                Copied
+                            </>
+                        ) : (
+                            <>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+                                Copy
+                            </>
+                        )}
+                    </button>
+                    <span className={`q-card__chevron ${open ? 'q-card__chevron--open' : ''}`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                    </span>
+                </div>
             </div>
             {open && (
                 <div className='q-card__body'>
@@ -110,14 +151,14 @@ const Interview = () => {
                 <nav className='interview-nav'>
                     <div className="nav-content">
                         <button
-                            onClick={() => navigate('/')}
+                            onClick={() => navigate('/app')}
                             className='interview-nav__item'
                             style={{ marginBottom: '1rem', borderBottom: '1px solid #2a3348', borderRadius: '0.4rem' }}
                         >
                             <span className='interview-nav__icon'>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
                             </span>
-                            Back to Home
+                            Back to Dashboard
                         </button>
 
                         <p className='interview-nav__label'>Sections</p>
