@@ -232,12 +232,6 @@ const Interview = () => {
                         <span className='aside-card__label'>Match score</span>
                         <div className='score-ring-wrapper'>
                             <svg className='score-svg' viewBox='0 0 100 100'>
-                                <defs>
-                                    <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stopColor="#6366F1" />
-                                        <stop offset="100%" stopColor="#06B6D4" />
-                                    </linearGradient>
-                                </defs>
                                 <circle className='score-track' cx='50' cy='50' r='42' />
                                 <circle
                                     className='score-fill'

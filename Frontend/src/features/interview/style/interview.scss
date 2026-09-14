@@ -5,9 +5,6 @@
     width: 100%;
     min-height: 100vh;
     background-color: $bg-page;
-    background-image: 
-        radial-gradient(ellipse 60% 40% at 50% -20%, rgba(99, 102, 241, 0.12), transparent 70%),
-        radial-gradient(circle at 90% 20%, rgba(139, 92, 246, 0.05), transparent 40%);
     color: $ink-primary;
     display: flex;
     flex-direction: column;
@@ -22,7 +19,7 @@
 // ── Top Bar ───────────────────────────────────────────────────────────────────
 .report-topbar {
     width: 100%;
-    max-width: 1240px;
+    max-width: 1200px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -43,7 +40,7 @@
             align-items: center;
             gap: 0.45rem;
             background: $bg-surface;
-            border: 1px solid $border-subtle;
+            border: 1px solid $border-strong;
             border-radius: $radius-button;
             padding: 0.45rem 0.85rem;
             color: $ink-secondary;
@@ -56,9 +53,7 @@
 
             &:hover {
                 background-color: $bg-surface-raised;
-                border-color: $border-strong;
                 color: $ink-primary;
-                transform: translateX(-2px);
             }
         }
 
@@ -70,13 +65,13 @@
 
         .report-title {
             font-family: $font-display;
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-size: 1.35rem;
+            font-weight: 440;
             color: $ink-primary;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
         }
     }
 
@@ -88,32 +83,25 @@
         display: inline-flex;
         align-items: center;
         gap: 0.55rem;
-        height: 40px;
-        padding: 0 1.2rem;
-        background: linear-gradient(135deg, $accent-primary, $accent-violet);
-        color: #ffffff;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        height: 38px;
+        padding: 0 1.15rem;
+        background-color: transparent;
+        color: $ink-primary;
+        border: 1px solid $border-strong;
         border-radius: $radius-button;
         font-family: $font-body;
         font-size: 0.875rem;
-        font-weight: 600;
+        font-weight: 500;
         cursor: pointer;
-        box-shadow: 0 4px 16px rgba(99, 102, 241, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        transition: all $transition-fast;
+        transition: background-color $transition-fast;
 
         &:hover:not(:disabled) {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-
-        &:active:not(:disabled) {
-            transform: translateY(0);
+            background-color: $bg-surface-raised;
         }
 
         &:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
         }
     }
 
@@ -126,18 +114,17 @@
 // ── Layout Grid ───────────────────────────────────────────────────────────────
 .interview-layout {
     width: 100%;
-    max-width: 1240px;
+    max-width: 1200px;
     display: grid;
-    grid-template-columns: 240px 1fr 310px;
+    grid-template-columns: 220px 1fr 280px;
     gap: 2rem;
     align-items: start;
 
-    @media (max-width: 1100px) {
-        grid-template-columns: 210px 1fr 280px;
-        gap: 1.5rem;
+    @media (max-width: 1040px) {
+        grid-template-columns: 200px 1fr;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 768px) {
         grid-template-columns: 1fr;
     }
 }
@@ -146,29 +133,27 @@
 .interview-nav {
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.75rem;
     position: sticky;
     top: 1.5rem;
 
     .nav-section-label {
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+        font-size: 0.75rem;
+        font-weight: 600;
         color: $ink-tertiary;
-        padding-left: 0.75rem;
+        padding-left: 0.5rem;
     }
 
     .nav-links {
         display: flex;
         flex-direction: column;
-        gap: 0.35rem;
+        gap: 0.25rem;
 
         .nav-link {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.7rem 0.9rem;
+            padding: 0.65rem 0.85rem;
             border: 1px solid transparent;
             background: transparent;
             border-radius: $radius-button;
@@ -184,26 +169,24 @@
                 color: $ink-tertiary;
                 display: flex;
                 align-items: center;
-                transition: color $transition-fast;
             }
 
             &:hover {
                 background-color: $bg-surface;
                 color: $ink-primary;
-
-                .nav-link__icon {
-                    color: $ink-secondary;
-                }
             }
 
+            // Routine navigation gets the secondary accent (Muted teal #4E8C89)
             &--active {
-                background: rgba(99, 102, 241, 0.12);
-                border-color: rgba(99, 102, 241, 0.3);
-                color: #ffffff;
+                background-color: rgba(78, 140, 137, 0.1);
+                color: $accent-secondary;
                 font-weight: 600;
+                border-left: 3px solid $accent-secondary;
+                border-top-left-radius: 2px;
+                border-bottom-left-radius: 2px;
 
                 .nav-link__icon {
-                    color: $accent-primary;
+                    color: $accent-secondary;
                 }
             }
         }
@@ -218,32 +201,30 @@
 .content-section {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.25rem;
 
     &__head {
         display: flex;
-        align-items: center;
+        align-items: baseline;
         justify-content: space-between;
-        padding-bottom: 0.75rem;
-        border-bottom: 1px solid $border-subtle;
 
         h2 {
             font-family: $font-display;
-            font-size: 1.5rem;
-            font-weight: 600;
+            font-size: 1.625rem;
+            font-weight: 440;
             color: $ink-primary;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
             margin: 0;
         }
 
         .count-chip {
             font-size: 0.75rem;
-            font-weight: 600;
-            color: $accent-primary;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.25);
-            padding: 0.25rem 0.65rem;
-            border-radius: 9999px;
+            font-weight: 500;
+            color: $ink-tertiary;
+            background-color: $bg-surface;
+            border: 1px solid $border-subtle;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
         }
     }
 }
@@ -252,33 +233,29 @@
 .q-stack {
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.75rem;
 }
 
 .q-card {
-    background: $bg-surface;
+    background-color: $bg-surface; // #17171A
     border: 1px solid $border-subtle;
-    border-radius: $radius-card;
+    border-radius: 8px;
     overflow: hidden;
-    transition: all $transition-normal;
-    box-shadow: $shadow-card;
+    transition: border-color $transition-fast;
 
     &:hover {
         border-color: $border-strong;
-        background: $bg-surface-raised;
     }
 
     &--open {
-        border-color: rgba(99, 102, 241, 0.4);
-        background: $bg-surface-raised;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.08);
+        border-color: $border-strong;
     }
 
     &__header {
         display: flex;
         align-items: flex-start;
         gap: 0.85rem;
-        padding: 1.2rem 1.4rem;
+        padding: 1.15rem 1.25rem;
         cursor: pointer;
         user-select: none;
     }
@@ -286,14 +263,9 @@
     &__num {
         font-family: $font-body;
         font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 0.05em;
-        color: $accent-primary;
-        background: rgba(99, 102, 241, 0.12);
-        border: 1px solid rgba(99, 102, 241, 0.25);
-        padding: 0.2rem 0.5rem;
-        border-radius: 6px;
-        margin-top: 1px;
+        font-weight: 600;
+        color: $ink-tertiary;
+        margin-top: 2px;
         flex-shrink: 0;
     }
 
@@ -312,33 +284,32 @@
         align-items: center;
         gap: 0.6rem;
         flex-shrink: 0;
-        margin-top: 1px;
+        margin-top: 2px;
     }
 
     .copy-btn {
         display: inline-flex;
         align-items: center;
         gap: 0.35rem;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid $border-subtle;
+        background: transparent;
+        border: 1px solid $border-strong;
         color: $ink-secondary;
         font-size: 0.72rem;
         font-weight: 500;
-        padding: 0.25rem 0.6rem;
-        border-radius: 6px;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
         cursor: pointer;
         transition: all $transition-fast;
 
         &:hover {
             color: $ink-primary;
-            background: rgba(255, 255, 255, 0.08);
-            border-color: $border-strong;
+            background-color: $bg-surface-raised;
         }
 
         &--copied {
-            background-color: rgba($success, 0.15);
+            background-color: rgba($success, 0.1);
             color: $success;
-            border-color: rgba($success, 0.4);
+            border-color: rgba($success, 0.3);
         }
     }
 
@@ -349,46 +320,39 @@
 
         &--rotated {
             transform: rotate(180deg);
-            color: $accent-primary;
         }
     }
 
     &__body {
-        padding: 1.25rem 1.4rem 1.4rem;
+        padding: 1.25rem;
         border-top: 1px solid $border-subtle;
         display: flex;
         flex-direction: column;
         gap: 1.15rem;
-        background: rgba(9, 10, 15, 0.4);
+        background-color: $bg-surface-raised; // #1F1F23
     }
 
     &__section {
         display: flex;
         flex-direction: column;
-        gap: 0.45rem;
-        background: $bg-surface;
-        border: 1px solid $border-subtle;
-        border-radius: 8px;
-        padding: 1rem 1.15rem;
+        gap: 0.35rem;
 
         .section-tag {
             font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
+            font-weight: 600;
 
             &--intention {
-                color: $accent-cyan;
+                color: $accent-secondary;
             }
 
             &--answer {
-                color: $accent-primary;
+                color: $ink-primary;
             }
         }
 
         p {
             font-size: 0.88rem;
-            line-height: 1.6;
+            line-height: 1.55;
             color: $ink-secondary;
             margin: 0;
         }
@@ -399,48 +363,38 @@
 .roadmap-stack {
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.75rem;
 }
 
 .roadmap-card {
-    background: $bg-surface;
+    background-color: $bg-surface;
     border: 1px solid $border-subtle;
-    border-radius: $radius-card;
-    box-shadow: $shadow-card;
-    padding: 1.35rem 1.5rem;
+    border-radius: 8px;
+    padding: 1.25rem 1.4rem;
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
-    transition: all $transition-fast;
-
-    &:hover {
-        border-color: $border-strong;
-        background: $bg-surface-raised;
-    }
+    gap: 0.75rem;
 
     &__header {
         display: flex;
         align-items: center;
-        gap: 0.85rem;
+        gap: 0.75rem;
 
         .roadmap-card__badge {
             font-size: 0.72rem;
-            font-weight: 700;
-            color: $accent-cyan;
-            background: rgba(6, 182, 212, 0.1);
-            border: 1px solid rgba(6, 182, 212, 0.25);
-            padding: 0.25rem 0.65rem;
-            border-radius: 6px;
-            letter-spacing: 0.04em;
+            font-weight: 600;
+            color: $accent-secondary;
+            background-color: rgba(78, 140, 137, 0.12);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
         }
 
         .roadmap-card__focus {
-            font-family: $font-display;
-            font-size: 1rem;
+            font-family: $font-body;
+            font-size: 0.95rem;
             font-weight: 600;
             color: $ink-primary;
             margin: 0;
-            letter-spacing: -0.01em;
         }
     }
 
@@ -450,24 +404,23 @@
         margin: 0;
         display: flex;
         flex-direction: column;
-        gap: 0.55rem;
+        gap: 0.45rem;
 
         li {
             display: flex;
             align-items: flex-start;
-            gap: 0.65rem;
-            font-size: 0.875rem;
+            gap: 0.6rem;
+            font-size: 0.845rem;
             line-height: 1.5;
             color: $ink-secondary;
 
             .task-bullet {
-                width: 6px;
-                height: 6px;
+                width: 5px;
+                height: 5px;
                 border-radius: 50%;
-                background-color: $accent-primary;
-                box-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
+                background-color: $ink-tertiary;
                 flex-shrink: 0;
-                margin-top: 7px;
+                margin-top: 6px;
             }
         }
     }
@@ -481,59 +434,42 @@
     position: sticky;
     top: 1.5rem;
 
-    @media (max-width: 900px) {
-        position: static;
+    @media (max-width: 1040px) {
+        grid-column: span 2;
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
+        grid-column: span 1;
         grid-template-columns: 1fr;
     }
 }
 
 .aside-card {
-    background: $bg-surface;
+    background-color: $bg-surface;
     border: 1px solid $border-subtle;
-    border-radius: $radius-card;
-    box-shadow: $shadow-card;
+    border-radius: 8px;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1.15rem;
-    backdrop-filter: blur(8px);
+    gap: 1rem;
 
     &__label {
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+        font-size: 0.75rem;
+        font-weight: 600;
         color: $ink-tertiary;
     }
 }
 
-// ── Match Score Card (Sleek Obsidian Glow) ──────────────────────────────────
+// ── Match Score Card (Single Most Important Number earns #C97A4A) ───────────
 .match-score-card {
-    background: linear-gradient(180deg, $bg-surface-raised, $bg-surface);
-    border: 1px solid $border-strong;
     align-items: center;
     text-align: center;
-    position: relative;
-    overflow: hidden;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: linear-gradient(90deg, transparent, $accent-primary, $accent-cyan, transparent);
-    }
 
     .score-ring-wrapper {
-        width: 120px;
-        height: 120px;
+        width: 100px;
+        height: 100px;
         position: relative;
         margin: 0.5rem 0;
 
@@ -545,14 +481,14 @@
 
         .score-track {
             fill: none;
-            stroke: rgba(255, 255, 255, 0.06);
-            stroke-width: 8;
+            stroke: rgba(237, 235, 230, 0.08);
+            stroke-width: 7;
         }
 
         .score-fill {
             fill: none;
-            stroke: url(#scoreGrad);
-            stroke-width: 8;
+            stroke: $accent-primary; // #C97A4A
+            stroke-width: 7;
             stroke-linecap: round;
             transition: stroke-dashoffset 1s ease;
         }
@@ -563,44 +499,37 @@
             display: flex;
             align-items: baseline;
             justify-content: center;
-            padding-top: 38px;
+            padding-top: 32px;
 
             .score-number {
                 font-family: $font-display;
-                font-size: 2.25rem;
-                font-weight: 700;
-                color: #ffffff;
+                font-size: 2rem;
+                font-weight: 600;
+                color: $accent-primary;
                 line-height: 1;
-                letter-spacing: -0.03em;
             }
 
             .score-percent {
-                font-size: 0.95rem;
-                font-weight: 600;
-                color: $accent-primary;
+                font-size: 0.85rem;
+                color: $ink-secondary;
                 margin-left: 2px;
             }
         }
     }
 
     .match-status-row {
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.4rem;
         font-size: 0.8125rem;
-        font-weight: 600;
-        color: $ink-primary;
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.25);
-        padding: 0.35rem 0.8rem;
-        border-radius: 9999px;
+        font-weight: 500;
+        color: $ink-secondary;
 
         .match-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
             background-color: $success;
-            box-shadow: 0 0 8px $success;
         }
     }
 }
@@ -610,21 +539,16 @@
     .gaps-list {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
 
         .gap-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.65rem 0.85rem;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid $border-subtle;
-            border-radius: 8px;
-            transition: all $transition-fast;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid $border-subtle;
 
-            &:hover {
-                background: rgba(255, 255, 255, 0.04);
-                border-color: $border-strong;
+            &:last-child {
+                border-bottom: none;
             }
 
             .gap-left {
@@ -635,30 +559,26 @@
             }
 
             .severity-dot {
-                width: 7px;
-                height: 7px;
+                width: 6px;
+                height: 6px;
                 border-radius: 50%;
                 flex-shrink: 0;
 
                 &--high {
-                    background-color: $danger;
-                    box-shadow: 0 0 6px rgba($danger, 0.6);
+                    background-color: $danger; // #C2543C
                 }
 
                 &--medium {
-                    background-color: $warning;
-                    box-shadow: 0 0 6px rgba($warning, 0.6);
+                    background-color: $accent-primary; // #C97A4A
                 }
 
                 &--low {
-                    background-color: $success;
-                    box-shadow: 0 0 6px rgba($success, 0.6);
+                    background-color: $success; // #6FA37F
                 }
             }
 
             .gap-name {
                 font-size: 0.845rem;
-                font-weight: 500;
                 color: $ink-primary;
                 white-space: nowrap;
                 overflow: hidden;
@@ -667,27 +587,8 @@
 
             .gap-level {
                 font-size: 0.6875rem;
-                font-weight: 600;
-                letter-spacing: 0.04em;
-                text-transform: uppercase;
-                padding: 0.15rem 0.45rem;
-                border-radius: 4px;
-                flex-shrink: 0;
-
-                &.gap-level--high {
-                    color: $danger;
-                    background: rgba($danger, 0.1);
-                }
-
-                &.gap-level--medium {
-                    color: $warning;
-                    background: rgba($warning, 0.1);
-                }
-
-                &.gap-level--low {
-                    color: $success;
-                    background: rgba($success, 0.1);
-                }
+                color: $ink-tertiary;
+                text-transform: capitalize;
             }
         }
     }
@@ -700,22 +601,20 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 1.25rem;
 
     .loading-spinner {
-        width: 44px;
-        height: 44px;
-        border: 3px solid $border-subtle;
+        width: 36px;
+        height: 36px;
+        border: 2px solid $border-subtle;
         border-top-color: $accent-primary;
         border-radius: 50%;
         animation: spin 0.8s linear infinite;
-        box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
     }
 
     p {
-        font-size: 0.95rem;
+        font-size: 0.9375rem;
         color: $ink-secondary;
-        font-weight: 500;
     }
 }
 

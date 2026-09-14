@@ -6,39 +6,35 @@ import '../style/landing.scss'
 const featureItems = [
     {
         title: 'Role & JD Deconstruction',
-        tag: 'Instant Analysis',
-        text: 'Extracts exact technical competencies, implicit seniority expectations, and core deliverables directly from any job description.',
+        tag: 'Job parsing',
+        text: 'Extracts exact technical competencies, seniority expectations, and core deliverables directly from any job description.',
         icon: (
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                 <polyline points="14 2 14 8 20 8" />
                 <line x1="16" y1="13" x2="8" y2="13" />
                 <line x1="16" y1="17" x2="8" y2="17" />
-                <polyline points="10 9 9 9 8 9" />
             </svg>
         )
     },
     {
         title: 'Interview Intention Decoding',
-        tag: 'Model Answers',
-        text: 'Understand what interviewers are actually testing for behind each question, with battle-tested model responses and key talking points.',
+        tag: 'Model answers',
+        text: 'Understand what interviewers are actually testing for behind each question, with curated model responses and talking points.',
         icon: (
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
-                <path d="m4.93 4.93 4.24 4.24" />
-                <path d="m14.83 9.17 4.24-4.24" />
-                <path d="m14.83 14.83 4.24 4.24" />
-                <path d="m9.17 14.83-4.24 4.24" />
-                <circle cx="12" cy="12" r="4" />
+                <line x1="12" y1="16" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12.01" y2="8" />
             </svg>
         )
     },
     {
         title: 'Milestone Roadmap & ATS Export',
-        tag: 'Action Plan',
-        text: 'Follow a day-by-day study roadmap tailored to your gaps and export an ATS-optimized resume drafted for the position.',
+        tag: 'Execution plan',
+        text: 'Follow a targeted day-by-day study roadmap tailored to your gaps and export an ATS-optimized resume drafted for the position.',
         icon: (
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                 <polyline points="22 4 12 14.01 9 11.01" />
             </svg>
@@ -49,18 +45,18 @@ const featureItems = [
 const processSteps = [
     {
         step: '01',
-        title: 'Input Job & Resume',
-        desc: 'Paste the target job description and upload your resume or a quick summary.'
+        title: 'Input Job & Profile',
+        desc: 'Paste the target job description and upload your resume or profile summary.'
     },
     {
         step: '02',
-        title: 'Role Match Scoring',
-        desc: 'AI scores profile compatibility and isolates critical technical & domain gaps.'
+        title: 'Match Analysis',
+        desc: 'The model assesses alignment and isolates critical technical and domain gaps.'
     },
     {
         step: '03',
         title: 'Question Strategy',
-        desc: 'Review curated technical and behavioral questions paired with interviewer intentions.'
+        desc: 'Review tailored technical and behavioral questions with interviewer intentions.'
     },
     {
         step: '04',
@@ -80,20 +76,10 @@ const Landing = () => {
 
     return (
         <div className="landing-page">
-            {/* Background Ambient Glows */}
-            <div className="ambient-glow ambient-glow--1" />
-            <div className="ambient-glow ambient-glow--2" />
-
-            {/* Sticky Navigation Bar */}
+            {/* Navigation Bar */}
             <header className="landing-nav">
                 <Link to="/" className="landing-brand">
-                    <div className="landing-brand__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                            <path d="M2 17l10 5 10-5" />
-                            <path d="M2 12l10 5 10-5" />
-                        </svg>
-                    </div>
+                    <div className="landing-brand__mark">P</div>
                     <span className="landing-brand__text">PrepAI</span>
                 </Link>
 
@@ -107,15 +93,13 @@ const Landing = () => {
                     {!user ? (
                         <>
                             <Link to="/login" className="landing-link">Sign in</Link>
-                            <button type="button" className="btn-glow" onClick={handlePrimaryAction}>
-                                <span>Get Started</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                            <button type="button" className="btn-nav-primary" onClick={handlePrimaryAction}>
+                                Get Started
                             </button>
                         </>
                     ) : (
-                        <button type="button" className="btn-glow" onClick={handlePrimaryAction}>
-                            <span>Open Dashboard</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                        <button type="button" className="btn-nav-primary" onClick={handlePrimaryAction}>
+                            Open Dashboard
                         </button>
                     )}
                 </div>
@@ -123,14 +107,13 @@ const Landing = () => {
 
             {/* Hero Section */}
             <section className="hero">
-                <div className="hero__badge">
-                    <span className="hero__badge-dot" />
-                    <span>Engineered for top-tier tech interviews</span>
-                </div>
+                <p className="hero__eyebrow">
+                    Engineered for top-tier tech interviews
+                </p>
 
                 <h1 className="hero__headline">
-                    Master your next interview <br className="hero-br" />
-                    <span className="text-gradient">before you step into the room.</span>
+                    Master your next interview <br />
+                    <em>before you step into the room.</em>
                 </h1>
 
                 <p className="hero__subhead">
@@ -139,8 +122,7 @@ const Landing = () => {
 
                 <div className="hero__actions">
                     <button type="button" className="btn-hero-primary" onClick={handlePrimaryAction}>
-                        <span>{user ? 'Go to Dashboard' : 'Start Preparing Free'}</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                        {user ? 'Open Dashboard' : 'Start Preparing Free'}
                     </button>
                     {!user && (
                         <Link to="/login" className="btn-hero-secondary">
@@ -149,16 +131,11 @@ const Landing = () => {
                     )}
                 </div>
 
-                {/* Hero Interactive Workspace Mockup */}
+                {/* Hero Interactive Workspace Mockup (No macOS traffic dots, clean tab strip) */}
                 <div className="hero__preview" id="preview">
                     <div className="mockup-window">
-                        {/* macOS Window Header */}
+                        {/* Tab Strip Framing */}
                         <div className="mockup-header">
-                            <div className="window-dots">
-                                <span className="dot dot--red" />
-                                <span className="dot dot--yellow" />
-                                <span className="dot dot--green" />
-                            </div>
                             <div className="mockup-tabs">
                                 <button
                                     className={`tab-btn ${activeTab === 'score' ? 'tab-btn--active' : ''}`}
@@ -179,10 +156,6 @@ const Landing = () => {
                                     Preparation Plan
                                 </button>
                             </div>
-                            <div className="mockup-status">
-                                <span className="status-live" />
-                                <span>Live Strategy</span>
-                            </div>
                         </div>
 
                         {/* Mockup Body */}
@@ -197,21 +170,19 @@ const Landing = () => {
                                             </svg>
                                             <div className="score-dial__content">
                                                 <span className="score-val">86<small>%</small></span>
-                                                <span className="score-tag">Match Score</span>
+                                                <span className="score-tag">Match score</span>
                                             </div>
                                         </div>
                                         <div className="score-details">
-                                            <div className="badge-pill badge-pill--emerald">
-                                                <span className="pill-dot" /> Strong Role Fit
-                                            </div>
+                                            <span className="status-label">Strong role alignment</span>
                                             <h3>Staff / Senior Full Stack Engineer</h3>
-                                            <p>Candidate demonstrates exceptional mastery in distributed Node.js services, React architecture, and async system design.</p>
+                                            <p>Candidate demonstrates strong alignment with distributed Node.js services, React architecture, and async system design.</p>
                                         </div>
                                     </div>
 
                                     <div className="breakdown-grid">
                                         <div className="breakdown-card">
-                                            <span className="breakdown-label">Verified Strengths</span>
+                                            <span className="breakdown-label">Verified strengths</span>
                                             <div className="tag-group">
                                                 <span className="skill-tag">React Fiber</span>
                                                 <span className="skill-tag">TypeScript</span>
@@ -220,10 +191,10 @@ const Landing = () => {
                                             </div>
                                         </div>
                                         <div className="breakdown-card">
-                                            <span className="breakdown-label">High-Impact Focus Areas</span>
+                                            <span className="breakdown-label">Focus areas</span>
                                             <div className="tag-group">
-                                                <span className="skill-tag skill-tag--warn">Kafka Partitioning</span>
-                                                <span className="skill-tag skill-tag--warn">Distributed Caching</span>
+                                                <span className="skill-tag skill-tag--focus">Kafka Partitioning</span>
+                                                <span className="skill-tag skill-tag--focus">Distributed Caching</span>
                                             </div>
                                         </div>
                                     </div>
@@ -234,18 +205,18 @@ const Landing = () => {
                                 <div className="tab-pane tab-pane--questions">
                                     <div className="mock-q">
                                         <div className="mock-q__head">
-                                            <span className="q-badge">Q1 &bull; System Design</span>
+                                            <span className="q-label">Question 01 &bull; System Design</span>
                                             <h4>How would you design a distributed idempotency layer for payment webhooks?</h4>
                                         </div>
                                         <div className="mock-q__body">
-                                            <div className="q-intention">
-                                                <strong>Interviewer Intention:</strong> Testing Redis atomic locking (`SETNX`), TTL safety windows, and failure-handling under network partitions.
-                                            </div>
+                                            <p className="q-intention">
+                                                <strong>Interviewer intention:</strong> Testing Redis atomic locking (`SETNX`), TTL safety windows, and failure-handling under network partitions.
+                                            </p>
                                         </div>
                                     </div>
                                     <div className="mock-q">
                                         <div className="mock-q__head">
-                                            <span className="q-badge">Q2 &bull; React Internals</span>
+                                            <span className="q-label">Question 02 &bull; React Architecture</span>
                                             <h4>Explain how React 19 server actions and transitions prevent UI blocking during async state updates.</h4>
                                         </div>
                                     </div>
@@ -255,17 +226,17 @@ const Landing = () => {
                             {activeTab === 'roadmap' && (
                                 <div className="tab-pane tab-pane--roadmap">
                                     <div className="roadmap-preview-item">
-                                        <div className="r-day">Day 01–03</div>
+                                        <span className="r-day">Days 01–03</span>
                                         <div className="r-content">
                                             <strong>Distributed Caching & Redis Locking Patterns</strong>
-                                            <p>Deep-dive into cache invalidation, write-through vs write-behind, and stampede prevention.</p>
+                                            <p>Review cache invalidation, write-through vs write-behind, and stampede prevention mechanisms.</p>
                                         </div>
                                     </div>
                                     <div className="roadmap-preview-item">
-                                        <div className="r-day">Day 04–07</div>
+                                        <span className="r-day">Days 04–07</span>
                                         <div className="r-content">
                                             <strong>System Scale, Sharding & Read Replicas</strong>
-                                            <p>Rehearse partition key selection, eventual consistency trade-offs, and horizontal scalability.</p>
+                                            <p>Examine partition key selection, eventual consistency trade-offs, and horizontal scalability.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -275,11 +246,11 @@ const Landing = () => {
                 </div>
             </section>
 
-            {/* Features Bento Grid */}
+            {/* Features Section */}
             <section className="features-section" id="features">
                 <div className="section-head">
-                    <span className="section-tag">Core Capabilities</span>
-                    <h2 className="section-title">Engineered to give you an unfair advantage.</h2>
+                    <span className="section-tag">Core capabilities</span>
+                    <h2 className="section-title">Designed for rigor and precision.</h2>
                 </div>
 
                 <div className="bento-grid">
@@ -300,7 +271,7 @@ const Landing = () => {
             <section className="workflow-section" id="workflow">
                 <div className="section-head">
                     <span className="section-tag">Workflow</span>
-                    <h2 className="section-title">From job post to interview ready in 30 seconds.</h2>
+                    <h2 className="section-title">From job description to structured plan.</h2>
                 </div>
 
                 <div className="steps-container">
@@ -314,17 +285,16 @@ const Landing = () => {
                 </div>
             </section>
 
-            {/* High-Impact Final CTA */}
+            {/* Final CTA Banner */}
             <section className="cta-banner">
                 <div className="cta-banner__inner">
                     <div className="cta-banner__content">
-                        <h2>Ready to ace your upcoming interviews?</h2>
-                        <p>Generate role-tailored questions, decode interviewer intentions, and boost your confidence now.</p>
+                        <h2>Ready to prepare for your next opportunity?</h2>
+                        <p>Generate role-tailored questions, decode interviewer intentions, and step into the room prepared.</p>
                     </div>
                     <div className="cta-banner__actions">
                         <button type="button" className="btn-hero-primary" onClick={handlePrimaryAction}>
-                            <span>{user ? 'Open Dashboard' : 'Get Started Now'}</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                            {user ? 'Open Dashboard' : 'Start Preparing Free'}
                         </button>
                     </div>
                 </div>
@@ -333,11 +303,10 @@ const Landing = () => {
             {/* Footer */}
             <footer className="landing-footer">
                 <div className="landing-footer__brand">
-                    <div className="footer-logo">
-                        <span className="dot dot--indigo" />
-                        <strong>PrepAI</strong>
-                    </div>
-                    <span>Modern Interview Intelligence</span>
+                    <span className="footer-mark">P</span>
+                    <strong>PrepAI</strong>
+                    <span className="footer-sep">&bull;</span>
+                    <span className="footer-tagline">Interview Strategy Intelligence</span>
                 </div>
                 <p className="landing-footer__copy">&copy; {new Date().getFullYear()} PrepAI. All rights reserved.</p>
             </footer>

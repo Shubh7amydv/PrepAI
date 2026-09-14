@@ -56,7 +56,7 @@ const Home = () => {
         }
 
         setUploadedResumeName(file.name)
-        setUploadStatus({ type: 'success', message: 'Resume uploaded successfully.' })
+        setUploadStatus({ type: 'success', message: 'Resume attached successfully.' })
     }
 
     const handleGenerateReport = async () => {
@@ -93,26 +93,16 @@ const Home = () => {
             {/* Top Workspace Header */}
             <header className='app-nav'>
                 <Link to='/' className='app-brand'>
-                    <div className='app-brand__icon'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                            <path d="M2 17l10 5 10-5" />
-                            <path d="M2 12l10 5 10-5" />
-                        </svg>
-                    </div>
+                    <div className='app-brand__mark'>P</div>
                     <span className='app-brand__name'>PrepAI</span>
                 </Link>
 
                 <div className='app-nav__user'>
                     {user && (
-                        <div className='user-badge'>
-                            <span className='user-dot' />
-                            <span className='user-name'>{user.username || user.email}</span>
-                        </div>
+                        <span className='user-name'>{user.username || user.email}</span>
                     )}
                     <button onClick={handleLogout} className='logout-btn' title='Sign out'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
-                        <span>Sign out</span>
+                        Sign out
                     </button>
                 </div>
             </header>
@@ -120,10 +110,7 @@ const Home = () => {
             {/* Main Content Area */}
             <main className='home-content'>
                 <div className='page-header'>
-                    <div className='page-header__badge'>
-                        <span className='badge-spark'>⚡</span> Strategy Workspace
-                    </div>
-                    <h1 className='page-header__title'>Generate an Interview Strategy</h1>
+                    <h1 className='page-header__title'>Create Your Custom Interview Plan</h1>
                     <p className='page-header__sub'>Provide your target job requirements and profile to receive customized interview questions, interviewer expectations, and a milestone roadmap.</p>
                 </div>
 
@@ -134,12 +121,7 @@ const Home = () => {
                         {/* Column 1: Job Description */}
                         <div className='strategy-col strategy-col--job'>
                             <div className='col-header'>
-                                <div className='col-header__left'>
-                                    <div className='col-icon-box'>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>
-                                    </div>
-                                    <h2>Target Job Description</h2>
-                                </div>
+                                <h2>Target job description</h2>
                                 <span className='label-required'>Required</span>
                             </div>
 
@@ -160,25 +142,17 @@ const Home = () => {
                         {/* Column 2: Candidate Profile */}
                         <div className='strategy-col strategy-col--profile'>
                             <div className='col-header'>
-                                <div className='col-header__left'>
-                                    <div className='col-icon-box'>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
-                                    </div>
-                                    <h2>Your Profile &amp; Experience</h2>
-                                </div>
+                                <h2>Your profile &amp; experience</h2>
                             </div>
 
                             {/* Dropzone */}
                             <div className='upload-block'>
                                 <div className='upload-block__header'>
-                                    <label className='sub-label'>Upload Resume</label>
+                                    <label className='sub-label'>Upload resume</label>
                                     <span className='chip-tag'>Recommended</span>
                                 </div>
 
                                 <label className='dropzone-box' htmlFor='resume'>
-                                    <div className='dropzone-icon-box'>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
-                                    </div>
                                     <span className='dropzone-text'>Click or drag &amp; drop to upload</span>
                                     <span className='dropzone-hint'>PDF or DOCX (Max 5MB)</span>
                                     <input
@@ -200,7 +174,6 @@ const Home = () => {
 
                                 {uploadedResumeName && (
                                     <div className='file-pill'>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></svg>
                                         <span className='file-name'>{uploadedResumeName}</span>
                                     </div>
                                 )}
@@ -208,12 +181,12 @@ const Home = () => {
 
                             {/* Plain Divider */}
                             <div className='divider-or'>
-                                <span>or summary</span>
+                                <span>or background summary</span>
                             </div>
 
                             {/* Summary Textarea */}
                             <div className='summary-block'>
-                                <label className='sub-label' htmlFor='selfDescription'>Quick Background Summary</label>
+                                <label className='sub-label' htmlFor='selfDescription'>Quick background summary</label>
                                 <textarea
                                     onChange={(e) => { setSelfDescription(e.target.value) }}
                                     value={selfDescription}
@@ -226,7 +199,6 @@ const Home = () => {
 
                             {/* Warning Note */}
                             <div className='notice-note'>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
                                 <span>Upload a <strong>Resume</strong> or provide a <strong>Summary</strong> for accurate role matching.</span>
                             </div>
                         </div>
@@ -235,26 +207,22 @@ const Home = () => {
                     {/* Footer Action Bar */}
                     <div className='strategy-card__footer'>
                         <div className='footer-meta'>
-                            <span className='status-dot-pulse' />
-                            <span>Fast AI synthesis &bull; takes ~15–20s</span>
+                            <span>Analysis takes ~15–20 seconds</span>
                         </div>
                         <div className='action-btns'>
                             <button
                                 type="button"
                                 onClick={handleGeneratePdf}
                                 disabled={pdfLoading}
-                                className='btn-secondary-action'
-                                title="Draft an ATS-optimized resume for this job">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
-                                <span>{pdfLoading ? 'Drafting...' : 'Draft Resume PDF'}</span>
+                                className='btn-secondary-action'>
+                                {pdfLoading ? 'Drafting...' : 'Generate Resume PDF'}
                             </button>
                             <button
                                 type="button"
                                 onClick={handleGenerateReport}
                                 disabled={loading}
                                 className='btn-primary-action'>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
-                                <span>{loading ? 'Synthesizing Strategy...' : 'Generate Interview Strategy'}</span>
+                                {loading ? 'Generating strategy...' : 'Generate Interview Strategy'}
                             </button>
                         </div>
                     </div>
@@ -264,7 +232,7 @@ const Home = () => {
                 {!loading && reports && reports.length > 0 && (
                     <section className='recent-section'>
                         <div className='recent-header'>
-                            <h2>Recent Interview Strategies</h2>
+                            <h2>Recent interview plans</h2>
                             <span className='recent-count'>{reports.length} saved</span>
                         </div>
                         <div className='recent-list'>
@@ -275,12 +243,11 @@ const Home = () => {
                                     onClick={() => navigate(`/interview/${report._id}`)}
                                 >
                                     <div className='recent-row__info'>
-                                        <h3 className='recent-row__title'>{report.title || 'Target Role Strategy'}</h3>
-                                        <span className='recent-row__date'>Generated {new Date(report.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                                        <h3 className='recent-row__title'>{report.title || 'Target Position Plan'}</h3>
+                                        <span className='recent-row__date'>Created {new Date(report.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                                     </div>
                                     <div className='recent-row__score'>
                                         <span className='score-badge'>{report.matchScore || 80}% Match</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
                                     </div>
                                 </div>
                             ))}
@@ -290,7 +257,7 @@ const Home = () => {
             </main>
 
             <footer className='home-footer'>
-                <p>&copy; {new Date().getFullYear()} PrepAI &bull; Autonomous Interview Architecture</p>
+                <p>&copy; {new Date().getFullYear()} PrepAI. All rights reserved.</p>
             </footer>
         </div>
     )
