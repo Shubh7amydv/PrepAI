@@ -70,10 +70,29 @@ const Interview = () => {
 
 
 
+    const navigate = useNavigate()
+
     if (loading || !report) {
         return (
-            <main style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
-                <h1>Loading............</h1>
+            <main style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: '80vh',
+                gap: '1.25rem',
+                color: '#e6edf3'
+            }}>
+                <div style={{
+                    width: '40px',
+                    height: '40px',
+                    border: '3px solid rgba(255, 45, 120, 0.2)',
+                    borderTop: '3px solid #ff2d78',
+                    borderRadius: '50%',
+                    animation: 'spin 0.8s linear infinite'
+                }} />
+                <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+                <p style={{ color: '#7d8590', fontSize: '0.95rem' }}>Loading your interview strategy...</p>
             </main>
         )
     }
@@ -90,6 +109,17 @@ const Interview = () => {
                 {/* ── Left Nav ── */}
                 <nav className='interview-nav'>
                     <div className="nav-content">
+                        <button
+                            onClick={() => navigate('/')}
+                            className='interview-nav__item'
+                            style={{ marginBottom: '1rem', borderBottom: '1px solid #2a3348', borderRadius: '0.4rem' }}
+                        >
+                            <span className='interview-nav__icon'>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
+                            </span>
+                            Back to Home
+                        </button>
+
                         <p className='interview-nav__label'>Sections</p>
                         {NAV_ITEMS.map(item => (
                             <button
