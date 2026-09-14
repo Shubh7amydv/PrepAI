@@ -1,482 +1,602 @@
-
 @use "sass:color";
+@use "../../../style/theme" as *;
 
-// ── Shared Variables (mirrors home.scss theme) ────────────────────────────────
-$bg-page: #0d1117;
-$bg-card: #161b22;
-$bg-panel: #1c2230;
-$bg-input: #1e2535;
-$border-color: #2a3348;
-$text-primary: #e6edf3;
-$text-muted: #7d8590;
-$accent: #ff2d78;
-$font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
-// severity palette
-$severity-high: #ff4d4d;
-$severity-medium: #f5a623;
-$severity-low: #3fb950;
-
-*::-webkit-scrollbar {
-    display: none;
-}
-
-// ── Page Shell ────────────────────────────────────────────────────────────────
 .interview-page {
     width: 100%;
     min-height: 100vh;
     background-color: $bg-page;
-    color: $text-primary;
-    font-family: $font-stack;
-    display: flex;
-    align-items: stretch;
-    padding: 1.5rem;
-    box-sizing: border-box;
-}
-
-// ── 3-Column Layout ───────────────────────────────────────────────────────────
-.interview-layout {
-    display: flex;
-    width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
-    background-color: $bg-card;
-    border: 1px solid $border-color;
-    border-radius: 1rem;
-    justify-content: space-between;
-}
-
-.interview-divider {
-    width: 1px;
-    background-color: $border-color;
-    flex-shrink: 0;
-}
-
-// ── Left Nav ─────────────────────────────────────────────────────────────────
-.interview-nav {
-    width: 220px;
-    flex-shrink: 0;
-    padding: 1.75rem 1rem;
+    color: $ink-primary;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 0.25rem;
+    align-items: center;
+    padding: 0 2rem 4rem;
 
-
-
-
-    &__label {
-        font-size: 0.7rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: $text-muted;
-        padding: 0 0.75rem;
-        margin-bottom: 0.5rem;
+    @media (max-width: 768px) {
+        padding: 0 1rem 3rem;
     }
+}
 
-    &__item {
+// ── Top Bar ───────────────────────────────────────────────────────────────────
+.report-topbar {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid $border-subtle;
+    gap: 1rem;
+
+    &__left {
         display: flex;
         align-items: center;
-        gap: 0.6rem;
-        width: 100%;
-        padding: 0.65rem 0.75rem;
-        background: none;
-        border: none;
-        border-radius: 0.5rem;
-        color: $text-muted;
-        font-family: $font-stack;
-        font-size: 0.875rem;
-        cursor: pointer;
-        text-align: left;
-        transition: background-color 0.15s, color 0.15s;
+        gap: 0.75rem;
+        flex: 1;
+        min-width: 0;
 
-        &:hover {
-            background-color: $bg-panel;
-            color: $text-primary;
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: transparent;
+            border: 1px solid $border-subtle;
+            border-radius: $radius-button;
+            padding: 0.35rem 0.75rem;
+            color: $ink-secondary;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all $transition-fast;
+            flex-shrink: 0;
+
+            &:hover {
+                background-color: $bg-surface;
+                color: $ink-primary;
+            }
         }
 
-        &--active {
-            background-color: rgba($accent, 0.1);
-            color: $accent;
+        .crumb-sep {
+            color: $ink-tertiary;
+            font-size: 0.9rem;
+        }
 
-            .interview-nav__icon svg {
-                stroke: $accent;
+        .report-title {
+            font-family: $font-display;
+            font-size: 1.35rem;
+            font-weight: 500;
+            color: $ink-primary;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    &__right {
+        flex-shrink: 0;
+    }
+
+    .btn-download-resume {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        height: 38px;
+        padding: 0 1rem;
+        background-color: $accent-primary;
+        color: #ffffff;
+        border: none;
+        border-radius: $radius-button;
+        font-family: $font-body;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color $transition-fast;
+
+        &:hover:not(:disabled) {
+            background-color: $accent-primary-hover;
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+
+    @media (max-width: 600px) {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+// ── Layout Grid ───────────────────────────────────────────────────────────────
+.interview-layout {
+    width: 100%;
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 220px 1fr 280px;
+    gap: 2rem;
+    align-items: start;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: 200px 1fr;
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// ── Left Sidebar Nav ──────────────────────────────────────────────────────────
+.interview-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .nav-section-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: $ink-tertiary;
+        padding-left: 0.5rem;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.6rem 0.75rem;
+            border: none;
+            background: transparent;
+            border-radius: $radius-button;
+            color: $ink-secondary;
+            font-family: $font-body;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: left;
+            transition: all $transition-fast;
+
+            &__icon {
+                color: $ink-tertiary;
+                display: flex;
+            }
+
+            &:hover {
+                background-color: $bg-surface;
+                color: $ink-primary;
+            }
+
+            &--active {
+                background-color: rgba($accent-primary, 0.08);
+                color: $accent-primary;
+                font-weight: 600;
+                border-left: 3px solid $accent-primary;
+                border-top-left-radius: 2px;
+                border-bottom-left-radius: 2px;
+
+                .nav-link__icon {
+                    color: $accent-primary;
+                }
             }
         }
     }
-
-    &__icon {
-        display: flex;
-        align-items: center;
-        flex-shrink: 0;
-    }
 }
 
-// ── Center Content ────────────────────────────────────────────────────────────
-.interview-content {
-    flex: 1;
-    padding: 1.75rem 2rem;
-    overflow-y: auto;
-    min-height: initial;
-    max-height: calc(100vh - 3rem);
-    padding-bottom: 5rem;
-    align-items: flex-start;
-
-
-
-
-
-
-
-
-    section {
-        min-height: 100%;
-    }
+// ── Main Content Area ─────────────────────────────────────────────────────────
+.interview-main {
+    min-width: 0;
 }
 
-.content-header {
+.content-section {
     display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid $border-color;
+    flex-direction: column;
+    gap: 1.25rem;
 
-    h2 {
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: $text-primary;
-        margin: 0;
-    }
+    &__head {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
 
-    &__count {
-        font-size: 0.8rem;
-        color: $text-muted;
-        background-color: $bg-panel;
-        padding: 0.15rem 0.6rem;
-        border-radius: 2rem;
-        border: 1px solid $border-color;
+        h2 {
+            font-family: $font-display;
+            font-size: 1.65rem;
+            font-weight: 500;
+            color: $ink-primary;
+        }
+
+        .count-chip {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: $ink-tertiary;
+            background-color: $bg-surface;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
     }
 }
 
-// ── Question Cards ────────────────────────────────────────────────────────────
-.q-list {
+// ── Question Stack ────────────────────────────────────────────────────────────
+.q-stack {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
 .q-card {
-    background-color: $bg-panel;
-    border: 1px solid $border-color;
-    border-radius: 0.6rem;
+    background-color: $bg-surface;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-card;
     overflow: hidden;
-    transition: border-color 0.2s;
+    transition: border-color $transition-fast;
 
     &:hover {
-        border-color: color.adjust($border-color, $lightness: 8%);
+        border-color: color.adjust($border-subtle, $lightness: -10%);
     }
 
     &__header {
         display: flex;
         align-items: flex-start;
         gap: 0.75rem;
-        padding: 0.9rem 1rem;
+        padding: 1rem 1.25rem;
         cursor: pointer;
         user-select: none;
     }
 
-    &__index {
-        flex-shrink: 0;
-        font-size: 0.7rem;
+    &__num {
+        font-family: $font-body;
+        font-size: 0.75rem;
         font-weight: 700;
-        color: $accent;
-        background-color: rgba($accent, 0.1);
-        border: 1px solid rgba($accent, 0.2);
-        border-radius: 0.3rem;
-        padding: 0.15rem 0.4rem;
+        color: $accent-primary;
         margin-top: 2px;
+        flex-shrink: 0;
     }
 
     &__question {
+        font-family: $font-body;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: $ink-primary;
+        line-height: 1.45;
         flex: 1;
         margin: 0;
-        font-size: 0.9rem;
+    }
+
+    &__controls {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    .copy-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        background: $bg-page;
+        border: 1px solid $border-subtle;
+        color: $ink-secondary;
+        font-size: 0.6875rem;
         font-weight: 500;
-        color: $text-primary;
-        line-height: 1.5;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all $transition-fast;
+
+        &:hover {
+            color: $ink-primary;
+            border-color: color.adjust($border-subtle, $lightness: -8%);
+        }
+
+        &--copied {
+            background-color: rgba($success, 0.1);
+            color: $success;
+            border-color: rgba($success, 0.4);
+        }
     }
 
     &__chevron {
-        flex-shrink: 0;
-        color: $text-muted;
-        transition: transform 0.2s;
-        margin-top: 2px;
+        color: $ink-tertiary;
+        display: flex;
+        transition: transform $transition-fast;
 
-        &--open {
+        &--rotated {
             transform: rotate(180deg);
-            color: $accent;
         }
     }
 
     &__body {
-        padding: 0 1rem 1rem;
+        padding: 0 1.25rem 1.25rem;
+        border-top: 1px solid $border-subtle;
+        padding-top: 1rem;
         display: flex;
         flex-direction: column;
-        gap: 0.75rem;
-        border-top: 1px solid $border-color;
-        padding-top: 0.75rem;
+        gap: 1rem;
+        background-color: rgba($bg-page, 0.5);
     }
 
     &__section {
         display: flex;
         flex-direction: column;
-        gap: 0.4rem;
+        gap: 0.3rem;
+
+        .section-tag {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: $ink-secondary;
+            text-transform: none;
+
+            &--intention {
+                color: $accent-primary;
+            }
+
+            &--answer {
+                color: $ink-primary;
+            }
+        }
 
         p {
+            font-size: 0.875rem;
+            line-height: 1.55;
+            color: $ink-primary;
             margin: 0;
-            font-size: 0.835rem;
-            color: color.adjust($text-muted, $lightness: 15%);
-            line-height: 1.6;
-        }
-    }
-
-    &__tag {
-        font-size: 0.68rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        padding: 0.15rem 0.5rem;
-        border-radius: 0.25rem;
-        width: fit-content;
-
-        &--intention {
-            color: #a78bfa;
-            background-color: rgba(#a78bfa, 0.1);
-            border: 1px solid rgba(#a78bfa, 0.2);
-        }
-
-        &--answer {
-            color: #3fb950;
-            background-color: rgba(#3fb950, 0.1);
-            border: 1px solid rgba(#3fb950, 0.2);
         }
     }
 }
 
-// ── Road Map ──────────────────────────────────────────────────────────────────
-.roadmap-list {
+// ── Roadmap Stack ─────────────────────────────────────────────────────────────
+.roadmap-stack {
     display: flex;
     flex-direction: column;
-    gap: 0;
-    position: relative;
-
-    // vertical timeline line
-    &::before {
-        content: '';
-        position: absolute;
-        left: 28px;
-        top: 0;
-        bottom: 0;
-        width: 2px;
-        background: linear-gradient(to bottom, $accent, rgba($accent, 0.1));
-        border-radius: 1px;
-    }
+    gap: 0.75rem;
 }
 
-.roadmap-day {
+.roadmap-card {
+    background-color: $bg-surface;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-card;
+    padding: 1.25rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.75rem 0 0.75rem 3.5rem;
-    position: relative;
-
-    // dot on timeline
-    &::before {
-        content: '';
-        position: absolute;
-        left: 21px;
-        top: 1.05rem;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background-color: $bg-card;
-        border: 2px solid $accent;
-    }
+    gap: 0.75rem;
 
     &__header {
         display: flex;
         align-items: center;
-        gap: 0.6rem;
-    }
+        gap: 0.75rem;
 
-    &__badge {
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: $accent;
-        background-color: rgba($accent, 0.1);
-        border: 1px solid rgba($accent, 0.25);
-        padding: 0.1rem 0.5rem;
-        border-radius: 2rem;
-    }
+        .roadmap-card__badge {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            color: $accent-primary;
+            background-color: rgba($accent-primary, 0.1);
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+        }
 
-    &__focus {
-        margin: 0;
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: $text-primary;
+        .roadmap-card__focus {
+            font-family: $font-body;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: $ink-primary;
+            margin: 0;
+        }
     }
 
     &__tasks {
         list-style: none;
-        margin: 0;
         padding: 0;
+        margin: 0;
         display: flex;
         flex-direction: column;
-        gap: 0.35rem;
+        gap: 0.4rem;
 
         li {
             display: flex;
             align-items: flex-start;
             gap: 0.5rem;
             font-size: 0.845rem;
-            color: color.adjust($text-muted, $lightness: 12%);
-            line-height: 1.5;
-        }
-    }
+            line-height: 1.45;
+            color: $ink-secondary;
 
-    &__bullet {
-        flex-shrink: 0;
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background-color: $text-muted;
-        margin-top: 8px;
+            .task-bullet {
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                background-color: $ink-tertiary;
+                flex-shrink: 0;
+                margin-top: 6px;
+            }
+        }
     }
 }
 
-// ── Right Sidebar ─────────────────────────────────────────────────────────────
-.interview-sidebar {
-    width: 240px;
-    flex-shrink: 0;
-    padding: 1.75rem 1.25rem;
+// ── Right Aside Overview ──────────────────────────────────────────────────────
+.interview-aside {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+
+    @media (max-width: 1024px) {
+        grid-column: span 2;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 768px) {
+        grid-column: span 1;
+        grid-template-columns: 1fr;
+    }
 }
 
-.sidebar-divider {
-    height: 1px;
-    background-color: $border-color;
+.aside-card {
+    background-color: $bg-surface;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-card;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    &__label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: $ink-tertiary;
+    }
 }
 
-// Match Score
-.match-score {
+// ── Match Score Card ──────────────────────────────────────────────────────────
+.match-score-card {
+    align-items: center;
+    text-align: center;
+
+    .score-ring-wrapper {
+        width: 100px;
+        height: 100px;
+        position: relative;
+        margin: 0.5rem 0;
+
+        .score-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .score-track {
+            fill: none;
+            stroke: $border-subtle;
+            stroke-width: 8;
+        }
+
+        .score-fill {
+            fill: none;
+            stroke: $accent-primary;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .score-inner {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            padding-top: 32px;
+
+            .score-number {
+                font-family: $font-display;
+                font-size: 2rem;
+                font-weight: 600;
+                color: $ink-primary;
+                line-height: 1;
+            }
+
+            .score-percent {
+                font-size: 0.85rem;
+                color: $ink-secondary;
+                margin-left: 2px;
+            }
+        }
+    }
+
+    .match-status-row {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: $success;
+
+        .match-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: $success;
+        }
+    }
+}
+
+// ── Skill Gaps Card ───────────────────────────────────────────────────────────
+.skill-gaps-card {
+    .gaps-list {
+        display: flex;
+        flex-direction: column;
+
+        .gap-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid $border-subtle;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            .severity-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                flex-shrink: 0;
+
+                &--high {
+                    background-color: $danger;
+                }
+
+                &--medium {
+                    background-color: $accent-warm;
+                }
+
+                &--low {
+                    background-color: $success;
+                }
+            }
+
+            .gap-name {
+                font-size: 0.875rem;
+                color: $ink-primary;
+                flex: 1;
+            }
+
+            .gap-level {
+                font-size: 0.6875rem;
+                color: $ink-tertiary;
+                text-transform: capitalize;
+            }
+        }
+    }
+}
+
+// ── Loading State ─────────────────────────────────────────────────────────────
+.loading-screen {
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.6rem;
+    justify-content: center;
+    gap: 1.25rem;
 
-    &__label {
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: $text-muted;
-        margin: 0;
-        align-self: flex-start;
-    }
-
-    &__ring {
-        width: 90px;
-        height: 90px;
+    .loading-spinner {
+        width: 36px;
+        height: 36px;
+        border: 3px solid $border-subtle;
+        border-top-color: $accent-primary;
         border-radius: 50%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        border: 4px solid;
-
-        &.score--high {
-            border-color: $severity-low;
-        }
-
-        &.score--mid {
-            border-color: $severity-medium;
-        }
-
-        &.score--low {
-            border-color: $severity-high;
-        }
+        animation: spin 0.8s linear infinite;
     }
 
-    &__value {
-        font-size: 1.6rem;
-        font-weight: 800;
-        color: $text-primary;
-        line-height: 1;
-    }
-
-    &__pct {
-        font-size: 0.75rem;
-        color: $text-muted;
-        margin-top: -2px;
-    }
-
-    &__sub {
-        margin: 0;
-        font-size: 0.75rem;
-        color: $severity-low;
-        text-align: center;
+    p {
+        font-size: 0.9375rem;
+        color: $ink-secondary;
     }
 }
 
-// Skill Gaps
-.skill-gaps {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-
-    &__label {
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: $text-muted;
-        margin: 0;
-    }
-
-    &__list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-}
-
-.skill-tag {
-    font-size: 0.775rem;
-    font-weight: 500;
-    padding: 0.3rem 0.7rem;
-    border-radius: 0.4rem;
-    border: 1px solid;
-    cursor: default;
-
-    &--high {
-        color: $severity-high;
-        background-color: rgba($severity-high, 0.1);
-        border-color: rgba($severity-high, 0.25);
-    }
-
-    &--medium {
-        color: $severity-medium;
-        background-color: rgba($severity-medium, 0.1);
-        border-color: rgba($severity-medium, 0.25);
-    }
-
-    &--low {
-        color: $severity-low;
-        background-color: rgba($severity-low, 0.1);
-        border-color: rgba($severity-low, 0.25);
-    }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

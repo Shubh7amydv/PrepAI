@@ -1,0 +1,32 @@
+// ── PrepAI Design System Tokens ──────────────────────────────────────────
+
+// Colors
+$bg-page: #F7F5F0;            // warm paper background
+$bg-surface: #EFEBE0;         // card/panel background, one shade off page bg
+$bg-surface-raised: #FFFFFF;  // for cards that need to pop
+$ink-primary: #1A1D24;        // main text
+$ink-secondary: #6B6558;      // secondary/muted text
+$ink-tertiary: #9A947F;       // placeholder text, timestamps, labels
+$accent-primary: #2D5A4A;     // deep forest green — primary actions
+$accent-primary-hover: #234639;
+$accent-warm: #C4622D;        // burnt clay — warnings, gaps, secondary emphasis
+$accent-warm-soft: #F0DCC8;   // light clay background for warning chips
+$border-subtle: #DDD6C4;      // subtle warm borders
+$success: #3D6B4F;
+$danger: #A8432C;
+
+// Fonts
+$font-display: 'Fraunces', Georgia, serif;
+$font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+// Radii
+$radius-card: 10px;
+$radius-button: 8px;
+$radius-pill: 999px;
+
+// Shadows
+$shadow-subtle: 0 4px 20px rgba(26, 29, 36, 0.06);
+$shadow-card: 0 4px 24px rgba(26, 29, 36, 0.08);
+
+// Transitions
+$transition-fast: 120ms ease;

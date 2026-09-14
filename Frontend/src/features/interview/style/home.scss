@@ -1,89 +1,57 @@
 @use "sass:color";
+@use "../../../style/theme" as *;
 
-// ── Shared Theme Variables (matching report page) ────────────────────────────
-$bg-page: #0d1117;
-$bg-card: #161b22;
-$bg-panel: #1c2230;
-$bg-input: #1e2535;
-$border-color: #2a3348;
-$text-primary: #e6edf3;
-$text-secondary: #d8edff;
-$text-muted: #7d8590;
-$accent: #ff2d78;
-$accent-light: #ff5fa1;
-$font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
-// ── Page Shell ───────────────────────────────────────────────────────────────
 .home-page {
     width: 100%;
     min-height: 100vh;
-    position: relative;
-    overflow: hidden;
-    padding: 2rem 1.5rem;
-    padding-top: 2.5rem;
-    gap: 2rem;
-    font-family: $font-stack;
-
+    background-color: $bg-page;
+    color: $ink-primary;
+    padding: 1.5rem 2rem 4rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
 
-    background: $bg-page;
-    color: $text-primary;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background:
-            radial-gradient(circle at 15% 25%, rgba(255, 45, 120, 0.08), transparent 30%),
-            radial-gradient(circle at 85% 75%, rgba(255, 45, 120, 0.06), transparent 35%);
-        pointer-events: none;
+    @media (max-width: 768px) {
+        padding: 1rem 1rem 3rem;
     }
 }
 
 // ── App Top Navigation Bar ───────────────────────────────────────────────────
 .app-nav {
     width: 100%;
-    max-width: 1080px;
+    max-width: 1060px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 1.25rem;
-    margin-bottom: 0.5rem;
-    background: rgba($bg-card, 0.6);
-    border: 1px solid $border-color;
-    border-radius: 0.75rem;
-    backdrop-filter: blur(12px);
-    z-index: 10;
+    padding: 0.75rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid $border-subtle;
 
     .app-brand {
         display: flex;
         align-items: center;
-        gap: 0.6rem;
+        gap: 0.5rem;
         text-decoration: none;
-        color: $text-primary;
+        color: $ink-primary;
 
         &__mark {
             width: 28px;
             height: 28px;
-            background: linear-gradient(135deg, $accent, $accent-light);
-            border-radius: 0.4rem;
+            background-color: $ink-primary;
+            color: $bg-page;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 0.85rem;
-            color: #fff;
+            font-family: $font-display;
+            font-weight: 700;
+            font-size: 0.95rem;
         }
 
         &__name {
-            font-size: 1.1rem;
-            font-weight: 700;
+            font-family: $font-body;
+            font-size: 1.15rem;
+            font-weight: 600;
             letter-spacing: -0.02em;
         }
     }
@@ -91,45 +59,45 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, s
     &__user {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: 1rem;
 
         .user-badge {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
-            font-size: 0.85rem;
-            color: $text-secondary;
-            background: rgba($bg-panel, 0.8);
-            border: 1px solid $border-color;
-            padding: 0.35rem 0.75rem;
-            border-radius: 9999px;
+            gap: 0.45rem;
+            font-size: 0.8125rem;
+            color: $ink-secondary;
+            background-color: $bg-surface;
+            border: 1px solid $border-subtle;
+            padding: 0.3rem 0.75rem;
+            border-radius: $radius-pill;
 
             .user-dot {
                 width: 6px;
                 height: 6px;
                 border-radius: 50%;
-                background-color: #3fb950;
+                background-color: $success;
             }
         }
 
         .logout-btn {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.35rem;
             background: transparent;
-            border: 1px solid rgba($border-color, 0.8);
-            color: $text-muted;
-            padding: 0.35rem 0.75rem;
-            border-radius: 0.4rem;
-            font-size: 0.8rem;
+            border: 1px solid $border-subtle;
+            color: $ink-secondary;
+            padding: 0.3rem 0.65rem;
+            border-radius: $radius-button;
+            font-size: 0.8125rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all $transition-fast;
 
             &:hover {
-                color: #ff4d4d;
-                border-color: rgba(#ff4d4d, 0.4);
-                background: rgba(#ff4d4d, 0.08);
+                color: $danger;
+                border-color: rgba($danger, 0.4);
+                background: rgba($danger, 0.05);
             }
         }
     }
@@ -138,709 +106,464 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, s
 // ── Page Header ──────────────────────────────────────────────────────────────
 .page-header {
     text-align: center;
-    z-index: 1;
-    margin-bottom: 1.5rem;
-    position: relative;
+    max-width: 680px;
+    margin-bottom: 2.5rem;
 
-    h1 {
-        font-size: clamp(1.8rem, 4vw, 2.3rem);
-        font-weight: 800;
-        margin-bottom: 0.75rem;
-        color: $text-primary;
-        letter-spacing: -0.5px;
-    }
-
-    p {
-        color: $text-muted;
-        font-size: 0.95rem;
-        max-width: 500px;
-        margin: 0 auto;
-        line-height: 1.6;
+    &__title {
+        font-family: $font-display;
+        font-size: clamp(2rem, 3.5vw, 2.5rem);
+        line-height: 1.1;
         font-weight: 500;
+        color: $ink-primary;
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.01em;
     }
 
-    .highlight {
-        background: linear-gradient(135deg, $accent 0%, $accent-light 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        font-weight: 900;
+    &__sub {
+        font-size: 1.0625rem;
+        line-height: 1.5;
+        color: $ink-secondary;
     }
 }
 
-// ── Quote Section (Two-Column Layout) ──────────────────────────────────────────
-.interview-card {
+// ── Main Strategy Card (Connected 2-Column + Action Bar) ─────────────────────
+.strategy-card {
     width: 100%;
-    max-width: 1000px;
-    display: flex;
-    gap: 0;
-    border-radius: 1rem;
+    max-width: 1060px;
+    background-color: $bg-surface-raised;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-card;
+    box-shadow: $shadow-card;
     overflow: hidden;
-    z-index: 10;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    position: relative;
+    margin-bottom: 3rem;
 
-    // Card effect container
-    background: $bg-card;
-    border: 1px solid $border-color;
+    &__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
 
-    // Quote panel on the left
-    .quote-panel {
-        flex: 0 0 28%;
-        background: $bg-panel;
-        border-right: 1px solid $border-color;
-        padding: 2rem 1.75rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        gap: 1rem;
-
-        .quote-icon {
-            font-size: 2.2rem;
-            opacity: 0.7;
-            color: $accent;
+        @media (max-width: 860px) {
+            grid-template-columns: 1fr;
         }
-
-        .quote-text {
-            font-size: 0.9rem;
-            font-weight: 500;
-            line-height: 1.7;
-            color: $text-secondary;
-            font-style: italic;
-        }
-
-        .quote-author {
-            font-size: 0.8rem;
-            color: $text-muted;
-            margin-top: 1rem;
-
-            &::before {
-                content: "— ";
-                opacity: 0.7;
-            }
-        }
-    }
-
-    // Body with panels
-    &__body {
-        flex: 1;
-        display: flex;
-        min-height: 520px;
     }
 
     &__footer {
+        padding: 1.25rem 2rem;
+        background-color: $bg-surface;
+        border-top: 1px solid $border-subtle;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1.25rem 1.75rem;
-        border-top: 1px solid $border-color;
-        background: $bg-panel;
-        flex-wrap: wrap;
-        gap: 1rem;
+        gap: 1.5rem;
 
-        .footer-info {
-            font-size: 0.85rem;
-            color: $text-muted;
-            font-weight: 500;
+        .footer-meta {
+            font-size: 0.8125rem;
+            color: $ink-tertiary;
+        }
+
+        .action-btns {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         @media (max-width: 768px) {
             flex-direction: column;
-            padding: 1rem;
+            align-items: stretch;
+            padding: 1.25rem;
 
-            .footer-info {
-                width: 100%;
-                text-align: center;
-                order: -1;
+            .action-btns {
+                flex-direction: column;
             }
         }
     }
 }
 
-// ── Panel Styling ─────────────────────────────────────────────────────────────
-.panel {
-    flex: 1;
+// ── Strategy Columns ─────────────────────────────────────────────────────────
+.strategy-col {
+    padding: 2rem;
     display: flex;
     flex-direction: column;
-    padding: 1.75rem;
-    gap: 1.5rem;
-    position: relative;
-    z-index: 1;
+    gap: 1.25rem;
 
-    &:first-child {
-        border-right: 1px solid $border-color;
+    &--job {
+        border-right: 1px solid $border-subtle;
+
+        @media (max-width: 860px) {
+            border-right: none;
+            border-bottom: 1px solid $border-subtle;
+        }
     }
 
-    &__header {
+    &--profile {
+        background-color: rgba($bg-surface, 0.4);
+    }
+
+    @media (max-width: 600px) {
+        padding: 1.5rem 1.25rem;
+    }
+}
+
+// ── Column Headers ────────────────────────────────────────────────────────────
+.col-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__left {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 0.5rem;
+        gap: 0.5rem;
+
+        .col-icon {
+            color: $ink-secondary;
+        }
 
         h2 {
-            font-size: 1.1rem;
+            font-family: $font-body;
+            font-size: 1.125rem;
             font-weight: 600;
-            margin: 0;
-            color: $text-primary;
-        }
-
-        .icon {
-            font-size: 1.3rem;
-            color: $accent;
+            color: $ink-primary;
         }
     }
 
-    &__subtitle {
+    .label-required {
         font-size: 0.75rem;
-        color: $text-muted;
-        margin-bottom: 0.75rem;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        font-weight: 600;
-    }
-
-    &__textarea {
-        flex: 1;
-        padding: 1rem;
-        border: 1px solid $border-color;
-        border-radius: 0.75rem;
-        background: $bg-input;
-        color: $text-primary;
-        font-family: inherit;
-        font-size: 0.9rem;
-        resize: none;
-        transition: all 0.3s ease;
-
-        &::placeholder {
-            color: $text-muted;
-        }
-
-        &:focus {
-            outline: none;
-            border-color: $accent;
-            box-shadow: 0 0 0 3px rgba(255, 45, 120, 0.15);
-            background: $bg-panel;
-        }
-    }
-
-    &__char-counter {
-        align-self: flex-end;
-        font-size: 0.75rem;
-        color: $text-muted;
+        color: $ink-tertiary;
         font-weight: 500;
     }
 }
 
-.panel-divider {
-    width: 1px;
-    background: $border-color;
-}
-
-.section-label {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: $accent;
-    margin-bottom: 0.5rem;
-}
-
-// ── Dropzone & Upload ──────────────────────────────────────────────────────────
-.dropzone {
+// ── Inputs & Textareas ────────────────────────────────────────────────────────
+.input-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    border: 2px dashed $border-color;
-    border-radius: 0.75rem;
-    background: $bg-panel;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-height: 140px;
-    text-align: center;
-
-    &:hover {
-        border-color: $accent;
-        background: rgba(255, 45, 120, 0.08);
-    }
-
-    &__icon {
-        font-size: 2rem;
-        color: $accent;
-        margin-bottom: 0.5rem;
-    }
-
-    &__title {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: $text-primary;
-        margin-bottom: 0.3rem;
-        margin: 0;
-    }
-
-    &__subtitle {
-        font-size: 0.75rem;
-        color: $text-muted;
-        margin: 0;
-    }
-
-    input[type="file"] {
-        display: none;
-    }
+    gap: 0.4rem;
+    height: 100%;
 }
 
-.or-divider {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin: 0.5rem 0;
-    color: $text-muted;
-    font-size: 0.75rem;
-    font-weight: 500;
+.custom-textarea {
+    width: 100%;
+    background-color: $bg-page;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-button;
+    color: $ink-primary;
+    font-family: $font-body;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    padding: 0.9rem;
+    resize: none;
+    outline: none;
+    transition: border-color $transition-fast;
 
-    &::before,
-    &::after {
-        content: "";
+    &::placeholder {
+        color: $ink-tertiary;
+    }
+
+    &:focus {
+        border-color: $accent-primary;
+    }
+
+    &--tall {
+        min-height: 280px;
         flex: 1;
-        height: 1px;
-        background: $border-color;
+    }
+
+    &--short {
+        min-height: 80px;
     }
 }
 
-// ── Info Box ───────────────────────────────────────────────────────────────────
-.info-box {
+.char-count {
+    font-size: 0.75rem;
+    color: $ink-tertiary;
+    align-self: flex-start;
+}
+
+// ── Sub Labels & Chips ────────────────────────────────────────────────────────
+.sub-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: $ink-secondary;
+}
+
+.upload-block {
     display: flex;
-    gap: 0.75rem;
-    padding: 1rem;
-    border: 1px solid rgba(255, 45, 120, 0.35);
-    border-radius: 0.75rem;
-    background: rgba(255, 45, 120, 0.1);
-    font-size: 0.8rem;
-    color: $text-secondary;
+    flex-direction: column;
+    gap: 0.5rem;
 
-    &__icon {
-        font-size: 1.1rem;
-        color: $accent;
-        flex-shrink: 0;
-        margin-top: 0.2rem;
-    }
+    &__label-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-    p {
-        margin: 0;
-        line-height: 1.4;
-        color: $text-secondary;
-
-        strong {
-            color: $text-primary;
+        .chip-best {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: $accent-warm;
+            background-color: $accent-warm-soft;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
         }
     }
 }
 
-// ── Badge ──────────────────────────────────────────────────────────────────────
-.badge {
-    display: inline-block;
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 0.3rem 0.6rem;
-    border-radius: 0.4rem;
-    background: rgba(255, 45, 120, 0.15);
-    color: $accent;
-    border: 1px solid rgba(255, 45, 120, 0.35);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-// ── Generate Button ───────────────────────────────────────────────────────────
-.generate-btn {
-    background: linear-gradient(135deg, $accent 0%, $accent-light 100%);
-    border: none;
-    border-radius: 0.75rem;
-    padding: 0.9rem 1.75rem;
-    color: white;
-    font-weight: 700;
-    font-size: 0.9rem;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(255, 45, 120, 0.25);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    font-family: $font-stack;
+// ── Upload Dropzone ───────────────────────────────────────────────────────────
+.dropzone-box {
+    width: 100%;
+    background-color: $bg-page;
+    border: 1px dashed $border-subtle;
+    border-radius: $radius-button;
+    padding: 1.25rem 1rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    transition: border-color $transition-fast, background-color $transition-fast;
 
-    &:hover:not(:disabled) {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 28px rgba(255, 45, 120, 0.35);
+    &:hover {
+        border-color: $accent-primary;
+        background-color: rgba($accent-primary, 0.03);
     }
 
-    &:active:not(:disabled) {
-        transform: translateY(0);
+    .dropzone-icon {
+        color: $ink-secondary;
+    }
+
+    .dropzone-text {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: $ink-primary;
+    }
+
+    .dropzone-hint {
+        font-size: 0.75rem;
+        color: $ink-tertiary;
+    }
+}
+
+.upload-msg {
+    font-size: 0.8125rem;
+    margin-top: 0.25rem;
+
+    &--success {
+        color: $success;
+    }
+
+    &--error {
+        color: $danger;
+    }
+}
+
+.file-selected-text {
+    font-size: 0.8125rem;
+    color: $accent-primary;
+    font-weight: 500;
+    margin-top: 0.2rem;
+}
+
+// ── Plain Divider ─────────────────────────────────────────────────────────────
+.divider-or {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0.25rem 0;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background-color: $border-subtle;
+    }
+
+    span {
+        position: relative;
+        background-color: $bg-surface;
+        padding: 0 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: $ink-tertiary;
+        text-transform: uppercase;
+    }
+}
+
+.summary-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+// ── Warning Note ──────────────────────────────────────────────────────────────
+.warning-note {
+    background-color: $accent-warm-soft;
+    border-left: 4px solid $accent-warm;
+    border-radius: 4px;
+    padding: 0.65rem 0.85rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    .warning-icon {
+        color: $accent-warm;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    p {
+        font-size: 0.8125rem;
+        line-height: 1.45;
+        color: $ink-primary;
+        margin: 0;
+
+        strong {
+            color: $ink-primary;
+            font-weight: 600;
+        }
+    }
+}
+
+// ── Action Buttons ────────────────────────────────────────────────────────────
+.btn-primary {
+    height: 44px;
+    padding: 0 1.25rem;
+    background-color: $accent-primary;
+    color: #ffffff;
+    border: none;
+    border-radius: $radius-button;
+    font-family: $font-body;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color $transition-fast;
+
+    &:hover:not(:disabled) {
+        background-color: $accent-primary-hover;
     }
 
     &:disabled {
         opacity: 0.6;
         cursor: not-allowed;
-        transform: none;
-    }
-
-    &--secondary {
-        background: rgba(255, 45, 120, 0.15);
-        border: 1px solid rgba(255, 45, 120, 0.35);
-        color: $accent;
-        box-shadow: none;
-
-        &:hover:not(:disabled) {
-            background: rgba(255, 45, 120, 0.25);
-            box-shadow: 0 8px 20px rgba(255, 45, 120, 0.2);
-        }
-
-        &:active:not(:disabled) {
-            transform: scale(0.98);
-        }
     }
 }
 
-.footer-buttons {
-    display: flex;
-    gap: 0.75rem;
+.btn-outline {
+    height: 44px;
+    padding: 0 1.25rem;
+    background-color: $bg-page;
+    color: $ink-primary;
+    border: 1px solid $border-subtle;
+    border-radius: $radius-button;
+    font-family: $font-body;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color $transition-fast, border-color $transition-fast;
 
-    .generate-btn {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.85rem;
-        padding: 0.8rem 1.25rem;
+    &:hover:not(:disabled) {
+        background-color: $bg-surface;
+        border-color: color.adjust($border-subtle, $lightness: -8%);
     }
 
-    @media (max-width: 768px) {
-        flex-direction: column;
-        width: 100%;
-
-        .generate-btn {
-            width: 100%;
-            justify-content: center;
-        }
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
     }
 }
 
-// ── Recent Reports ────────────────────────────────────────────────────────────
-.recent-reports {
+// ── Recent Reports Section ────────────────────────────────────────────────────
+.recent-section {
     width: 100%;
-    max-width: 1000px;
-    z-index: 5;
-    position: relative;
+    max-width: 1060px;
+    margin-bottom: 3rem;
 
-    .reports-header {
-        text-align: center;
-        margin-bottom: 1.5rem;
-
-        h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: $text-primary;
-            margin: 0;
-            margin-bottom: 0.5rem;
-        }
-
-        p {
-            color: $text-muted;
-            font-size: 0.9rem;
-            margin: 0;
-        }
+    .recent-title {
+        font-family: $font-body;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: $ink-primary;
+        margin-bottom: 1rem;
     }
 
-    .reports-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1rem;
+    .recent-list {
+        background-color: $bg-surface-raised;
+        border: 1px solid $border-subtle;
+        border-radius: $radius-card;
+        overflow: hidden;
 
-        .report-item {
-            background: $bg-card;
-            border: 1px solid $border-color;
-            border-radius: 0.85rem;
-            padding: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .recent-row {
             display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            text-decoration: none;
-            color: inherit;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid $border-subtle;
+            cursor: pointer;
+            transition: background-color $transition-fast;
+
+            &:last-child {
+                border-bottom: none;
+            }
 
             &:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
-                border-color: rgba(255, 45, 120, 0.35);
-                background: $bg-panel;
+                background-color: $bg-surface;
             }
 
-            .report-title {
-                font-size: 0.95rem;
-                font-weight: 600;
-                color: $text-primary;
-                flex-grow: 1;
-            }
-
-            .report-meta {
+            &__info {
                 display: flex;
-                align-items: center;
-                justify-content: space-between;
-                font-size: 0.8rem;
-                color: $text-muted;
+                flex-direction: column;
+                gap: 0.2rem;
 
-                .report-date {
-                    display: block;
+                .recent-row__title {
+                    font-size: 0.9375rem;
+                    font-weight: 600;
+                    color: $ink-primary;
+                }
+
+                .recent-row__date {
+                    font-size: 0.75rem;
+                    color: $ink-tertiary;
                 }
             }
 
-            .match-score {
-                font-size: 0.85rem;
-                font-weight: 700;
-                padding: 0.4rem 0.8rem;
-                background: rgba(255, 45, 120, 0.15);
-                border: 1px solid rgba(255, 45, 120, 0.35);
-                border-radius: 0.5rem;
-                color: $accent;
-                text-align: center;
-                align-self: flex-start;
+            &__score {
+                display: flex;
+                align-items: baseline;
+                gap: 0.25rem;
+
+                .score-num {
+                    font-family: $font-display;
+                    font-size: 1.125rem;
+                    font-weight: 600;
+                    color: $accent-primary;
+                }
+
+                .score-text {
+                    font-size: 0.75rem;
+                    color: $ink-secondary;
+                }
             }
         }
     }
-
-    .no-reports {
-        text-align: center;
-        padding: 2rem;
-        color: rgba(230, 247, 255, 0.7);
-        font-size: 0.9rem;
-    }
 }
 
-// ── Upload Section ────────────────────────────────────────────────────────────
-.upload-section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.upload-feedback {
-    margin: 0;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 0.55rem 0.7rem;
-    border-radius: 0.55rem;
-    border: 1px solid transparent;
-
-    &--success {
-        color: #70f5b0;
-        background: rgba(32, 183, 120, 0.12);
-        border-color: rgba(32, 183, 120, 0.35);
-    }
-
-    &--error {
-        color: #ff9bb9;
-        background: rgba(255, 45, 120, 0.12);
-        border-color: rgba(255, 45, 120, 0.35);
-    }
-}
-
-.upload-file-name {
-    margin: 0;
-    font-size: 0.78rem;
-    color: $text-secondary;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.self-description {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-// ── Page Footer ───────────────────────────────────────────────────────────────
-.page-footer {
-    margin-top: 2rem;
+// ── Home Footer ───────────────────────────────────────────────────────────────
+.home-footer {
+    width: 100%;
+    max-width: 1060px;
     text-align: center;
-    color: $text-muted;
-    font-size: 0.8rem;
-    z-index: 1;
-    position: relative;
-
-    a {
-        color: $accent;
-        text-decoration: none;
-        transition: color 0.2s;
-
-        &:hover {
-            color: $accent-light;
-        }
-    }
-}
-
-// ── Responsive Design ─────────────────────────────────────────────────────────
-@media (max-width: 1000px) {
-    .interview-card {
-        max-width: 95%;
-
-        .quote-panel {
-            flex: 0 0 35%;
-            padding: 1.5rem 1.25rem;
-        }
-
-        .panel {
-            padding: 1.25rem;
-        }
-
-        &__body {
-            min-height: 450px;
-        }
-    }
-
-    .recent-reports {
-        .reports-list {
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        }
-    }
-}
-
-@media (max-width: 768px) {
-    .home-page {
-        padding: 1.5rem 1rem;
-        padding-top: 2.5rem;
-    }
-
-    .page-header {
-        h1 {
-            font-size: 1.5rem;
-        }
-
-        p {
-            font-size: 0.85rem;
-        }
-    }
-
-    .interview-card {
-        flex-direction: column;
-        max-width: 100%;
-
-        .quote-panel {
-            flex: 1;
-            border-right: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 1.5rem;
-            min-height: 150px;
-        }
-
-        &__body {
-            flex-direction: column;
-            min-height: auto;
-
-            .panel {
-                padding: 1rem;
-
-                &:first-child {
-                    border-right: none;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-                }
-            }
-        }
-    }
-
-    .recent-reports {
-        .reports-list {
-            grid-template-columns: 1fr;
-        }
-
-        .reports-header {
-            h2 {
-                font-size: 1.1rem;
-            }
-
-            p {
-                font-size: 0.8rem;
-            }
-        }
-    }
-}
-
-@media (max-width: 480px) {
-    .home-page {
-        padding: 1rem 0.75rem;
-        padding-top: 2rem;
-    }
-
-    .page-header {
-        h1 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        p {
-            font-size: 0.8rem;
-            max-width: 100%;
-        }
-    }
-
-    .interview-card {
-        border-radius: 1rem;
-
-        .quote-panel {
-            padding: 1.25rem;
-
-            .quote-text {
-                font-size: 0.85rem;
-            }
-        }
-
-        &__body {
-            .panel {
-                padding: 1rem 0.75rem;
-                gap: 1rem;
-
-                &__header h2 {
-                    font-size: 0.95rem;
-                }
-
-                &__textarea {
-                    font-size: 0.85rem;
-                    padding: 0.75rem;
-                }
-            }
-        }
-
-        &__footer {
-            flex-direction: column;
-            gap: 0.5rem;
-            padding: 1rem;
-
-            .footer-info {
-                font-size: 0.75rem;
-            }
-        }
-    }
-
-    .generate-btn {
-        width: 100%;
-        padding: 0.8rem 1rem;
-        font-size: 0.85rem;
-    }
-
-    .info-box {
-        padding: 0.75rem;
-        font-size: 0.75rem;
-
-        &__icon {
-            font-size: 0.95rem;
-        }
-    }
-
-    .badge {
-        font-size: 0.6rem;
-        padding: 0.25rem 0.5rem;
-    }
+    padding-top: 2rem;
+    border-top: 1px solid $border-subtle;
+    font-size: 0.8125rem;
+    color: $ink-tertiary;
 }

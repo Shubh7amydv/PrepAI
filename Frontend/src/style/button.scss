@@ -1,22 +1,52 @@
 @use "sass:color";
+@use "./theme" as *;
 
-.button{
-
+.button {
     border: none;
     outline: none;
-    padding-inline: 1.5rem;
-    padding-block: 0.75rem;
-    border-radius: 1rem;
+    padding: 10px 20px;
+    border-radius: $radius-button;
+    font-family: $font-body;
+    font-size: 0.9375rem;
+    font-weight: 600;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color $transition-fast, color $transition-fast, border-color $transition-fast, opacity $transition-fast;
 
-    transition: all 0.3s ease-in-out;
+    &.primary-button {
+        background-color: $accent-primary;
+        color: #ffffff;
 
-    &.primary-button{
-        background-color: #e1034d;
-        color: white;
+        &:hover {
+            background-color: $accent-primary-hover;
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
     }
 
-    &:active{
-        transform: scale(0.9);
+    &.secondary-button {
+        background-color: transparent;
+        color: $ink-primary;
+        border: 1px solid $border-subtle;
+
+        &:hover {
+            background-color: $bg-surface;
+            border-color: color.adjust($border-subtle, $lightness: -5%);
+        }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    }
+
+    &:active:not(:disabled) {
+        transform: scale(0.99);
     }
 }
