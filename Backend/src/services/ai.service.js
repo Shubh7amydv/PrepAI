@@ -34,6 +34,38 @@ const interviewReportSchema = z.object({
     title: z.string().describe("The title of the job for which the interview report is generated"),
 })
 
+const CANDIDATE_MODELS = [
+    "openai/gpt-oss-120b",
+    "openai/gpt-oss-20b",
+    "qwen/qwen3.8-27b",
+    "groq/compound",
+    "llama-3.3-70b-versatile"
+];
+
+async function callGroqWithFallback({ messages, temperature = 0.3 }) {
+    let lastError = null;
+    for (const model of CANDIDATE_MODELS) {
+        try {
+            console.log(`Attempting Groq completion with model: ${model}...`);
+            const completion = await groq.chat.completions.create({
+                model,
+                temperature,
+                response_format: { type: "json_object" },
+                messages,
+            });
+
+            const raw = completion.choices?.[0]?.message?.content;
+            if (raw) {
+                return raw;
+            }
+        } catch (err) {
+            console.warn(`Model ${model} failed (${err.message}). Trying next fallback...`);
+            lastError = err;
+        }
+    }
+    throw lastError || new Error("All Groq models failed to return a response");
+}
+
 async function generateInterviewReport({ resume, selfDescription, jobDescription }) {
 
     if (!process.env.GROQ_API_KEY) {
@@ -127,12 +159,10 @@ IMPORTANT:
 - Each answer should be 2-3 sentences minimum with concrete details
 - Preparation plan should be 10+ days with 3-5 tasks per day
 - All content should be highly specific to the job description and candidate profile
-- Make sure tasks are actionable with specific resources or platforms when possible`
+- Make sure tasks are actionable with specific resources or platforms when possible`;
 
-    const completion = await groq.chat.completions.create({
-        model: "llama-3.3-70b-versatile",
+    const raw = await callGroqWithFallback({
         temperature: 0.3,
-        response_format: { type: "json_object" },
         messages: [
             {
                 role: "system",
@@ -144,12 +174,6 @@ IMPORTANT:
             },
         ],
     });
-
-    const raw = completion.choices?.[0]?.message?.content;
-
-    if (!raw) {
-        throw new Error("Groq returned an empty response");
-    }
 
     const parsed = JSON.parse(raw);
 
@@ -290,10 +314,8 @@ REMEMBER:
 - Include all relevant information that matches the job requirements`;
 
         console.log("Calling Groq API for resume generation...");
-        const completion = await groq.chat.completions.create({
-            model: "llama-3.3-70b-versatile",
+        const raw = await callGroqWithFallback({
             temperature: 0.4,
-            response_format: { type: "json_object" },
             messages: [
                 {
                     role: "system",
@@ -305,12 +327,6 @@ REMEMBER:
                 }
             ]
         });
-
-        const raw = completion.choices?.[0]?.message?.content;
-
-        if (!raw) {
-            throw new Error("Groq returned an empty response for resume generation");
-        }
 
         console.log("Parsing Groq response...");
         let parsed;
