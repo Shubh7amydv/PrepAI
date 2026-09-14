@@ -11,11 +11,16 @@ async function generateInterviewReportController(req, res) {
 
         // If a file is uploaded, parse it and normalize to plain text only.
         if (req.file?.buffer) {
-            const parsedResume = await (new pdfParse.PDFParse(Uint8Array.from(req.file.buffer))).getText();
-            if (typeof parsedResume === "string") {
-                resumeContent = parsedResume;
-            } else if (parsedResume && typeof parsedResume.text === "string") {
-                resumeContent = parsedResume.text;
+            try {
+                const parsedResume = await (new pdfParse.PDFParse(Uint8Array.from(req.file.buffer))).getText();
+                if (typeof parsedResume === "string") {
+                    resumeContent = parsedResume;
+                } else if (parsedResume && typeof parsedResume.text === "string") {
+                    resumeContent = parsedResume.text;
+                }
+            } catch (pdfErr) {
+                console.warn("Could not extract text from uploaded resume buffer:", pdfErr.message);
+                resumeContent = req.file.originalname ? `Uploaded Resume File: ${req.file.originalname}` : "";
             }
         }
 

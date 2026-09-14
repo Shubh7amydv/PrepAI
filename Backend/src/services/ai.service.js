@@ -37,16 +37,87 @@ const interviewReportSchema = z.object({
 const CANDIDATE_MODELS = [
     "openai/gpt-oss-120b",
     "openai/gpt-oss-20b",
-    "qwen/qwen3.8-27b",
-    "groq/compound",
-    "llama-3.3-70b-versatile"
+    "qwen/qwen3.8-27b"
 ];
+
+function sanitizeInterviewReport(rawObj, fallbackTitle = "Target Position Interview Plan") {
+    const obj = typeof rawObj === "object" && rawObj !== null ? rawObj : {};
+
+    // 1. Title
+    const title = String(obj.title || obj.jobTitle || obj.role || fallbackTitle).trim() || fallbackTitle;
+
+    // 2. Match Score (0 - 100)
+    let score = typeof obj.matchScore === "number" ? obj.matchScore : parseInt(String(obj.matchScore).replace(/[^0-9]/g, ""), 10);
+    if (isNaN(score) || score < 0) score = 70;
+    if (score > 100) score = 100;
+
+    // 3. Technical Questions
+    const technicalQuestions = Array.isArray(obj.technicalQuestions)
+        ? obj.technicalQuestions.map(q => ({
+            question: String(q?.question || "Technical Concept Question").trim(),
+            intention: String(q?.intention || "Evaluate domain expertise and practical experience").trim(),
+            answer: String(q?.answer || "Provide a detailed answer with practical examples.").trim()
+        }))
+        : [];
+
+    // 4. Behavioral Questions
+    const behavioralQuestions = Array.isArray(obj.behavioralQuestions)
+        ? obj.behavioralQuestions.map(q => ({
+            question: String(q?.question || "Behavioral Scenario Question").trim(),
+            intention: String(q?.intention || "Evaluate teamwork, communication, and decision making").trim(),
+            answer: String(q?.answer || "Structure the response using the STAR method.").trim()
+        }))
+        : [];
+
+    // 5. Skill Gaps
+    const validSeverities = ["low", "medium", "high"];
+    const skillGaps = Array.isArray(obj.skillGaps)
+        ? obj.skillGaps.map(g => {
+            let sev = String(g?.severity || "medium").toLowerCase().trim();
+            if (!validSeverities.includes(sev)) {
+                if (sev.includes("high") || sev.includes("crit")) sev = "high";
+                else if (sev.includes("low")) sev = "low";
+                else sev = "medium";
+            }
+            return {
+                skill: String(g?.skill || "Technical Skill").trim(),
+                severity: sev
+            };
+        })
+        : [];
+
+    // 6. Preparation Plan
+    const preparationPlan = Array.isArray(obj.preparationPlan)
+        ? obj.preparationPlan.map((p, idx) => {
+            let day = typeof p?.day === "number" ? p.day : parseInt(String(p?.day).replace(/[^0-9]/g, ""), 10);
+            if (isNaN(day) || day <= 0) day = idx + 1;
+            const focus = String(p?.focus || `Day ${day} Preparation & Practice`).trim();
+            const tasks = Array.isArray(p?.tasks)
+                ? p.tasks.map(t => String(t).trim()).filter(Boolean)
+                : [String(p?.tasks || "Review key technical topics")];
+            return {
+                day,
+                focus,
+                tasks: tasks.length ? tasks : ["Review core concepts and practice interview problems"]
+            };
+        })
+        : [];
+
+    return {
+        title,
+        matchScore: score,
+        technicalQuestions,
+        behavioralQuestions,
+        skillGaps,
+        preparationPlan
+    };
+}
 
 async function callGroqWithFallback({ messages, temperature = 0.3 }) {
     let lastError = null;
     for (const model of CANDIDATE_MODELS) {
         try {
-            console.log(`Attempting Groq completion with model: ${model}...`);
+            console.log(`Calling Groq model: ${model}...`);
             const completion = await groq.chat.completions.create({
                 model,
                 temperature,
@@ -59,7 +130,7 @@ async function callGroqWithFallback({ messages, temperature = 0.3 }) {
                 return raw;
             }
         } catch (err) {
-            console.warn(`Model ${model} failed (${err.message}). Trying next fallback...`);
+            console.warn(`Model ${model} error (${err.message}). Trying fallback...`);
             lastError = err;
         }
     }
@@ -75,98 +146,45 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
     const prompt = `You are an expert interview coach and hiring manager. Generate a COMPREHENSIVE interview report for a candidate applying for a position.
 
 CANDIDATE PROFILE:
-Resume/Experience: ${resume}
-Self Description: ${selfDescription}
+Resume/Experience: ${resume || "Provided in self-description"}
+Self Description: ${selfDescription || "Not provided"}
 
 JOB DESCRIPTION:
 ${jobDescription}
 
 CRITICAL REQUIREMENTS - Generate DETAILED and COMPREHENSIVE content:
 
-1. MATCH SCORE (0-100): Analyze how well the candidate's skills, experience, and background match the job requirements. Be thorough in your analysis.
+1. MATCH SCORE (0-100): Analyze how well the candidate's skills, experience, and background match the job requirements.
+2. TECHNICAL QUESTIONS: Generate 8-10 highly relevant technical questions with question, intention, and detailed answer.
+3. BEHAVIORAL QUESTIONS: Generate 6-8 behavioral questions with question, intention, and answer using STAR method.
+4. SKILL GAPS: Identify 4-6 specific skill gaps with skill name and severity ("low", "medium", or "high").
+5. PREPARATION PLAN: Create a detailed day-wise preparation roadmap (10-14 days) with day number, focus, and actionable tasks array.
+6. TITLE: The job title for this position.
 
-2. TECHNICAL QUESTIONS: Generate 8-10 highly relevant technical questions that would likely be asked in interviews for this role. Include:
-   - Deep technical questions specific to the tech stack mentioned in the job
-   - System design or architecture questions if applicable
-   - Problem-solving scenarios
-   - Each question should have:
-     * A clear, specific question
-     * The interviewer's intention behind asking it
-     * A detailed answer covering key points, approaches, and best practices
-     * Real-world examples if applicable
-
-3. BEHAVIORAL QUESTIONS: Generate 6-8 behavioral and situational questions tailored to the role and company needs. Include:
-   - Leadership and teamwork questions
-   - Conflict resolution scenarios
-   - Problem-solving under pressure
-   - Achievement and failure stories
-   - Each question should have:
-     * A clear behavioral question
-     * Why the interviewer asks this (intention)
-     * A detailed answer using STAR method when applicable
-     * Tips for impactful responses
-
-4. SKILL GAPS: Identify 5-8 skill gaps or areas where the candidate could improve. For each:
-   - Name the specific skill or knowledge area
-   - Rate severity as "low", "medium", or "high"
-   - Explain why this skill is important for the role
-
-5. PREPARATION PLAN: Create a detailed 10-14 day intensive preparation roadmap:
-   - Each day should have a specific focus area
-   - Include 3-5 concrete tasks per day
-   - Tasks should be specific resources, practice problems, or learning activities
-   - Cover: technical concepts, system design, behavioral prep, mock interviews, projects
-   - Example tasks: "Study [specific topic] from [resource]", "Solve [N] problems on [platform]", "Practice mock interview focusing on [area]"
-   - Make the plan actionable and time-bound
-
-6. JOB TITLE: Return the exact job title for which this report is generated
-
-Return ONLY valid JSON with NO additional text, following this exact structure:
+Return ONLY valid JSON with this exact structure:
 {
-  "matchScore": number (0-100),
+  "title": "Exact Job Title",
+  "matchScore": 75,
   "technicalQuestions": [
-    {
-      "question": "specific technical question",
-      "intention": "why interviewer asks this",
-      "answer": "detailed answer with key points and examples"
-    }
+    { "question": "...", "intention": "...", "answer": "..." }
   ],
   "behavioralQuestions": [
-    {
-      "question": "behavioral question",
-      "intention": "why interviewer asks this",
-      "answer": "detailed answer with STAR method and examples"
-    }
+    { "question": "...", "intention": "...", "answer": "..." }
   ],
   "skillGaps": [
-    {
-      "skill": "skill name",
-      "severity": "low|medium|high"
-    }
+    { "skill": "...", "severity": "low|medium|high" }
   ],
   "preparationPlan": [
-    {
-      "day": number (starting from 1),
-      "focus": "specific focus for this day",
-      "tasks": ["Task 1: specific and actionable", "Task 2: specific and actionable", ...]
-    }
-  ],
-  "title": "exact job title"
-}
-
-IMPORTANT:
-- Generate AT LEAST 8 technical questions and 6 behavioral questions
-- Each answer should be 2-3 sentences minimum with concrete details
-- Preparation plan should be 10+ days with 3-5 tasks per day
-- All content should be highly specific to the job description and candidate profile
-- Make sure tasks are actionable with specific resources or platforms when possible`;
+    { "day": 1, "focus": "...", "tasks": ["Task 1", "Task 2"] }
+  ]
+}`;
 
     const raw = await callGroqWithFallback({
         temperature: 0.3,
         messages: [
             {
                 role: "system",
-                content: "You are an expert interview coach and hiring manager. Always return strictly valid JSON only. Generate comprehensive, detailed, and specific content with many interview questions and a detailed preparation plan. Be thorough in your analysis and recommendations."
+                content: "You are an expert interview coach. Return strictly valid JSON with comprehensive interview prep content."
             },
             {
                 role: "user",
@@ -175,9 +193,21 @@ IMPORTANT:
         ],
     });
 
-    const parsed = JSON.parse(raw);
+    let parsed;
+    try {
+        parsed = JSON.parse(raw);
+    } catch (e) {
+        // Try extracting JSON from markdown fences if any
+        const match = raw.match(/\{[\s\S]*\}/);
+        if (match) {
+            parsed = JSON.parse(match[0]);
+        } else {
+            throw new Error(`Failed to parse Groq response: ${e.message}`);
+        }
+    }
 
-    return interviewReportSchema.parse(parsed);
+    const sanitized = sanitizeInterviewReport(parsed, jobDescription.slice(0, 50));
+    return interviewReportSchema.parse(sanitized);
 }
 
 // ── PDF Generation Functions ───────────────────────────────────────────────────
