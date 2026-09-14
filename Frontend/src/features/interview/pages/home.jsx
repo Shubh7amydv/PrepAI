@@ -50,9 +50,15 @@ const Home = () => {
     }
 
     const handleGenerateReport = async () => {
-        const resumeFile = resumeInputRef.current.files[ 0 ]
-        const data = await generateReport({ jobDescription, selfDescription, resumeFile })
-        navigate(`/interview/${data._id}`)
+        try {
+            const resumeFile = resumeInputRef.current?.files?.[ 0 ]
+            const data = await generateReport({ jobDescription, selfDescription, resumeFile })
+            if (data?._id) {
+                navigate(`/interview/${data._id}`)
+            }
+        } catch (error) {
+            console.error("Failed to generate report:", error)
+        }
     }
 
     const handleGeneratePdf = async () => {

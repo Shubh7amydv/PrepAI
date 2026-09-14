@@ -1,9 +1,17 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://prepai-1zor.onrender.com",
+    baseURL: import.meta.env.VITE_API_URL || "https://prepai-1zor.onrender.com",
     withCredentials: true,
 })
+
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem("prepai_token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
 
 const downloadArrayBufferPdf = (arrayBuffer, fileName) => {
     const blob = new Blob([ arrayBuffer ], { type: 'application/pdf' })

@@ -3,9 +3,17 @@ const jwt = require("jsonwebtoken");
 // This middleware will check whether the user is authenticated or not by checking the token in cookies and verifying it
 
 function authUser(req, res, next) {
-    const token = req.cookies.token;
+    let token = req.cookies?.token;
 
-    // If tokennis not provided 
+    // Check Authorization header (Bearer token) if cookie is not present
+    if (!token && req.headers.authorization) {
+        const parts = req.headers.authorization.split(" ");
+        if (parts.length === 2 && parts[0] === "Bearer") {
+            token = parts[1];
+        }
+    }
+
+    // If token is not provided 
     if (!token) {
         return res.status(401).json({
             message: "Token not available"

@@ -60,7 +60,8 @@ async function registerUserController(req,res) {
     })
 
     res.status(201).json({
-        messgae:"User is registered",
+        message:"User is registered",
+        token,
         user:{
             id:user._id,
             username: user.username,
@@ -124,8 +125,9 @@ async function loginUserController(req,res) {
         maxAge: 24 * 60 * 60 * 1000
     })
 
-    res.status(201).json({
-        messgae:"User signed in successfully",
+    res.status(200).json({
+        message:"User signed in successfully",
+        token,
         user:{
             id:user._id,
             username: user.username,
@@ -145,7 +147,14 @@ async function loginUserController(req,res) {
  * @access public 
  */
 async function logoutUserController(req,res) {
-    const token=req.cookies.token;
+    let token=req.cookies?.token;
+
+    if (!token && req.headers.authorization) {
+        const parts = req.headers.authorization.split(" ");
+        if (parts.length === 2 && parts[0] === "Bearer") {
+            token = parts[1];
+        }
+    }
 
     if(token){
         await tokenBlacklistModel.create({

@@ -110,7 +110,50 @@ async function generateResumePdfController(req, res) {
 }
 
 
-module.exports={ generateInterviewReportController, generateResumePdfController }
+async function getInterviewReportByIdController(req, res) {
+    try {
+        const { interviewId } = req.params;
+        const interviewReport = await interviewReportmodel.findOne({
+            _id: interviewId,
+            user: req.user.id
+        });
+
+        if (!interviewReport) {
+            return res.status(404).json({ message: "Interview report not found" });
+        }
+
+        res.status(200).json({
+            message: "Interview report fetched successfully",
+            interviewReport
+        });
+    } catch (error) {
+        console.error("Error fetching interview report:", error);
+        res.status(500).json({ message: "Failed to fetch interview report", error: error.message });
+    }
+}
+
+async function getAllInterviewReportsController(req, res) {
+    try {
+        const interviewReports = await interviewReportmodel.find({
+            user: req.user.id
+        }).sort({ createdAt: -1 });
+
+        res.status(200).json({
+            message: "Interview reports fetched successfully",
+            interviewReports: interviewReports || []
+        });
+    } catch (error) {
+        console.error("Error fetching all interview reports:", error);
+        res.status(500).json({ message: "Failed to fetch interview reports", error: error.message });
+    }
+}
+
+module.exports = {
+    generateInterviewReportController,
+    generateResumePdfController,
+    getInterviewReportByIdController,
+    getAllInterviewReportsController
+};
 
 
 

@@ -8,12 +8,16 @@ export const useAuth =() =>{
     
     const { user, setUser, loading, setLoading, isInitializing, setIsInitializing } = context;
 
-    const cacheUser = (nextUser) => {
+    const cacheUser = (nextUser, token) => {
         if (nextUser) {
             localStorage.setItem("prepai_user", JSON.stringify(nextUser));
+            if (token) {
+                localStorage.setItem("prepai_token", token);
+            }
             return;
         }
         localStorage.removeItem("prepai_user");
+        localStorage.removeItem("prepai_token");
     };
 
     const getErrorMessage = (error, fallbackMessage) => {
@@ -45,10 +49,10 @@ export const useAuth =() =>{
                  return { success: false, error: "Unable to login" };
             }
             setUser(data.user);
-              cacheUser(data.user);
-              return { success: true, error: "" };
+            cacheUser(data.user, data.token);
+            return { success: true, error: "" };
        } catch (error) {
-              return { success: false, error: getErrorMessage(error, "Invalid email or password") };
+            return { success: false, error: getErrorMessage(error, "Invalid email or password") };
        }finally{
         setLoading(false);
        }
@@ -63,7 +67,7 @@ export const useAuth =() =>{
                 return { success: false, error: "Unable to register" };
               }
               setUser(data.user)
-                            cacheUser(data.user);
+              cacheUser(data.user, data.token);
               return { success: true, error: "" };
         } catch (error) {
               return { success: false, error: getErrorMessage(error, "Registration failed") };
@@ -75,11 +79,12 @@ export const useAuth =() =>{
     const handleLogout=async ()=>{
        try {
              setLoading(true);
-             const data=await logout();
+             await logout();
              setUser(null)
              cacheUser(null);
        } catch (error) {
-        
+             setUser(null);
+             cacheUser(null);
        }finally{
         setLoading(false)
        }

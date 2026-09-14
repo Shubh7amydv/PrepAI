@@ -15,6 +15,8 @@ const authMiddleware=require("../middlewares/auth.middlewares");
 // We will use authMiddleware to protect this route and allow only authenticated users to access it
 // We will use upload.single('resume') to handle file upload and expect the file field name to be 'resume' 
 interviewRouter.post('/',authMiddleware.authUser,upload.single('resume'), interviewController.generateInterviewReportController);
+interviewRouter.get('/', authMiddleware.authUser, interviewController.getAllInterviewReportsController);
+interviewRouter.get('/report/:interviewId', authMiddleware.authUser, interviewController.getInterviewReportByIdController);
 
 /**
  * @route POST /api/interview/resume-pdf
@@ -23,6 +25,4 @@ interviewRouter.post('/',authMiddleware.authUser,upload.single('resume'), interv
  */
 interviewRouter.post('/resume-pdf', authMiddleware.authUser, upload.single('resume'), interviewController.generateResumePdfController);
 
-
-
- module.exports=interviewRouter;
+module.exports=interviewRouter;
