@@ -211,7 +211,7 @@ const Landing = () => {
                     <p className="final-cta__text">Generate your custom interview questions and roadmap in under 30 seconds.</p>
                 </div>
                 <div className="final-cta__actions">
-                    <Link to="/register" className="landing-button landing-button--primary">
+                    <Link to="/register" className="landing-button landing-button--deep">
                         Create Account
                     </Link>
                     <Link to="/login" className="landing-button landing-button--outline">

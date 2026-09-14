@@ -40,7 +40,7 @@
     &__label {
         font-size: 0.75rem;
         font-weight: 600;
-        color: $accent-warm;
+        color: $accent-primary;
     }
 
     blockquote {
@@ -130,8 +130,8 @@
     .form-error {
         font-size: 0.8125rem;
         color: $danger;
-        background-color: rgba($danger, 0.08);
-        border: 1px solid rgba($danger, 0.2);
+        background-color: rgba($danger, 0.12);
+        border: 1px solid rgba($danger, 0.3);
         border-radius: 6px;
         padding: 0.5rem 0.75rem;
         margin: 0;
@@ -143,17 +143,21 @@
         width: 100%;
         margin-top: 0.5rem;
         background-color: $accent-primary;
-        color: #ffffff;
+        color: $bg-page;
         border: none;
         border-radius: $radius-button;
         font-family: $font-body;
         font-size: 0.9375rem;
         font-weight: 600;
         cursor: pointer;
-        transition: background-color $transition-fast;
+        transition: background-color $transition-fast, transform $transition-fast;
 
         &:hover {
             background-color: $accent-primary-hover;
+        }
+
+        &:active {
+            transform: scale(0.99);
         }
     }
 
@@ -180,3 +184,4 @@
         padding: 2rem 1.5rem;
     }
 }
+

@@ -83,7 +83,7 @@
         height: 38px;
         padding: 0 1rem;
         background-color: $accent-primary;
-        color: #ffffff;
+        color: $bg-page;
         border: none;
         border-radius: $radius-button;
         font-family: $font-body;
@@ -171,7 +171,7 @@
             }
 
             &--active {
-                background-color: rgba($accent-primary, 0.08);
+                background-color: rgba($accent-primary, 0.12);
                 color: $accent-primary;
                 font-weight: 600;
                 border-left: 3px solid $accent-primary;
@@ -241,7 +241,7 @@
         display: flex;
         align-items: flex-start;
         gap: 0.75rem;
-        padding: 1rem 1.25rem;
+        padding: 1.1rem 1.25rem;
         cursor: pointer;
         user-select: none;
     }
@@ -249,8 +249,8 @@
     &__num {
         font-family: $font-body;
         font-size: 0.75rem;
-        font-weight: 700;
-        color: $accent-primary;
+        font-weight: 600;
+        color: $ink-secondary;
         margin-top: 2px;
         flex-shrink: 0;
     }
@@ -289,7 +289,7 @@
 
         &:hover {
             color: $ink-primary;
-            border-color: color.adjust($border-subtle, $lightness: -8%);
+            border-color: $border-strong;
         }
 
         &--copied {
@@ -373,7 +373,7 @@
             font-size: 0.6875rem;
             font-weight: 700;
             color: $accent-primary;
-            background-color: rgba($accent-primary, 0.1);
+            background-color: rgba($accent-primary, 0.12);
             padding: 0.2rem 0.55rem;
             border-radius: 4px;
         }
@@ -449,10 +449,17 @@
     }
 }
 
-// ── Match Score Card ──────────────────────────────────────────────────────────
+// ── Match Score Card (MOST IMPORTANT ELEMENT: Burgundy Card, Cream Arc & Digits) ──
 .match-score-card {
+    background-color: $accent-deep;
+    border: 1px solid rgba(239, 234, 187, 0.2);
+    box-shadow: 0 8px 30px rgba(75, 20, 38, 0.45);
     align-items: center;
     text-align: center;
+
+    .aside-card__label {
+        color: rgba(239, 234, 187, 0.75);
+    }
 
     .score-ring-wrapper {
         width: 100px;
@@ -468,13 +475,13 @@
 
         .score-track {
             fill: none;
-            stroke: $border-subtle;
+            stroke: rgba(239, 234, 187, 0.2);
             stroke-width: 8;
         }
 
         .score-fill {
             fill: none;
-            stroke: $accent-primary;
+            stroke: $highlight;
             stroke-width: 8;
             stroke-linecap: round;
             transition: stroke-dashoffset 1s ease;
@@ -492,13 +499,13 @@
                 font-family: $font-display;
                 font-size: 2rem;
                 font-weight: 600;
-                color: $ink-primary;
+                color: $highlight;
                 line-height: 1;
             }
 
             .score-percent {
                 font-size: 0.85rem;
-                color: $ink-secondary;
+                color: $highlight;
                 margin-left: 2px;
             }
         }
@@ -510,7 +517,7 @@
         gap: 0.4rem;
         font-size: 0.8125rem;
         font-weight: 600;
-        color: $success;
+        color: rgba(239, 234, 187, 0.85);
 
         .match-dot {
             width: 6px;
@@ -521,7 +528,7 @@
     }
 }
 
-// ── Skill Gaps Card ───────────────────────────────────────────────────────────
+// ── Skill Gaps Card (Secondary to Match Score) ────────────────────────────────
 .skill-gaps-card {
     .gaps-list {
         display: flex;
@@ -549,7 +556,7 @@
                 }
 
                 &--medium {
-                    background-color: $accent-warm;
+                    background-color: $accent-primary;
                 }
 
                 &--low {

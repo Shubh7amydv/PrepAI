@@ -53,6 +53,7 @@
             font-size: 1.15rem;
             font-weight: 600;
             letter-spacing: -0.02em;
+            color: $ink-primary;
         }
     }
 
@@ -97,7 +98,7 @@
             &:hover {
                 color: $danger;
                 border-color: rgba($danger, 0.4);
-                background: rgba($danger, 0.05);
+                background: rgba($danger, 0.1);
             }
         }
     }
@@ -195,7 +196,7 @@
     }
 
     &--profile {
-        background-color: rgba($bg-surface, 0.4);
+        background-color: rgba($bg-surface, 0.45);
     }
 
     @media (max-width: 600px) {
@@ -229,7 +230,7 @@
     .label-required {
         font-size: 0.75rem;
         color: $ink-tertiary;
-        font-weight: 500;
+        font-weight: 600;
     }
 }
 
@@ -299,8 +300,8 @@
         .chip-best {
             font-size: 0.6875rem;
             font-weight: 600;
-            color: $accent-warm;
-            background-color: $accent-warm-soft;
+            color: $accent-primary;
+            background-color: rgba($accent-primary, 0.15);
             padding: 0.15rem 0.45rem;
             border-radius: 4px;
         }
@@ -324,7 +325,7 @@
 
     &:hover {
         border-color: $accent-primary;
-        background-color: rgba($accent-primary, 0.03);
+        background-color: rgba($accent-primary, 0.05);
     }
 
     .dropzone-icon {
@@ -387,7 +388,7 @@
         font-size: 0.75rem;
         font-weight: 600;
         color: $ink-tertiary;
-        text-transform: uppercase;
+        text-transform: lowercase;
     }
 }
 
@@ -397,10 +398,10 @@
     gap: 0.4rem;
 }
 
-// ── Warning Note ──────────────────────────────────────────────────────────────
+// ── Warning Note (Burgundy Left Border & Soft Burgundy BG) ────────────────────
 .warning-note {
-    background-color: $accent-warm-soft;
-    border-left: 4px solid $accent-warm;
+    background-color: rgba(97, 32, 56, 0.22);
+    border-left: 4px solid $accent-deep;
     border-radius: 4px;
     padding: 0.65rem 0.85rem;
     display: flex;
@@ -408,7 +409,7 @@
     gap: 0.5rem;
 
     .warning-icon {
-        color: $accent-warm;
+        color: $highlight;
         flex-shrink: 0;
         margin-top: 2px;
     }
@@ -420,18 +421,18 @@
         margin: 0;
 
         strong {
-            color: $ink-primary;
+            color: $highlight;
             font-weight: 600;
         }
     }
 }
 
-// ── Action Buttons ────────────────────────────────────────────────────────────
+// ── Action Buttons: Primary is Burgundy (Deep), Secondary is Outline ──────────
 .btn-primary {
     height: 44px;
     padding: 0 1.25rem;
-    background-color: $accent-primary;
-    color: #ffffff;
+    background-color: $accent-deep;
+    color: $highlight;
     border: none;
     border-radius: $radius-button;
     font-family: $font-body;
@@ -442,10 +443,15 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    transition: background-color $transition-fast;
+    box-shadow: 0 2px 14px rgba(75, 20, 38, 0.45);
+    transition: background-color $transition-fast, transform $transition-fast;
 
     &:hover:not(:disabled) {
-        background-color: $accent-primary-hover;
+        background-color: $accent-deep-soft;
+    }
+
+    &:active:not(:disabled) {
+        transform: scale(0.99);
     }
 
     &:disabled {
@@ -459,7 +465,7 @@
     padding: 0 1.25rem;
     background-color: $bg-page;
     color: $ink-primary;
-    border: 1px solid $border-subtle;
+    border: 1px solid $border-strong;
     border-radius: $radius-button;
     font-family: $font-body;
     font-size: 0.9375rem;
@@ -469,11 +475,15 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    transition: background-color $transition-fast, border-color $transition-fast;
+    transition: background-color $transition-fast, border-color $transition-fast, transform $transition-fast;
 
     &:hover:not(:disabled) {
         background-color: $bg-surface;
-        border-color: color.adjust($border-subtle, $lightness: -8%);
+        border-color: $highlight;
+    }
+
+    &:active:not(:disabled) {
+        transform: scale(0.99);
     }
 
     &:disabled {
@@ -545,7 +555,7 @@
                     font-family: $font-display;
                     font-size: 1.125rem;
                     font-weight: 600;
-                    color: $accent-primary;
+                    color: $highlight;
                 }
 
                 .score-text {
@@ -567,3 +577,4 @@
     font-size: 0.8125rem;
     color: $ink-tertiary;
 }
+

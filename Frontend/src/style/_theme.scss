@@ -1,21 +1,40 @@
-// ── PrepAI Design System Tokens ──────────────────────────────────────────
+@use "sass:color";
 
-// Colors
-$bg-page: #F7F5F0;            // warm paper background
-$bg-surface: #EFEBE0;         // card/panel background, one shade off page bg
-$bg-surface-raised: #FFFFFF;  // for cards that need to pop
-$ink-primary: #1A1D24;        // main text
-$ink-secondary: #6B6558;      // secondary/muted text
-$ink-tertiary: #9A947F;       // placeholder text, timestamps, labels
-$accent-primary: #2D5A4A;     // deep forest green — primary actions
-$accent-primary-hover: #234639;
-$accent-warm: #C4622D;        // burnt clay — warnings, gaps, secondary emphasis
-$accent-warm-soft: #F0DCC8;   // light clay background for warning chips
-$border-subtle: #DDD6C4;      // subtle warm borders
-$success: #3D6B4F;
-$danger: #A8432C;
+// ── PrepAI Design System Tokens (Dark Theme: Burgundy / Teal / Sage / Cream) ──
 
-// Fonts
+// Core Palette
+$color-burgundy: #4B1426;
+$color-burgundy-soft: #612038;
+$color-deep-teal: #17433F;
+$color-near-black: #0B1A18;
+$color-lifted-teal: #1E4F4A;
+$color-sage: #558467;
+$color-sage-hover: #6B9A7A;
+$color-cream: #EFEABB;
+$color-cream-white: #F4F1DE;
+$color-sage-grey: #9FB8AE;
+$color-teal-grey: #6C8880;
+$color-success: #6FA37F;
+$color-danger: #B4543C;
+
+// Semantic Token Variables
+$bg-page: $color-near-black;                       // #0B1A18 - near-black teal page canvas
+$bg-surface: $color-deep-teal;                     // #17433F - standard card/panel background
+$bg-surface-raised: $color-lifted-teal;            // #1E4F4A - lifted teal panel
+$ink-primary: $color-cream-white;                  // #F4F1DE - main soft off-white text
+$ink-secondary: $color-sage-grey;                  // #9FB8AE - secondary text, labels
+$ink-tertiary: $color-teal-grey;                   // #6C8880 - placeholders, timestamps
+$accent-primary: $color-sage;                      // #558467 - sage actions, active states
+$accent-primary-hover: $color-sage-hover;          // #6B9A7A
+$accent-deep: $color-burgundy;                     // #4B1426 - highest importance: score, primary CTA
+$accent-deep-soft: $color-burgundy-soft;           // #612038 - hover/fill for deep elements
+$highlight: $color-cream;                          // #EFEABB - cream highlight digits
+$border-subtle: rgba(239, 234, 187, 0.12);        // soft cream-tinted hairline border
+$border-strong: rgba(239, 234, 187, 0.22);
+$success: $color-success;
+$danger: $color-danger;
+
+// Typography Families
 $font-display: 'Fraunces', Georgia, serif;
 $font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
@@ -24,9 +43,9 @@ $radius-card: 10px;
 $radius-button: 8px;
 $radius-pill: 999px;
 
-// Shadows
-$shadow-subtle: 0 4px 20px rgba(26, 29, 36, 0.06);
-$shadow-card: 0 4px 24px rgba(26, 29, 36, 0.08);
+// Shadows (dark theme requires deeper, softer drop-shadows)
+$shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.25);
+$shadow-card: 0 8px 30px rgba(0, 0, 0, 0.35);
 
 // Transitions
 $transition-fast: 120ms ease;
