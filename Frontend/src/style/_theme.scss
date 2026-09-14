@@ -1,57 +1,72 @@
 @use "sass:color";
 
-// ── PrepAI Design System Tokens (Warm Light Theme: Red / Orange / Cream / Cyan) ──
+// ── PrepAI Design System Tokens (Linear / Vercel High-Craft Obsidian & Indigo) ──
 
-// Core Palette
-$color-red: #DF301C;
-$color-red-hover: #C22815;
-$color-orange: #FF9100;
-$color-orange-hover: #E67F00;
-$color-cream: #FFF1D1;
-$color-near-white: #FFFBF3;
-$color-pure-white: #FFFFFF;
-$color-cyan: #00B7CD;
+// Palette
+$color-bg-base: #090A0F;
+$color-bg-surface: #12141C;
+$color-bg-raised: #181B26;
+$color-bg-overlay: #1F2433;
 
-$color-ink-primary: #241A12;
-$color-ink-secondary: #6B5B48;
-$color-ink-tertiary: #9C8B75;
+$color-text-primary: #F8FAFC;
+$color-text-secondary: #94A3B8;
+$color-text-muted: #64748B;
 
-$color-border-subtle: #EDE0C8;
-$color-border-strong: #D8C7A5;
+$color-brand-primary: #6366F1;
+$color-brand-primary-hover: #4F46E5;
+$color-brand-accent: #8B5CF6;
+$color-brand-cyan: #06B6D4;
+$color-brand-emerald: #10B981;
+$color-brand-rose: #F43F5E;
+$color-brand-amber: #F59E0B;
 
-$color-success: #3F8F5C;
-$color-danger: #C22815;
+$color-border-subtle: rgba(255, 255, 255, 0.07);
+$color-border-medium: rgba(255, 255, 255, 0.12);
+$color-border-strong: rgba(255, 255, 255, 0.18);
 
-// Semantic Token Variables
-$bg-page: $color-near-white;                         // #FFFBF3 - warm near-white page canvas
-$bg-surface: $color-cream;                           // #FFF1D1 - cream standard card background
-$bg-surface-raised: $color-pure-white;              // #FFFFFF - pure white raised panel
-$ink-primary: $color-ink-primary;                    // #241A12 - warm near-black main text
-$ink-secondary: $color-ink-secondary;                // #6B5B48 - warm brown-grey secondary text
-$ink-tertiary: $color-ink-tertiary;                  // #9C8B75 - placeholder, helper copy
-$accent-primary: $color-orange;                      // #FF9100 - orange interactive actions
-$accent-primary-hover: $color-orange-hover;          // #E67F00
-$accent-deep: $color-red;                            // #DF301C - red reserved for score & top CTA
-$accent-deep-hover: $color-red-hover;                // #C22815
-$accent-info: $color-cyan;                           // #00B7CD - cyan helper copy, info badges
-$border-subtle: $color-border-subtle;                // #EDE0C8 - warm hairline border
-$border-strong: $color-border-strong;                // #D8C7A5 - visible warm border for inputs
-$success: $color-success;
-$danger: $color-danger;
+// Semantic Token Mappings
+$bg-page: $color-bg-base;
+$bg-surface: $color-bg-surface;
+$bg-surface-raised: $color-bg-raised;
+$bg-surface-overlay: $color-bg-overlay;
 
-// Typography Families
-$font-display: 'Fraunces', Georgia, serif;
+$ink-primary: $color-text-primary;
+$ink-secondary: $color-text-secondary;
+$ink-tertiary: $color-text-muted;
+
+$accent-primary: $color-brand-primary;
+$accent-primary-hover: $color-brand-primary-hover;
+$accent-violet: $color-brand-accent;
+$accent-cyan: $color-brand-cyan;
+$accent-deep: $color-brand-primary;
+
+$border-subtle: $color-border-subtle;
+$border-strong: $color-border-strong;
+
+$success: $color-brand-emerald;
+$danger: $color-brand-rose;
+$warning: $color-brand-amber;
+
+// Typography
+$font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 $font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
 // Radii
-$radius-card: 10px;
+$radius-sm: 6px;
 $radius-button: 8px;
+$radius-card: 12px;
 $radius-pill: 999px;
 
-// Shadows
-$shadow-subtle: 0 4px 16px rgba(36, 26, 18, 0.05);
-$shadow-card: 0 8px 24px rgba(36, 26, 18, 0.08);
+// Shadows & Glows
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+$shadow-card: 0 12px 36px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
+$shadow-glow: 0 0 30px rgba(99, 102, 241, 0.25);
+$shadow-button: 0 2px 10px rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 
 // Transitions
-$transition-fast: 120ms ease;
+$transition-fast: 140ms cubic-bezier(0.16, 1, 0.3, 1);
+$transition-smooth: 220ms cubic-bezier(0.16, 1, 0.3, 1);
+$transition-normal: $transition-smooth;
+$shadow-subtle: $shadow-card;
+
 

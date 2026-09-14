@@ -5,11 +5,14 @@
     width: 100%;
     min-height: 100vh;
     background-color: $bg-page;
+    background-image: 
+        radial-gradient(ellipse 60% 40% at 50% -20%, rgba(99, 102, 241, 0.12), transparent 70%),
+        radial-gradient(circle at 90% 20%, rgba(139, 92, 246, 0.05), transparent 40%);
     color: $ink-primary;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 2rem 4rem;
+    padding: 0 2rem 5rem;
 
     @media (max-width: 768px) {
         padding: 0 1rem 3rem;
@@ -19,31 +22,32 @@
 // ── Top Bar ───────────────────────────────────────────────────────────────────
 .report-topbar {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1240px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.25rem 0;
+    padding: 1.5rem 0;
     margin-bottom: 2rem;
     border-bottom: 1px solid $border-subtle;
-    gap: 1rem;
+    gap: 1.25rem;
 
     &__left {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: 0.85rem;
         flex: 1;
         min-width: 0;
 
         .back-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
-            background: transparent;
-            border: 1px solid $border-strong;
+            gap: 0.45rem;
+            background: $bg-surface;
+            border: 1px solid $border-subtle;
             border-radius: $radius-button;
-            padding: 0.35rem 0.75rem;
+            padding: 0.45rem 0.85rem;
             color: $ink-secondary;
+            font-family: $font-body;
             font-size: 0.8125rem;
             font-weight: 500;
             cursor: pointer;
@@ -51,24 +55,28 @@
             flex-shrink: 0;
 
             &:hover {
-                background-color: $bg-surface;
+                background-color: $bg-surface-raised;
+                border-color: $border-strong;
                 color: $ink-primary;
+                transform: translateX(-2px);
             }
         }
 
         .crumb-sep {
             color: $ink-tertiary;
             font-size: 0.9rem;
+            user-select: none;
         }
 
         .report-title {
             font-family: $font-display;
-            font-size: 1.35rem;
-            font-weight: 500;
+            font-size: 1.25rem;
+            font-weight: 600;
             color: $ink-primary;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            letter-spacing: -0.02em;
         }
     }
 
@@ -79,30 +87,37 @@
     .btn-download-resume {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-        height: 38px;
-        padding: 0 1rem;
-        background-color: $accent-primary;
+        gap: 0.55rem;
+        height: 40px;
+        padding: 0 1.2rem;
+        background: linear-gradient(135deg, $accent-primary, $accent-violet);
         color: #ffffff;
-        border: none;
+        border: 1px solid rgba(255, 255, 255, 0.12);
         border-radius: $radius-button;
         font-family: $font-body;
         font-size: 0.875rem;
         font-weight: 600;
         cursor: pointer;
-        transition: background-color $transition-fast;
+        box-shadow: 0 4px 16px rgba(99, 102, 241, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        transition: all $transition-fast;
 
         &:hover:not(:disabled) {
-            background-color: $accent-primary-hover;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        &:active:not(:disabled) {
+            transform: translateY(0);
         }
 
         &:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+            transform: none;
         }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
         flex-direction: column;
         align-items: stretch;
     }
@@ -111,17 +126,18 @@
 // ── Layout Grid ───────────────────────────────────────────────────────────────
 .interview-layout {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1240px;
     display: grid;
-    grid-template-columns: 220px 1fr 280px;
+    grid-template-columns: 240px 1fr 310px;
     gap: 2rem;
     align-items: start;
 
-    @media (max-width: 1024px) {
-        grid-template-columns: 200px 1fr;
+    @media (max-width: 1100px) {
+        grid-template-columns: 210px 1fr 280px;
+        gap: 1.5rem;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
         grid-template-columns: 1fr;
     }
 }
@@ -130,26 +146,30 @@
 .interview-nav {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.85rem;
+    position: sticky;
+    top: 1.5rem;
 
     .nav-section-label {
-        font-size: 0.75rem;
-        font-weight: 600;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
         color: $ink-tertiary;
-        padding-left: 0.5rem;
+        padding-left: 0.75rem;
     }
 
     .nav-links {
         display: flex;
         flex-direction: column;
-        gap: 0.25rem;
+        gap: 0.35rem;
 
         .nav-link {
             display: flex;
             align-items: center;
-            gap: 0.65rem;
-            padding: 0.6rem 0.75rem;
-            border: none;
+            gap: 0.75rem;
+            padding: 0.7rem 0.9rem;
+            border: 1px solid transparent;
             background: transparent;
             border-radius: $radius-button;
             color: $ink-secondary;
@@ -163,20 +183,24 @@
             &__icon {
                 color: $ink-tertiary;
                 display: flex;
+                align-items: center;
+                transition: color $transition-fast;
             }
 
             &:hover {
                 background-color: $bg-surface;
                 color: $ink-primary;
+
+                .nav-link__icon {
+                    color: $ink-secondary;
+                }
             }
 
             &--active {
-                background-color: rgba($accent-primary, 0.10);
-                color: $accent-primary;
+                background: rgba(99, 102, 241, 0.12);
+                border-color: rgba(99, 102, 241, 0.3);
+                color: #ffffff;
                 font-weight: 600;
-                border-left: 3px solid $accent-primary;
-                border-top-left-radius: 2px;
-                border-bottom-left-radius: 2px;
 
                 .nav-link__icon {
                     color: $accent-primary;
@@ -194,27 +218,32 @@
 .content-section {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.5rem;
 
     &__head {
         display: flex;
-        align-items: baseline;
-        gap: 0.75rem;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid $border-subtle;
 
         h2 {
             font-family: $font-display;
-            font-size: 1.65rem;
-            font-weight: 500;
+            font-size: 1.5rem;
+            font-weight: 600;
             color: $ink-primary;
+            letter-spacing: -0.02em;
+            margin: 0;
         }
 
         .count-chip {
             font-size: 0.75rem;
             font-weight: 600;
-            color: $ink-secondary;
-            background-color: $bg-surface;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
+            color: $accent-primary;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            padding: 0.25rem 0.65rem;
+            border-radius: 9999px;
         }
     }
 }
@@ -223,26 +252,33 @@
 .q-stack {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.85rem;
 }
 
 .q-card {
-    background-color: $bg-surface-raised;
+    background: $bg-surface;
     border: 1px solid $border-subtle;
     border-radius: $radius-card;
     overflow: hidden;
-    box-shadow: $shadow-subtle;
-    transition: border-color $transition-fast;
+    transition: all $transition-normal;
+    box-shadow: $shadow-card;
 
     &:hover {
         border-color: $border-strong;
+        background: $bg-surface-raised;
+    }
+
+    &--open {
+        border-color: rgba(99, 102, 241, 0.4);
+        background: $bg-surface-raised;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.08);
     }
 
     &__header {
         display: flex;
         align-items: flex-start;
-        gap: 0.75rem;
-        padding: 1.1rem 1.25rem;
+        gap: 0.85rem;
+        padding: 1.2rem 1.4rem;
         cursor: pointer;
         user-select: none;
     }
@@ -250,9 +286,14 @@
     &__num {
         font-family: $font-body;
         font-size: 0.75rem;
-        font-weight: 600;
-        color: $ink-secondary;
-        margin-top: 2px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: $accent-primary;
+        background: rgba(99, 102, 241, 0.12);
+        border: 1px solid rgba(99, 102, 241, 0.25);
+        padding: 0.2rem 0.5rem;
+        border-radius: 6px;
+        margin-top: 1px;
         flex-shrink: 0;
     }
 
@@ -261,7 +302,7 @@
         font-size: 0.95rem;
         font-weight: 500;
         color: $ink-primary;
-        line-height: 1.45;
+        line-height: 1.5;
         flex: 1;
         margin: 0;
     }
@@ -269,32 +310,33 @@
     &__controls {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.6rem;
         flex-shrink: 0;
-        margin-top: 2px;
+        margin-top: 1px;
     }
 
     .copy-btn {
         display: inline-flex;
         align-items: center;
-        gap: 0.25rem;
-        background: $bg-page;
-        border: 1px solid $border-strong;
+        gap: 0.35rem;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid $border-subtle;
         color: $ink-secondary;
-        font-size: 0.6875rem;
+        font-size: 0.72rem;
         font-weight: 500;
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
         cursor: pointer;
         transition: all $transition-fast;
 
         &:hover {
             color: $ink-primary;
-            border-color: color.adjust($border-strong, $lightness: -10%);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: $border-strong;
         }
 
         &--copied {
-            background-color: rgba($success, 0.1);
+            background-color: rgba($success, 0.15);
             color: $success;
             border-color: rgba($success, 0.4);
         }
@@ -307,43 +349,47 @@
 
         &--rotated {
             transform: rotate(180deg);
+            color: $accent-primary;
         }
     }
 
     &__body {
-        padding: 0 1.25rem 1.25rem;
+        padding: 1.25rem 1.4rem 1.4rem;
         border-top: 1px solid $border-subtle;
-        padding-top: 1rem;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
-        background-color: rgba($bg-page, 0.6);
+        gap: 1.15rem;
+        background: rgba(9, 10, 15, 0.4);
     }
 
     &__section {
         display: flex;
         flex-direction: column;
-        gap: 0.3rem;
+        gap: 0.45rem;
+        background: $bg-surface;
+        border: 1px solid $border-subtle;
+        border-radius: 8px;
+        padding: 1rem 1.15rem;
 
         .section-tag {
-            font-size: 0.6875rem;
-            font-weight: 600;
-            color: $ink-secondary;
-            text-transform: none;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
 
             &--intention {
-                color: $accent-primary;
+                color: $accent-cyan;
             }
 
             &--answer {
-                color: $ink-primary;
+                color: $accent-primary;
             }
         }
 
         p {
-            font-size: 0.875rem;
-            line-height: 1.55;
-            color: $ink-primary;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: $ink-secondary;
             margin: 0;
         }
     }
@@ -353,39 +399,48 @@
 .roadmap-stack {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.85rem;
 }
 
 .roadmap-card {
-    background-color: $bg-surface-raised;
+    background: $bg-surface;
     border: 1px solid $border-subtle;
     border-radius: $radius-card;
-    box-shadow: $shadow-subtle;
-    padding: 1.25rem 1.5rem;
+    box-shadow: $shadow-card;
+    padding: 1.35rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.9rem;
+    transition: all $transition-fast;
+
+    &:hover {
+        border-color: $border-strong;
+        background: $bg-surface-raised;
+    }
 
     &__header {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: 0.85rem;
 
         .roadmap-card__badge {
-            font-size: 0.6875rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            color: $accent-primary;
-            background-color: rgba($accent-primary, 0.12);
-            padding: 0.2rem 0.55rem;
-            border-radius: 4px;
+            color: $accent-cyan;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            letter-spacing: 0.04em;
         }
 
         .roadmap-card__focus {
-            font-family: $font-body;
-            font-size: 0.95rem;
+            font-family: $font-display;
+            font-size: 1rem;
             font-weight: 600;
             color: $ink-primary;
             margin: 0;
+            letter-spacing: -0.01em;
         }
     }
 
@@ -395,23 +450,24 @@
         margin: 0;
         display: flex;
         flex-direction: column;
-        gap: 0.4rem;
+        gap: 0.55rem;
 
         li {
             display: flex;
             align-items: flex-start;
-            gap: 0.5rem;
-            font-size: 0.845rem;
-            line-height: 1.45;
+            gap: 0.65rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
             color: $ink-secondary;
 
             .task-bullet {
-                width: 5px;
-                height: 5px;
+                width: 6px;
+                height: 6px;
                 border-radius: 50%;
-                background-color: $ink-tertiary;
+                background-color: $accent-primary;
+                box-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
                 flex-shrink: 0;
-                margin-top: 6px;
+                margin-top: 7px;
             }
         }
     }
@@ -422,52 +478,62 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+    position: sticky;
+    top: 1.5rem;
 
-    @media (max-width: 1024px) {
-        grid-column: span 2;
+    @media (max-width: 900px) {
+        position: static;
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
 
-    @media (max-width: 768px) {
-        grid-column: span 1;
+    @media (max-width: 600px) {
         grid-template-columns: 1fr;
     }
 }
 
 .aside-card {
-    background-color: $bg-surface-raised;
+    background: $bg-surface;
     border: 1px solid $border-subtle;
     border-radius: $radius-card;
-    box-shadow: $shadow-subtle;
+    box-shadow: $shadow-card;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.15rem;
+    backdrop-filter: blur(8px);
 
     &__label {
-        font-size: 0.75rem;
-        font-weight: 600;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
         color: $ink-tertiary;
     }
 }
 
-// ── Match Score Card (MOST IMPORTANT ELEMENT: Solid Red Card, White Text, Cream Arc) ──
+// ── Match Score Card (Sleek Obsidian Glow) ──────────────────────────────────
 .match-score-card {
-    background-color: $accent-deep;
-    border: 1px solid rgba(223, 48, 28, 0.8);
-    box-shadow: 0 8px 24px rgba(223, 48, 28, 0.3);
+    background: linear-gradient(180deg, $bg-surface-raised, $bg-surface);
+    border: 1px solid $border-strong;
     align-items: center;
     text-align: center;
-    color: #ffffff;
+    position: relative;
+    overflow: hidden;
 
-    .aside-card__label {
-        color: rgba(255, 255, 255, 0.85);
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, $accent-primary, $accent-cyan, transparent);
     }
 
     .score-ring-wrapper {
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
         position: relative;
         margin: 0.5rem 0;
 
@@ -479,13 +545,13 @@
 
         .score-track {
             fill: none;
-            stroke: rgba(255, 255, 255, 0.25);
+            stroke: rgba(255, 255, 255, 0.06);
             stroke-width: 8;
         }
 
         .score-fill {
             fill: none;
-            stroke: $bg-surface;
+            stroke: url(#scoreGrad);
             stroke-width: 8;
             stroke-linecap: round;
             transition: stroke-dashoffset 1s ease;
@@ -497,87 +563,131 @@
             display: flex;
             align-items: baseline;
             justify-content: center;
-            padding-top: 32px;
+            padding-top: 38px;
 
             .score-number {
                 font-family: $font-display;
-                font-size: 2rem;
-                font-weight: 600;
+                font-size: 2.25rem;
+                font-weight: 700;
                 color: #ffffff;
                 line-height: 1;
+                letter-spacing: -0.03em;
             }
 
             .score-percent {
-                font-size: 0.85rem;
-                color: rgba(255, 255, 255, 0.9);
+                font-size: 0.95rem;
+                font-weight: 600;
+                color: $accent-primary;
                 margin-left: 2px;
             }
         }
     }
 
     .match-status-row {
-        display: flex;
+        display: inline-flex;
         align-items: center;
-        gap: 0.4rem;
+        gap: 0.5rem;
         font-size: 0.8125rem;
         font-weight: 600;
-        color: rgba(255, 255, 255, 0.95);
+        color: $ink-primary;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        padding: 0.35rem 0.8rem;
+        border-radius: 9999px;
 
         .match-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
             background-color: $success;
+            box-shadow: 0 0 8px $success;
         }
     }
 }
 
-// ── Skill Gaps Card (White Raised Card) ───────────────────────────────────────
+// ── Skill Gaps Card ─────────────────────────────────────────────────────────
 .skill-gaps-card {
     .gaps-list {
         display: flex;
         flex-direction: column;
+        gap: 0.5rem;
 
         .gap-item {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            padding: 0.65rem 0;
-            border-bottom: 1px solid $border-subtle;
+            justify-content: space-between;
+            padding: 0.65rem 0.85rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid $border-subtle;
+            border-radius: 8px;
+            transition: all $transition-fast;
 
-            &:last-child {
-                border-bottom: none;
+            &:hover {
+                background: rgba(255, 255, 255, 0.04);
+                border-color: $border-strong;
+            }
+
+            .gap-left {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                min-width: 0;
             }
 
             .severity-dot {
-                width: 8px;
-                height: 8px;
+                width: 7px;
+                height: 7px;
                 border-radius: 50%;
                 flex-shrink: 0;
 
                 &--high {
                     background-color: $danger;
+                    box-shadow: 0 0 6px rgba($danger, 0.6);
                 }
 
                 &--medium {
-                    background-color: $accent-primary;
+                    background-color: $warning;
+                    box-shadow: 0 0 6px rgba($warning, 0.6);
                 }
 
                 &--low {
                     background-color: $success;
+                    box-shadow: 0 0 6px rgba($success, 0.6);
                 }
             }
 
             .gap-name {
-                font-size: 0.875rem;
+                font-size: 0.845rem;
+                font-weight: 500;
                 color: $ink-primary;
-                flex: 1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .gap-level {
                 font-size: 0.6875rem;
-                color: $ink-tertiary;
-                text-transform: capitalize;
+                font-weight: 600;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                padding: 0.15rem 0.45rem;
+                border-radius: 4px;
+                flex-shrink: 0;
+
+                &.gap-level--high {
+                    color: $danger;
+                    background: rgba($danger, 0.1);
+                }
+
+                &.gap-level--medium {
+                    color: $warning;
+                    background: rgba($warning, 0.1);
+                }
+
+                &.gap-level--low {
+                    color: $success;
+                    background: rgba($success, 0.1);
+                }
             }
         }
     }
@@ -590,20 +700,22 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1.25rem;
+    gap: 1.5rem;
 
     .loading-spinner {
-        width: 36px;
-        height: 36px;
+        width: 44px;
+        height: 44px;
         border: 3px solid $border-subtle;
         border-top-color: $accent-primary;
         border-radius: 50%;
         animation: spin 0.8s linear infinite;
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
     }
 
     p {
-        font-size: 0.9375rem;
+        font-size: 0.95rem;
         color: $ink-secondary;
+        font-weight: 500;
     }
 }
 
