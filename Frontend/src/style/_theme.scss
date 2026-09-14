@@ -1,36 +1,41 @@
 @use "sass:color";
 
-// ── PrepAI Design System Tokens (Dark Theme: Burgundy / Teal / Sage / Cream) ──
+// ── PrepAI Design System Tokens (Warm Light Theme: Red / Orange / Cream / Cyan) ──
 
 // Core Palette
-$color-burgundy: #4B1426;
-$color-burgundy-soft: #612038;
-$color-deep-teal: #17433F;
-$color-near-black: #0B1A18;
-$color-lifted-teal: #1E4F4A;
-$color-sage: #558467;
-$color-sage-hover: #6B9A7A;
-$color-cream: #EFEABB;
-$color-cream-white: #F4F1DE;
-$color-sage-grey: #9FB8AE;
-$color-teal-grey: #6C8880;
-$color-success: #6FA37F;
-$color-danger: #B4543C;
+$color-red: #DF301C;
+$color-red-hover: #C22815;
+$color-orange: #FF9100;
+$color-orange-hover: #E67F00;
+$color-cream: #FFF1D1;
+$color-near-white: #FFFBF3;
+$color-pure-white: #FFFFFF;
+$color-cyan: #00B7CD;
+
+$color-ink-primary: #241A12;
+$color-ink-secondary: #6B5B48;
+$color-ink-tertiary: #9C8B75;
+
+$color-border-subtle: #EDE0C8;
+$color-border-strong: #D8C7A5;
+
+$color-success: #3F8F5C;
+$color-danger: #C22815;
 
 // Semantic Token Variables
-$bg-page: $color-near-black;                       // #0B1A18 - near-black teal page canvas
-$bg-surface: $color-deep-teal;                     // #17433F - standard card/panel background
-$bg-surface-raised: $color-lifted-teal;            // #1E4F4A - lifted teal panel
-$ink-primary: $color-cream-white;                  // #F4F1DE - main soft off-white text
-$ink-secondary: $color-sage-grey;                  // #9FB8AE - secondary text, labels
-$ink-tertiary: $color-teal-grey;                   // #6C8880 - placeholders, timestamps
-$accent-primary: $color-sage;                      // #558467 - sage actions, active states
-$accent-primary-hover: $color-sage-hover;          // #6B9A7A
-$accent-deep: $color-burgundy;                     // #4B1426 - highest importance: score, primary CTA
-$accent-deep-soft: $color-burgundy-soft;           // #612038 - hover/fill for deep elements
-$highlight: $color-cream;                          // #EFEABB - cream highlight digits
-$border-subtle: rgba(239, 234, 187, 0.12);        // soft cream-tinted hairline border
-$border-strong: rgba(239, 234, 187, 0.22);
+$bg-page: $color-near-white;                         // #FFFBF3 - warm near-white page canvas
+$bg-surface: $color-cream;                           // #FFF1D1 - cream standard card background
+$bg-surface-raised: $color-pure-white;              // #FFFFFF - pure white raised panel
+$ink-primary: $color-ink-primary;                    // #241A12 - warm near-black main text
+$ink-secondary: $color-ink-secondary;                // #6B5B48 - warm brown-grey secondary text
+$ink-tertiary: $color-ink-tertiary;                  // #9C8B75 - placeholder, helper copy
+$accent-primary: $color-orange;                      // #FF9100 - orange interactive actions
+$accent-primary-hover: $color-orange-hover;          // #E67F00
+$accent-deep: $color-red;                            // #DF301C - red reserved for score & top CTA
+$accent-deep-hover: $color-red-hover;                // #C22815
+$accent-info: $color-cyan;                           // #00B7CD - cyan helper copy, info badges
+$border-subtle: $color-border-subtle;                // #EDE0C8 - warm hairline border
+$border-strong: $color-border-strong;                // #D8C7A5 - visible warm border for inputs
 $success: $color-success;
 $danger: $color-danger;
 
@@ -43,9 +48,10 @@ $radius-card: 10px;
 $radius-button: 8px;
 $radius-pill: 999px;
 
-// Shadows (dark theme requires deeper, softer drop-shadows)
-$shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.25);
-$shadow-card: 0 8px 30px rgba(0, 0, 0, 0.35);
+// Shadows
+$shadow-subtle: 0 4px 16px rgba(36, 26, 18, 0.05);
+$shadow-card: 0 8px 24px rgba(36, 26, 18, 0.08);
 
 // Transitions
 $transition-fast: 120ms ease;
+

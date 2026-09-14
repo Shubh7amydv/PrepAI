@@ -115,7 +115,7 @@
 
     &--primary {
         background-color: $accent-primary;
-        color: $bg-page;
+        color: #ffffff;
 
         &:hover {
             background-color: $accent-primary-hover;
@@ -124,11 +124,11 @@
 
     &--deep {
         background-color: $accent-deep;
-        color: $highlight;
-        box-shadow: 0 2px 12px rgba(75, 20, 38, 0.4);
+        color: #ffffff;
+        box-shadow: 0 2px 10px rgba(223, 48, 28, 0.25);
 
         &:hover {
-            background-color: $accent-deep-soft;
+            background-color: $accent-deep-hover;
         }
     }
 
@@ -139,7 +139,7 @@
 
         &:hover {
             background-color: $bg-surface;
-            border-color: $highlight;
+            border-color: color.adjust($border-strong, $lightness: -10%);
         }
     }
 
@@ -241,7 +241,7 @@
     }
 }
 
-// ── Document Preview Visual (with Burgundy Match Score Ring) ──────────────────
+// ── Document Preview Visual (Raised White Card with Red Match Score Ring) ─────
 .hero__visual {
     width: 100%;
     display: flex;
@@ -286,7 +286,7 @@
         .doc-badge {
             font-size: 0.6875rem;
             font-weight: 600;
-            color: $ink-tertiary;
+            color: $ink-secondary;
             background-color: $bg-surface;
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
@@ -304,7 +304,7 @@
             position: relative;
             flex-shrink: 0;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(75, 20, 38, 0.25) 0%, rgba(75, 20, 38, 0.05) 70%, transparent 100%);
+            background: radial-gradient(circle, rgba(223, 48, 28, 0.08) 0%, rgba(223, 48, 28, 0.02) 70%, transparent 100%);
 
             &__svg {
                 width: 100%;
@@ -338,12 +338,12 @@
                     font-family: $font-display;
                     font-size: 1.5rem;
                     font-weight: 600;
-                    color: $highlight;
+                    color: $accent-deep;
                     line-height: 1;
 
                     small {
                         font-size: 0.85rem;
-                        color: $highlight;
+                        color: $accent-deep;
                         font-family: $font-body;
                     }
                 }
@@ -435,7 +435,7 @@
     }
 }
 
-// ── Feature Grid ──────────────────────────────────────────────────────────────
+// ── Feature Grid (Cream Cards #FFF1D1) ────────────────────────────────────────
 .features-section {
     width: 100%;
     max-width: 1160px;
@@ -530,7 +530,7 @@
     }
 }
 
-// ── Final CTA ─────────────────────────────────────────────────────────────────
+// ── Final CTA (Cream #FFF1D1 Container + Red Button) ──────────────────────────
 .final-cta {
     width: 100%;
     max-width: 1160px;

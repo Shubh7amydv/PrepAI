@@ -40,7 +40,7 @@
             align-items: center;
             gap: 0.35rem;
             background: transparent;
-            border: 1px solid $border-subtle;
+            border: 1px solid $border-strong;
             border-radius: $radius-button;
             padding: 0.35rem 0.75rem;
             color: $ink-secondary;
@@ -83,7 +83,7 @@
         height: 38px;
         padding: 0 1rem;
         background-color: $accent-primary;
-        color: $bg-page;
+        color: #ffffff;
         border: none;
         border-radius: $radius-button;
         font-family: $font-body;
@@ -171,7 +171,7 @@
             }
 
             &--active {
-                background-color: rgba($accent-primary, 0.12);
+                background-color: rgba($accent-primary, 0.10);
                 color: $accent-primary;
                 font-weight: 600;
                 border-left: 3px solid $accent-primary;
@@ -210,8 +210,8 @@
 
         .count-chip {
             font-size: 0.75rem;
-            font-weight: 500;
-            color: $ink-tertiary;
+            font-weight: 600;
+            color: $ink-secondary;
             background-color: $bg-surface;
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
@@ -227,14 +227,15 @@
 }
 
 .q-card {
-    background-color: $bg-surface;
+    background-color: $bg-surface-raised;
     border: 1px solid $border-subtle;
     border-radius: $radius-card;
     overflow: hidden;
+    box-shadow: $shadow-subtle;
     transition: border-color $transition-fast;
 
     &:hover {
-        border-color: color.adjust($border-subtle, $lightness: -10%);
+        border-color: $border-strong;
     }
 
     &__header {
@@ -278,7 +279,7 @@
         align-items: center;
         gap: 0.25rem;
         background: $bg-page;
-        border: 1px solid $border-subtle;
+        border: 1px solid $border-strong;
         color: $ink-secondary;
         font-size: 0.6875rem;
         font-weight: 500;
@@ -289,7 +290,7 @@
 
         &:hover {
             color: $ink-primary;
-            border-color: $border-strong;
+            border-color: color.adjust($border-strong, $lightness: -10%);
         }
 
         &--copied {
@@ -316,7 +317,7 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        background-color: rgba($bg-page, 0.5);
+        background-color: rgba($bg-page, 0.6);
     }
 
     &__section {
@@ -356,9 +357,10 @@
 }
 
 .roadmap-card {
-    background-color: $bg-surface;
+    background-color: $bg-surface-raised;
     border: 1px solid $border-subtle;
     border-radius: $radius-card;
+    box-shadow: $shadow-subtle;
     padding: 1.25rem 1.5rem;
     display: flex;
     flex-direction: column;
@@ -434,9 +436,10 @@
 }
 
 .aside-card {
-    background-color: $bg-surface;
+    background-color: $bg-surface-raised;
     border: 1px solid $border-subtle;
     border-radius: $radius-card;
+    box-shadow: $shadow-subtle;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -449,16 +452,17 @@
     }
 }
 
-// ── Match Score Card (MOST IMPORTANT ELEMENT: Burgundy Card, Cream Arc & Digits) ──
+// ── Match Score Card (MOST IMPORTANT ELEMENT: Solid Red Card, White Text, Cream Arc) ──
 .match-score-card {
     background-color: $accent-deep;
-    border: 1px solid rgba(239, 234, 187, 0.2);
-    box-shadow: 0 8px 30px rgba(75, 20, 38, 0.45);
+    border: 1px solid rgba(223, 48, 28, 0.8);
+    box-shadow: 0 8px 24px rgba(223, 48, 28, 0.3);
     align-items: center;
     text-align: center;
+    color: #ffffff;
 
     .aside-card__label {
-        color: rgba(239, 234, 187, 0.75);
+        color: rgba(255, 255, 255, 0.85);
     }
 
     .score-ring-wrapper {
@@ -475,13 +479,13 @@
 
         .score-track {
             fill: none;
-            stroke: rgba(239, 234, 187, 0.2);
+            stroke: rgba(255, 255, 255, 0.25);
             stroke-width: 8;
         }
 
         .score-fill {
             fill: none;
-            stroke: $highlight;
+            stroke: $bg-surface;
             stroke-width: 8;
             stroke-linecap: round;
             transition: stroke-dashoffset 1s ease;
@@ -499,13 +503,13 @@
                 font-family: $font-display;
                 font-size: 2rem;
                 font-weight: 600;
-                color: $highlight;
+                color: #ffffff;
                 line-height: 1;
             }
 
             .score-percent {
                 font-size: 0.85rem;
-                color: $highlight;
+                color: rgba(255, 255, 255, 0.9);
                 margin-left: 2px;
             }
         }
@@ -517,7 +521,7 @@
         gap: 0.4rem;
         font-size: 0.8125rem;
         font-weight: 600;
-        color: rgba(239, 234, 187, 0.85);
+        color: rgba(255, 255, 255, 0.95);
 
         .match-dot {
             width: 6px;
@@ -528,7 +532,7 @@
     }
 }
 
-// ── Skill Gaps Card (Secondary to Match Score) ────────────────────────────────
+// ── Skill Gaps Card (White Raised Card) ───────────────────────────────────────
 .skill-gaps-card {
     .gaps-list {
         display: flex;
