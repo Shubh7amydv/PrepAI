@@ -1,66 +1,59 @@
-// import { useState } from "react";
-// import { createContext } from "react";
+import { createContext, useState, useEffect } from "react";
+import { getMe } from "./services/auth.api";
 
-// export const AuthContext=createContext();
-
-// export const AuthProvider=({children})=>{
-    
-//     const [user,setUser]=useState(null)
-
-//     const [loading,setLoading]=useState(false);
-
-//     return (
-//         <AuthContext.Provider value={{user,setUser,loading,setLoading}}>
-//             {children}
-//         </AuthContext.Provider>
-//     )
-// }
-
-
-
-
-// /**
- 
-//    createContext()  → creates empty pipe
-
-//    AuthProvider     → creates water (data: user, loading)
-
-//    Provider         → pushes water into pipe
-
-//    children         → receive water
-
-//  */
-
-
-import { createContext, useState } from "react";
-
-
-export const AuthContext = createContext()
+export const AuthContext = createContext();
 
 const getCachedUser = () => {
     try {
-        const rawUser = localStorage.getItem("prepai_user")
-        return rawUser ? JSON.parse(rawUser) : null
+        const rawUser = localStorage.getItem("prepai_user");
+        return rawUser ? JSON.parse(rawUser) : null;
     } catch (error) {
-        return null
+        return null;
     }
-}
+};
 
+export const AuthProvider = ({ children }) => {
+    const [ user, setUser ] = useState(getCachedUser);
+    const [ loading, setLoading ] = useState(false);
+    const [ isInitializing, setIsInitializing ] = useState(true);
 
-export const AuthProvider = ({ children }) => { 
+    // Initialize user ONCE on application mount
+    useEffect(() => {
+        let isMounted = true;
+        const initUser = async () => {
+            const token = localStorage.getItem("prepai_token");
+            try {
+                const data = await getMe();
+                if (isMounted && data?.user) {
+                    setUser(data.user);
+                    localStorage.setItem("prepai_user", JSON.stringify(data.user));
+                }
+            } catch (error) {
+                if (isMounted) {
+                    // Only clear if no valid cached token/user or 401
+                    if (error?.response?.status === 401) {
+                        setUser(null);
+                        localStorage.removeItem("prepai_user");
+                        localStorage.removeItem("prepai_token");
+                    }
+                }
+            } finally {
+                if (isMounted) {
+                    setIsInitializing(false);
+                }
+            }
+        };
 
-    const [ user, setUser ] = useState(getCachedUser)
-    const [ loading, setLoading ] = useState(false)
-    const [ isInitializing, setIsInitializing ] = useState(true)
+        initUser();
 
-    
-
+        return () => {
+            isMounted = false;
+        };
+    }, []);
 
     return (
-        <AuthContext.Provider value={{ user, setUser, loading, setLoading, isInitializing, setIsInitializing }} >
+        <AuthContext.Provider value={{ user, setUser, loading, setLoading, isInitializing, setIsInitializing }}>
             {children}
         </AuthContext.Provider>
-    )
-
-    
-}
+    );
+};

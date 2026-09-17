@@ -69,6 +69,9 @@ const Login = () => {
                 </aside>
 
                 <section className='glass-card'>
+                    <Link to='/' className='auth-back-link'>
+                        ← Back to PrepAI
+                    </Link>
                     <div className='card-header-badge'>
                         <span className='pill-badge'>🚀 Instant Access Available</span>
                     </div>

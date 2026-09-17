@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
+const tokenBlacklistModel = require("../models/blacklist.model");
 
-// This middleware will check whether the user is authenticated or not by checking the token in cookies and verifying it
-
-function authUser(req, res, next) {
+// This middleware checks whether the user is authenticated by verifying JWT and checking token blacklist
+async function authUser(req, res, next) {
     let token = req.cookies?.token;
 
     // Check Authorization header (Bearer token) if cookie is not present
@@ -20,20 +20,15 @@ function authUser(req, res, next) {
         });
     }
 
-
-    // If token is provided we need to check it whether it is genuine or not 
-    /**
-     * Token = header + payload + signature
-
-    Verification:
-    newSignature = HASH(header + payload + SECRET)
-
-    If newSignature == token.signature → VALID ✅
-    Else → INVALID ❌
-     */
-
-    
     try {
+        // Check if token is blacklisted (logged out)
+        const isBlacklisted = await tokenBlacklistModel.findOne({ token });
+        if (isBlacklisted) {
+            return res.status(401).json({
+                message: "Session expired or logged out. Please sign in again."
+            });
+        }
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         // attach user info to request
@@ -48,8 +43,6 @@ function authUser(req, res, next) {
     }
 }
 
-
-
-module.exports={
+module.exports = {
     authUser
-}
+};

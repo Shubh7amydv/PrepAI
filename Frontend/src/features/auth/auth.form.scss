@@ -109,6 +109,23 @@
     display: flex;
     flex-direction: column;
 
+    .auth-back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: $ink-secondary;
+        text-decoration: none;
+        margin-bottom: 1.25rem;
+        width: fit-content;
+        transition: color $transition-fast;
+
+        &:hover {
+            color: #FFFFFF;
+        }
+    }
+
     .card-header-badge {
         margin-bottom: 0.75rem;
 

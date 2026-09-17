@@ -55,6 +55,9 @@ const Register = () => {
         <main className='register-page'>
             <div className='register-page__layout'>
                 <section className='glass-card register-card'>
+                    <Link to='/' className='auth-back-link'>
+                        ← Back to PrepAI
+                    </Link>
                     <div className='card-header-badge'>
                         <span className='pill-badge'>⚡ Recruiter Demo Mode</span>
                     </div>
