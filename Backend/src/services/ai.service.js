@@ -143,48 +143,120 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
         throw new Error("Missing GROQ_API_KEY in environment variables");
     }
 
-    const prompt = `You are an expert interview coach and hiring manager. Generate a COMPREHENSIVE interview report for a candidate applying for a position.
+    const prompt = `You are a Principal Engineering Director and Staff Hiring Committee Chair at a Tier-1 tech company.
+Generate an in-depth, production-grade, and actionable Technical Interview Intelligence Report.
 
-CANDIDATE PROFILE:
-Resume/Experience: ${resume || "Provided in self-description"}
-Self Description: ${selfDescription || "Not provided"}
+CANDIDATE BACKGROUND & PROFILE:
+Resume Details:
+${resume || "Not explicitly provided in resume file"}
 
-JOB DESCRIPTION:
+Candidate Self-Description & Stated Skills:
+${selfDescription || "Not explicitly provided"}
+
+TARGET JOB DESCRIPTION & REQUIREMENTS:
 ${jobDescription}
 
-CRITICAL REQUIREMENTS - Generate DETAILED and COMPREHENSIVE content:
+================================================================================
+CALIBRATION GUIDELINES & CRITICAL REQUIREMENTS:
+================================================================================
 
-1. MATCH SCORE (0-100): Analyze how well the candidate's skills, experience, and background match the job requirements.
-2. TECHNICAL QUESTIONS: Generate 8-10 highly relevant technical questions with question, intention, and detailed answer.
-3. BEHAVIORAL QUESTIONS: Generate 6-8 behavioral questions with question, intention, and answer using STAR method.
-4. SKILL GAPS: Identify 4-6 specific skill gaps with skill name and severity ("low", "medium", or "high").
-5. PREPARATION PLAN: Create a detailed day-wise preparation roadmap (10-14 days) with day number, focus, and actionable tasks array.
-6. TITLE: The job title for this position.
+1. EXACT JOB TITLE:
+   - Extract the precise target role title (e.g., "Staff Backend Engineer - Distributed Systems", "Senior Frontend Engineer - Platform").
 
-Return ONLY valid JSON with this exact structure:
+2. MATHEMATICAL MATCH SCORE CALCULATION (0 - 100):
+   Evaluate the candidate strictly against these 4 weighted pillars:
+   - Core Hard Skills & Tech Stack Alignment (40% weight): Match of primary programming languages, frameworks, and storage systems.
+   - Scale, Concurrency & System Complexity (25% weight): Demonstrated experience with distributed systems, high throughput, low latency, or deep frontend state architecture.
+   - Seniority & Technical Ownership (20% weight): Alignment with target seniority level (Junior / Mid / Senior / Staff / Principal), architectural decision-making, and mentorship.
+   - Domain & Tooling Familiarity (15% weight): Domain-specific requirements (e.g., FinTech, Cloud Infra, Real-time APIs, Security, CI/CD).
+   Output a single realistic integer score reflecting this weighted calculation.
+
+3. TECHNICAL QUESTIONS (Generate 8 - 10 Comprehensive Questions):
+   - Focus on REAL-WORLD production scenarios, race conditions, distributed consensus, failure recovery, caching invalidation, database sharding, memory optimization, or framework architecture.
+   - AVOID shallow textbook trivia (e.g., "what is a promise?"). Instead ask scenario-driven questions (e.g., "How do you ensure idempotency across distributed microservices handling 50k webhook req/s with out-of-order delivery?").
+   - For each question:
+     * "question": The exact scenario-based technical question.
+     * "intention": Reveal what the hiring committee evaluates (the signal they seek: understanding of race conditions, memory vs CPU trade-offs, consistency models).
+     * "answer": A multi-part response blueprint including:
+       1) Recommended Architecture / Algorithmic solution.
+       2) Trade-offs & performance implications (P99 latency, memory footprint).
+       3) Edge cases and pitfalls to highlight in the interview.
+
+4. BEHAVIORAL & LEADERSHIP QUESTIONS (Generate 6 - 8 Questions):
+   - Tailored to the company culture and seniority in the JD (e.g., technical disagreements, managing tech debt vs feature delivery, production outages, cross-team misalignment).
+   - For each question:
+     * "question": The behavioral prompt.
+     * "intention": The core competency assessed (e.g., conflict resolution, root-cause blameless post-mortem, stakeholder empathy).
+     * "answer": A structured STAR (Situation, Task, Action, Result) model response detailing:
+       - Situation: Specific high-stakes context.
+       - Task: Individual ownership and goal.
+       - Action: Engineering and interpersonal actions taken.
+       - Result: Quantified impact (e.g., 99.99% uptime restored, 30% latency drop, delivered 2 weeks ahead).
+
+5. SKILL GAPS ISOLATION (Generate 4 - 6 Specific Gaps):
+   - Isolate exact areas where the candidate's background falls short of the target job posting.
+   - Classify severity strictly:
+     * "high": Essential hard requirement for the role; failing this will result in a No-Hire.
+     * "medium": Expected secondary skill or architectural pattern that will be probed.
+     * "low": Tooling, secondary library, or domain nuance that can be ramped up on the job.
+
+6. ACTIONABLE PREPARATION ROADMAP (10 to 14 Days):
+   - Structure into 4 progressive phases:
+     * Phase 1 (Days 1-3): Deep-Dive on High-Severity Skill Gaps & Foundational Architecture.
+     * Phase 2 (Days 4-7): Practical Implementation, Concurrency, Indexing & API Resilience.
+     * Phase 3 (Days 8-10): End-to-End System Design Scenarios & STAR Story Framing.
+     * Phase 4 (Days 11-14): Full-Scale Live Mock Interviews, Edge-Case Defense & Whiteboard Drills.
+   - For each day provide:
+     * "day": Integer (1, 2, 3...)
+     * "focus": Concise theme of the day.
+     * "tasks": Array of 3-4 specific, actionable study/coding tasks with concrete deliverables.
+
+================================================================================
+OUTPUT FORMAT:
+================================================================================
+Return ONLY a valid JSON object matching this schema:
 {
-  "title": "Exact Job Title",
-  "matchScore": 75,
+  "title": "Exact Role Title",
+  "matchScore": 82,
   "technicalQuestions": [
-    { "question": "...", "intention": "...", "answer": "..." }
+    {
+      "question": "Scenario-based technical question...",
+      "intention": "What the interviewer evaluates...",
+      "answer": "Structured architecture solution, trade-offs, and edge cases..."
+    }
   ],
   "behavioralQuestions": [
-    { "question": "...", "intention": "...", "answer": "..." }
+    {
+      "question": "Behavioral question...",
+      "intention": "Competency and leadership trait evaluated...",
+      "answer": "STAR Framework: Situation (...), Task (...), Action (...), Result (...)"
+    }
   ],
   "skillGaps": [
-    { "skill": "...", "severity": "low|medium|high" }
+    {
+      "skill": "Specific Skill / Architecture Gap",
+      "severity": "high"
+    }
   ],
   "preparationPlan": [
-    { "day": 1, "focus": "...", "tasks": ["Task 1", "Task 2"] }
+    {
+      "day": 1,
+      "focus": "Core Domain / Distributed Locking",
+      "tasks": [
+        "Implement a Redis SETNX lock with TTL safety in sandbox environment.",
+        "Analyze split-brain edge cases in multi-master setups.",
+        "Review P99 latency impact of distributed locks under 20k RPS."
+      ]
+    }
   ]
 }`;
 
     const raw = await callGroqWithFallback({
-        temperature: 0.3,
+        temperature: 0.25,
         messages: [
             {
                 role: "system",
-                content: "You are an expert interview coach. Return strictly valid JSON with comprehensive interview prep content."
+                content: "You are a Principal Engineering Director and Staff Interview Calibrator. Output strictly valid JSON conforming to the requested schema. Provide comprehensive, production-grade technical interview strategies with high-signal trade-offs and STAR behavioral frameworks."
             },
             {
                 role: "user",
