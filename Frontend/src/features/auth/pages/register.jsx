@@ -11,7 +11,8 @@ const Register = () => {
     const [ password, setPassword ] = useState("")
     const [ authError, setAuthError ] = useState("")
 
-    const { user, loading, handleRegister } = useAuth()
+    const { user, loading, handleRegister, handleDemoLogin } = useAuth()
+    const [ isSubmittingDemo, setIsSubmittingDemo ] = useState(false)
     
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -24,13 +25,25 @@ const Register = () => {
         setAuthError(error)
     }
 
+    const onDemoLoginClick = async () => {
+        setAuthError("")
+        setIsSubmittingDemo(true)
+        const { success, error } = await handleDemoLogin()
+        if (success) {
+            navigate('/app')
+            return
+        }
+        setIsSubmittingDemo(false)
+        setAuthError(error || "Demo login failed")
+    }
+
     useEffect(() => {
         if (user) {
             navigate('/app')
         }
     }, [user, navigate])
 
-    if (loading) {
+    if (loading && !isSubmittingDemo) {
         return (
             <main style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
                 <h1>Loading........</h1>
@@ -42,8 +55,30 @@ const Register = () => {
         <main className='register-page'>
             <div className='register-page__layout'>
                 <section className='glass-card register-card'>
+                    <div className='card-header-badge'>
+                        <span className='pill-badge'>⚡ Recruiter Demo Mode</span>
+                    </div>
                     <h1>Create Account</h1>
-                    <p className='glass-card__subtitle'>Join thousands preparing for their next big opportunity.</p>
+                    <p className='glass-card__subtitle'>Join to prepare for interviews, or try Demo Mode instantly.</p>
+
+                    <div className='demo-access-box'>
+                        <div className='demo-access-box__info'>
+                            <strong>Want to test without creating an account?</strong>
+                            <span>Jump straight to the dashboard with full features enabled.</span>
+                        </div>
+                        <button
+                            type="button"
+                            className='button demo-button'
+                            onClick={onDemoLoginClick}
+                            disabled={isSubmittingDemo}
+                        >
+                            {isSubmittingDemo ? "Connecting Demo..." : "⚡ 1-Click Demo Login"}
+                        </button>
+                    </div>
+
+                    <div className='auth-divider'>
+                        <span>or register with email</span>
+                    </div>
 
                     <form onSubmit={handleSubmit}>
                         <div className="input-group">
@@ -76,7 +111,9 @@ const Register = () => {
 
                         {authError && <p className='form-error'>{authError}</p>}
 
-                        <button className='button primary-button register-submit' >Create Account</button>
+                        <button className='button primary-button register-submit' disabled={isSubmittingDemo}>
+                            Create Account
+                        </button>
                     </form>
 
                     <p className='switch-auth'>Already have an account? <Link to={"/login"} >Sign in</Link> </p>

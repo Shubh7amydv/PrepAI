@@ -19,6 +19,13 @@ authRouter.post("/register", authController.registerUserController);
  */
 authRouter.post("/login",authController.loginUserController)
 
+/**
+ * @route POST api/auth/demo-login
+ * @access public
+ * @description Used to login as a demo/recruiter account
+ */
+authRouter.post("/demo-login", authController.demoLoginController)
+
 
 /**
  * @route GET api/auth/logout

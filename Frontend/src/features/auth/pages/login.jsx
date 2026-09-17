@@ -5,12 +5,13 @@ import { useAuth } from '../hooks/useAuth'
 
 const Login = () => {
 
-    const { user, loading, handleLogin } = useAuth()
+    const { user, loading, handleLogin, handleDemoLogin } = useAuth()
     const navigate = useNavigate()
 
     const [ email, setEmail ] = useState("")
     const [ password, setPassword ] = useState("")
     const [ authError, setAuthError ] = useState("")
+    const [ isSubmittingDemo, setIsSubmittingDemo ] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -23,13 +24,32 @@ const Login = () => {
         setAuthError(error)
     }
 
+    const handleAutofillDemo = () => {
+        setEmail("demo.recruiter@prepai.dev")
+        setPassword("DemoUser@PrepAI123!")
+        setAuthError("")
+    }
+
+    const onDemoLoginClick = async () => {
+        setAuthError("")
+        setIsSubmittingDemo(true)
+        handleAutofillDemo()
+        const { success, error } = await handleDemoLogin()
+        if (success) {
+            navigate('/app')
+            return
+        }
+        setIsSubmittingDemo(false)
+        setAuthError(error || "Demo login failed")
+    }
+
     useEffect(() => {
         if (user) {
             navigate('/app')
         }
     }, [user, navigate])
 
-    if (loading) {
+    if (loading && !isSubmittingDemo) {
         return (
             <main style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
                 <h1>Loading.........</h1>
@@ -49,13 +69,50 @@ const Login = () => {
                 </aside>
 
                 <section className='glass-card'>
+                    <div className='card-header-badge'>
+                        <span className='pill-badge'>🚀 Instant Access Available</span>
+                    </div>
                     <h1>Welcome Back</h1>
-                    <p className='glass-card__subtitle'>Sign in and continue building your interview edge.</p>
+                    <p className='glass-card__subtitle'>Sign in or use Demo Mode to test PrepAI instantly.</p>
+
+                    <div className='demo-access-box'>
+                        <div className='demo-access-box__info'>
+                            <strong>Recruiter & Guest Access</strong>
+                            <span>Skip registration and explore full app features with one click.</span>
+                        </div>
+                        <div className='demo-actions-row'>
+                            <button
+                                type="button"
+                                className='button demo-button'
+                                onClick={onDemoLoginClick}
+                                disabled={isSubmittingDemo}
+                            >
+                                {isSubmittingDemo ? (
+                                    <span>Connecting Demo...</span>
+                                ) : (
+                                    <span>⚡ 1-Click Demo Login</span>
+                                )}
+                            </button>
+                            <button
+                                type="button"
+                                className='button demo-autofill-btn'
+                                onClick={handleAutofillDemo}
+                                title="Auto-fill demo credentials in the form"
+                            >
+                                Auto-fill
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className='auth-divider'>
+                        <span>or continue with email</span>
+                    </div>
 
                     <form onSubmit={handleSubmit}>
                         <div className="input-group">
                             <label htmlFor="email">Email Address</label>
                             <input
+                                value={email}
                                 onChange={(e) => { setEmail(e.target.value) }}
                                 type="email"
                                 id="email"
@@ -66,6 +123,7 @@ const Login = () => {
                         <div className="input-group">
                             <label htmlFor="password">Password</label>
                             <input
+                                value={password}
                                 onChange={(e) => { setPassword(e.target.value) }}
                                 type="password"
                                 id="password"
@@ -75,7 +133,9 @@ const Login = () => {
 
                         {authError && <p className='form-error'>{authError}</p>}
 
-                        <button className='button primary-button login-submit' >Sign In</button>
+                        <button className='button primary-button login-submit' disabled={isSubmittingDemo}>
+                            Sign In
+                        </button>
                     </form>
 
                     <p className='switch-auth'>Don&apos;t have an account? <Link to={"/register"} >Create one</Link> </p>

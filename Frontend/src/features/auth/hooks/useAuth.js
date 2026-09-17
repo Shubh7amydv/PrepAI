@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import {AuthContext} from "../auth.context"
-import{ login,register,logout,getMe} from "../services/auth.api"
+import{ login,register,logout,getMe,demoLogin} from "../services/auth.api"
 
 export const useAuth =() =>{
 
@@ -58,6 +58,23 @@ export const useAuth =() =>{
        }
     }
 
+    const handleDemoLogin = async () => {
+        try {
+            setLoading(true);
+            const data = await demoLogin();
+            if (!data?.user) {
+                return { success: false, error: "Unable to sign in as demo user" };
+            }
+            setUser(data.user);
+            cacheUser(data.user, data.token);
+            return { success: true, error: "" };
+        } catch (error) {
+            return { success: false, error: getErrorMessage(error, "Demo login failed") };
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleRegister=async ({username,email,password})=>{
 
         try {
@@ -96,9 +113,11 @@ export const useAuth =() =>{
         isInitializing,
         handleRegister,
         handleLogin,
+        handleDemoLogin,
         handleLogout,
         register: handleRegister,
         login: handleLogin,
+        demoLogin: handleDemoLogin,
         logout: handleLogout
     }
 

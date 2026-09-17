@@ -1,34 +1,39 @@
 @use "sass:color";
 
-// ── PrepAI Design System Tokens (Dark Editorial / Warm Burnt-Amber & Muted Teal) ──
+// ── PrepAI Design System Tokens (BillFlow Warm Linen & Coral Editorial Theme) ──
 
 // Core Palette
-$color-bg-page: #0E0E10;         // Near-black warm neutral
-$color-bg-surface: #17171A;      // Card background - one clear step up from page
-$color-bg-raised: #1F1F23;       // Raised panels, modals, inputs
-$color-bg-overlay: #27272C;
+$color-bg-page: #EAE7DC;         // Signature warm linen/sand canvas
+$color-bg-surface: #FAF8F5;      // Soft warm off-white surface
+$color-bg-raised: #FFFFFF;       // Crisp white raised cards / inputs
+$color-bg-overlay: #F2EFE8;      // Ivory layered surface
+$color-bg-sand: #D8C3A5;         // Rich warm sand for headers / subtle strips
 
-$color-ink-primary: #EDEBE6;     // Warm off-white, not pure #FFF
-$color-ink-secondary: #9C9994;   // Secondary text
-$color-ink-tertiary: #6B6863;    // Placeholder, disabled, label text
+$color-ink-primary: #2B2824;     // Deep obsidian warm charcoal text
+$color-ink-secondary: #6B6864;   // Elegant muted slate warm gray
+$color-ink-tertiary: #8E8D8A;    // Muted placeholder / label text
 
-$color-accent-primary: #C97A4A;  // Warm burnt-amber - primary action & match score ONLY
-$color-accent-primary-hover: #B36838;
-$color-accent-secondary: #4E8C89; // Muted teal - secondary actions, links, info states
-$color-accent-secondary-hover: #407572;
+$color-accent-primary: #E85A4F;  // Signature vibrant coral terracotta
+$color-accent-primary-hover: #D44A3F;
+$color-accent-primary-active: #C03D32;
+$color-accent-secondary: #E98074;// Warm rose salmon
+$color-accent-secondary-hover: #D86F63;
+$color-accent-blue: #0055FF;     // Tech cobalt blue for tags / badge highlights
 
-$color-border-subtle: rgba(237, 235, 230, 0.08);
-$color-border-strong: rgba(237, 235, 230, 0.16);
+$color-border-subtle: rgba(216, 195, 165, 0.45);
+$color-border-strong: rgba(216, 195, 165, 0.85);
+$color-border-card: rgba(216, 195, 165, 0.7);
 
-$color-success: #6FA37F;
-$color-danger: #C2543C;
-$color-warning: #D49E58;
+$color-success: #00A86B;         // BillFlow emerald green
+$color-danger: #E85A4F;          // Coral danger
+$color-warning: #F5B82E;         // Warm amber yellow
 
 // Semantic Token Mappings
 $bg-page: $color-bg-page;
 $bg-surface: $color-bg-surface;
 $bg-surface-raised: $color-bg-raised;
 $bg-surface-overlay: $color-bg-overlay;
+$bg-sand: $color-bg-sand;
 
 $ink-primary: $color-ink-primary;
 $ink-secondary: $color-ink-secondary;
@@ -36,32 +41,39 @@ $ink-tertiary: $color-ink-tertiary;
 
 $accent-primary: $color-accent-primary;
 $accent-primary-hover: $color-accent-primary-hover;
+$accent-primary-active: $color-accent-primary-active;
 $accent-secondary: $color-accent-secondary;
 $accent-secondary-hover: $color-accent-secondary-hover;
+$accent-blue: $color-accent-blue;
 
 $border-subtle: $color-border-subtle;
 $border-strong: $color-border-strong;
+$border-card: $color-border-card;
 
 $success: $color-success;
 $danger: $color-danger;
 $warning: $color-warning;
 
-// Typography (Display: Fraunces serif 400-450, Body: Inter 400-600)
-$font-display: 'Fraunces', Georgia, serif;
-$font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+// Typography (Display: Playfair Display serif, Body: Plus Jakarta Sans)
+$font-display: 'Playfair Display', Georgia, serif;
+$font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
 // Radii
-$radius-sm: 4px;
-$radius-button: 8px;
-$radius-card: 10px;
+$radius-sm: 6px;
+$radius-button: 999px;
+$radius-input: 10px;
+$radius-card: 16px;
 $radius-pill: 999px;
 
-// Shadows (Soft diffuse shadows, NO NEON GLOWS)
-$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-$shadow-card: 0 20px 60px rgba(0, 0, 0, 0.4);
+// Shadows
+$shadow-xs: 0 1px 2px rgba(43, 40, 36, 0.05);
+$shadow-sm: 0 2px 8px rgba(43, 40, 36, 0.06);
+$shadow-md: 0 8px 24px rgba(43, 40, 36, 0.08);
+$shadow-card: 0 16px 40px -12px rgba(43, 40, 36, 0.12);
+$shadow-accent: 0 10px 25px -5px rgba(232, 90, 79, 0.35);
 $shadow-subtle: $shadow-sm;
 
 // Transitions
-$transition-fast: 120ms ease;
-$transition-smooth: 200ms ease;
+$transition-fast: 150ms ease;
+$transition-smooth: 220ms ease;
 $transition-normal: $transition-smooth;

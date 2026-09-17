@@ -4,12 +4,12 @@
 .button {
     border: none;
     outline: none;
-    height: 40px;
-    padding: 0 1.2rem;
+    height: 42px;
+    padding: 0 1.4rem;
     border-radius: $radius-button;
     font-family: $font-body;
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.9375rem;
+    font-weight: 700;
     letter-spacing: -0.01em;
     cursor: pointer;
     display: inline-flex;
@@ -22,37 +22,43 @@
 
     &.primary-button {
         background-color: $accent-primary;
-        color: $bg-page;
+        color: #FFFFFF;
         border: 1px solid transparent;
-        font-weight: 600;
+        box-shadow: 0 4px 14px rgba(232, 90, 79, 0.28);
 
         &:hover:not(:disabled) {
             background-color: $accent-primary-hover;
-            border-color: rgba(237, 235, 230, 0.2);
+            box-shadow: 0 6px 20px rgba(232, 90, 79, 0.4);
+            transform: translateY(-1px);
         }
 
         &:active:not(:disabled) {
-            transform: scale(0.99);
+            background-color: $accent-primary-active;
+            transform: translateY(0);
         }
 
         &:disabled {
-            opacity: 0.5;
+            opacity: 0.55;
             cursor: not-allowed;
+            box-shadow: none;
         }
     }
 
     &.secondary-button {
-        background-color: transparent;
+        background-color: $bg-surface;
         color: $ink-primary;
         border: 1px solid $border-strong;
+        box-shadow: $shadow-xs;
 
         &:hover:not(:disabled) {
-            background-color: $bg-surface;
-            border-color: rgba(237, 235, 230, 0.3);
+            background-color: $bg-page;
+            color: $accent-primary;
+            border-color: $accent-primary;
+            transform: translateY(-1px);
         }
 
         &:active:not(:disabled) {
-            transform: scale(0.99);
+            transform: translateY(0);
         }
 
         &:disabled {

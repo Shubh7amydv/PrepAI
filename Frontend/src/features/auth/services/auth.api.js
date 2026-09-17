@@ -47,6 +47,15 @@ export async function login({ email, password }) {
 
 }
 
+export async function demoLogin() {
+    try {
+        const response = await api.post("/api/auth/demo-login");
+        return response.data;
+    } catch (err) {
+        throw err;
+    }
+}
+
 export async function logout() {
     try {
 

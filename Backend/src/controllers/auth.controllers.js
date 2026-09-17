@@ -178,10 +178,8 @@ async function logoutUserController(req,res) {
  * @access public 
  */
 async function getUserController(req,res) {
-
     const user= await userModel.findById(req.user.id);
     res.status(201).json({
-
         message: "user fetched successfully",
         user:{
             id: user._id,
@@ -191,12 +189,65 @@ async function getUserController(req,res) {
     })
 }
 
+/**
+ * @name demoLoginController
+ * @description Used to log in as a demo/recruiter account without requiring manual registration
+ * @access public
+ */
+async function demoLoginController(req, res) {
+    try {
+        const demoEmail = "demo.recruiter@prepai.dev";
+        const demoUsername = "DemoRecruiter";
+        const demoPassword = "DemoUser@PrepAI123!";
 
+        let user = await userModel.findOne({ email: demoEmail });
 
+        if (!user) {
+            const hash = await bcrypt.hash(demoPassword, 10);
+            user = await userModel.create({
+                username: demoUsername,
+                email: demoEmail,
+                password: hash
+            });
+        }
+
+        const token = jwt.sign(
+            {
+                id: user._id,
+                username: user.username
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
+        );
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+            maxAge: 24 * 60 * 60 * 1000
+        });
+
+        return res.status(200).json({
+            message: "Demo user signed in successfully",
+            token,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email
+            }
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Failed to login as demo user",
+            error: error.message
+        });
+    }
+}
 
 module.exports={
     registerUserController,
     loginUserController,
     logoutUserController,
-    getUserController
+    getUserController,
+    demoLoginController
 }
