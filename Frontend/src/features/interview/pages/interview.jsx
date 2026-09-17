@@ -92,23 +92,201 @@ const QuestionCard = ({ item, index }) => {
     )
 }
 
-// ── Road Map Day Sub-component ────────────────────────────────────────────────
-const RoadMapDay = ({ day }) => (
-    <div className='roadmap-card'>
-        <div className='roadmap-card__header'>
-            <span className='roadmap-card__badge'>Day {day.day}</span>
-            <h3 className='roadmap-card__focus'>{day.focus}</h3>
+// ── Interactive Milestone Path UI Sub-components ──────────────────────────────
+
+const MILESTONE_PHASES = [
+    {
+        id: 'phase-1',
+        number: '01',
+        title: 'Core Foundation & Critical Gaps',
+        description: 'Remediate high-severity skill gaps and master foundational system primitives.',
+        icon: '🎯',
+        minDay: 1,
+        maxDay: 3
+    },
+    {
+        id: 'phase-2',
+        number: '02',
+        title: 'Concurrency, API Resilience & Scale',
+        description: 'Practical coding implementations, performance profiling, and distributed concurrency.',
+        icon: '⚡',
+        minDay: 4,
+        maxDay: 7
+    },
+    {
+        id: 'phase-3',
+        number: '03',
+        title: 'System Design & STAR Behavioral Mastery',
+        description: 'End-to-end architectural scenarios, trade-off defense, and leadership matrices.',
+        icon: '🏛️',
+        minDay: 8,
+        maxDay: 10
+    },
+    {
+        id: 'phase-4',
+        number: '04',
+        title: 'Full-Scale Simulation & Final Calibration',
+        description: 'Live whiteboarding drills, timed mock interviews, and committee pitch readiness.',
+        icon: '🏆',
+        minDay: 11,
+        maxDay: 30
+    }
+];
+
+const RoadMapPath = ({ plan = [] }) => {
+    const [ checkedTasks, setCheckedTasks ] = useState({})
+
+    const toggleTask = (dayNum, taskIdx) => {
+        const key = `${dayNum}-${taskIdx}`
+        setCheckedTasks(prev => ({
+            ...prev,
+            [key]: !prev[key]
+        }))
+    }
+
+    const totalTasks = plan.reduce((acc, d) => acc + (d.tasks?.length || 0), 0)
+    const completedCount = Object.values(checkedTasks).filter(Boolean).length
+    const progressPercent = totalTasks > 0 ? Math.round((completedCount / totalTasks) * 100) : 0
+
+    // Group days by Milestone Phase
+    const phasesWithDays = MILESTONE_PHASES.map(phase => {
+        const daysInPhase = plan.filter(d => d.day >= phase.minDay && d.day <= phase.maxDay)
+        return {
+            ...phase,
+            days: daysInPhase
+        }
+    }).filter(p => p.days.length > 0)
+
+    // Handle any days not matched in predefined phases
+    const matchedDayNumbers = new Set(phasesWithDays.flatMap(p => p.days.map(d => d.day)))
+    const remainingDays = plan.filter(d => !matchedDayNumbers.has(d.day))
+    if (remainingDays.length > 0) {
+        phasesWithDays.push({
+            id: 'phase-extra',
+            number: String(phasesWithDays.length + 1).padStart(2, '0'),
+            title: 'Extended Execution & Polish',
+            description: 'Advanced deep-dive topics and specialized system drills.',
+            icon: '🚀',
+            days: remainingDays
+        })
+    }
+
+    return (
+        <div className='roadmap-path-container'>
+            {/* Journey Header & Progress Meter */}
+            <div className='roadmap-journey-header'>
+                <div className='journey-meta'>
+                    <div className='journey-title-row'>
+                        <span className='journey-badge'>📍 Strategic Milestones</span>
+                        <span className='journey-counter'>{completedCount} of {totalTasks} Tasks Mastered</span>
+                    </div>
+                    <div className='journey-progress-track'>
+                        <div
+                            className='journey-progress-fill'
+                            style={{ width: `${progressPercent}%` }}
+                        />
+                    </div>
+                </div>
+                <div className='journey-stat-chip'>
+                    <span className='stat-num'>{progressPercent}%</span>
+                    <span className='stat-label'>Ready</span>
+                </div>
+            </div>
+
+            {/* Milestones Path List */}
+            <div className='milestones-path-list'>
+                {phasesWithDays.map((phase, pIdx) => {
+                    const phaseTotalTasks = phase.days.reduce((acc, d) => acc + (d.tasks?.length || 0), 0)
+                    const phaseDoneTasks = phase.days.reduce((acc, d) => {
+                        return acc + d.tasks.filter((_, tIdx) => checkedTasks[`${d.day}-${tIdx}`]).length
+                    }, 0)
+                    const phasePercent = phaseTotalTasks > 0 ? Math.round((phaseDoneTasks / phaseTotalTasks) * 100) : 0
+                    const isPhaseComplete = phaseTotalTasks > 0 && phaseDoneTasks === phaseTotalTasks
+
+                    return (
+                        <div key={phase.id} className={`milestone-phase-card ${isPhaseComplete ? 'milestone-phase-card--complete' : ''}`}>
+                            {/* Phase Header Banner */}
+                            <div className='phase-header-banner'>
+                                <div className='phase-badge-group'>
+                                    <span className='phase-icon'>{phase.icon}</span>
+                                    <div className='phase-title-wrap'>
+                                        <span className='phase-kicker'>Milestone {phase.number}</span>
+                                        <h3 className='phase-title'>{phase.title}</h3>
+                                    </div>
+                                </div>
+                                <div className='phase-status-tag'>
+                                    <span>{phaseDoneTasks}/{phaseTotalTasks} Done</span>
+                                </div>
+                            </div>
+
+                            <p className='phase-description'>{phase.description}</p>
+
+                            {/* Connected Days Path */}
+                            <div className='phase-days-path'>
+                                {phase.days.map((day, dIdx) => {
+                                    const dayDone = day.tasks?.every((_, tIdx) => checkedTasks[`${day.day}-${tIdx}`])
+                                    const dayCompletedCount = day.tasks?.filter((_, tIdx) => checkedTasks[`${day.day}-${tIdx}`]).length || 0
+
+                                    return (
+                                        <div key={day.day} className={`path-day-node ${dayDone ? 'path-day-node--done' : ''}`}>
+                                            {/* Node Indicator */}
+                                            <div className='node-connector'>
+                                                <div className='node-marker'>
+                                                    {dayDone ? (
+                                                        <span className='marker-check'>✓</span>
+                                                    ) : (
+                                                        <span className='marker-num'>{String(day.day).padStart(2, '0')}</span>
+                                                    )}
+                                                </div>
+                                                {dIdx < phase.days.length - 1 && <div className='node-line' />}
+                                            </div>
+
+                                            {/* Node Content Card */}
+                                            <div className='node-content-card'>
+                                                <div className='node-header'>
+                                                    <div className='node-title-group'>
+                                                        <span className='day-pill'>Day {day.day}</span>
+                                                        <h4 className='node-focus-title'>{day.focus}</h4>
+                                                    </div>
+                                                    <span className='node-progress-tag'>
+                                                        {dayCompletedCount}/{day.tasks?.length || 0}
+                                                    </span>
+                                                </div>
+
+                                                {/* Checklist */}
+                                                <ul className='node-checklist'>
+                                                    {day.tasks?.map((task, tIdx) => {
+                                                        const isChecked = !!checkedTasks[`${day.day}-${tIdx}`]
+                                                        return (
+                                                            <li
+                                                                key={tIdx}
+                                                                className={`task-item ${isChecked ? 'task-item--checked' : ''}`}
+                                                                onClick={() => toggleTask(day.day, tIdx)}
+                                                            >
+                                                                <button
+                                                                    type='button'
+                                                                    className={`task-checkbox ${isChecked ? 'task-checkbox--checked' : ''}`}
+                                                                    aria-label={`Mark task ${tIdx + 1} as completed`}
+                                                                >
+                                                                    {isChecked && <span>✓</span>}
+                                                                </button>
+                                                                <span className='task-text'>{task}</span>
+                                                            </li>
+                                                        )
+                                                    })}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
         </div>
-        <ul className='roadmap-card__tasks'>
-            {day.tasks.map((task, i) => (
-                <li key={i}>
-                    <span className='task-bullet' />
-                    <span>{task}</span>
-                </li>
-            ))}
-        </ul>
-    </div>
-)
+    )
+}
 
 // ── Main Interview Component ──────────────────────────────────────────────────
 const Interview = () => {
@@ -212,14 +390,10 @@ const Interview = () => {
                     {activeNav === 'roadmap' && (
                         <section className='content-section'>
                             <div className='content-section__head'>
-                                <h2>Preparation roadmap</h2>
-                                <span className='count-chip'>{report.preparationPlan?.length || 0}-day plan</span>
+                                <h2>Preparation Roadmap</h2>
+                                <span className='count-chip'>{report.preparationPlan?.length || 0}-day journey</span>
                             </div>
-                            <div className='roadmap-stack'>
-                                {report.preparationPlan?.map((day) => (
-                                    <RoadMapDay key={day.day} day={day} />
-                                ))}
-                            </div>
+                            <RoadMapPath plan={report.preparationPlan || []} />
                         </section>
                     )}
                 </main>

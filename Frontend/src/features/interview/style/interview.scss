@@ -431,63 +431,401 @@
     }
 }
 
-// ── Road Map Day Card ─────────────────────────────────────────────────────────
-.roadmap-card {
-    background-color: #0E121E;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    padding: 1.5rem;
-    box-shadow: $shadow-xs;
+// ── Interactive Milestone Path UI ─────────────────────────────────────────────
+.roadmap-path-container {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.75rem;
+    width: 100%;
+}
 
-    &__header {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
+.roadmap-journey-header {
+    background: #0E121E;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
 
-        .roadmap-card__badge {
-            background: linear-gradient(135deg, #6366F1, #8B5CF6);
-            color: #FFFFFF;
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 0.25rem 0.65rem;
-            border-radius: 999px;
-            letter-spacing: 0.03em;
-        }
-
-        .roadmap-card__focus {
-            font-family: $font-display;
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #FFFFFF;
-        }
+    @media (max-width: 640px) {
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    &__tasks {
-        list-style: none;
+    .journey-meta {
         display: flex;
         flex-direction: column;
         gap: 0.65rem;
-        padding-left: 0.25rem;
+        flex: 1;
 
-        li {
+        .journey-title-row {
             display: flex;
-            align-items: flex-start;
-            gap: 0.65rem;
-            font-size: 0.9375rem;
-            color: $ink-secondary;
-            line-height: 1.5;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
 
-            .task-bullet {
-                width: 6px;
-                height: 6px;
+            .journey-badge {
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: #A5B4FC;
+                background: rgba(99, 102, 241, 0.15);
+                border: 1px solid rgba(99, 102, 241, 0.35);
+                padding: 0.2rem 0.6rem;
                 border-radius: 999px;
-                background-color: $accent-primary;
-                box-shadow: 0 0 8px rgba(99, 102, 241, 0.7);
-                margin-top: 0.5rem;
+            }
+
+            .journey-counter {
+                font-family: $font-mono;
+                font-size: 0.8125rem;
+                font-weight: 600;
+                color: $ink-primary;
+            }
+        }
+
+        .journey-progress-track {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 999px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+
+            .journey-progress-fill {
+                height: 100%;
+                background: linear-gradient(90deg, #3B82F6, #6366F1, #10B981);
+                border-radius: 999px;
+                transition: width 0.3s ease;
+            }
+        }
+    }
+
+    .journey-stat-chip {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        min-width: 80px;
+
+        .stat-num {
+            font-family: $font-mono;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #FFFFFF;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: $ink-tertiary;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.2rem;
+        }
+    }
+}
+
+.milestones-path-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.milestone-phase-card {
+    background: #0E121E;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    position: relative;
+    transition: border-color $transition-fast;
+
+    &:hover {
+        border-color: rgba(99, 102, 241, 0.35);
+    }
+
+    &--complete {
+        border-color: rgba(16, 185, 129, 0.4);
+        background: linear-gradient(180deg, rgba(16, 185, 129, 0.03) 0%, #0E121E 100%);
+    }
+
+    .phase-header-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+        .phase-badge-group {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+
+            .phase-icon {
+                font-size: 1.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 44px;
+                height: 44px;
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 12px;
                 flex-shrink: 0;
+            }
+
+            .phase-title-wrap {
+                display: flex;
+                flex-direction: column;
+                gap: 0.2rem;
+
+                .phase-kicker {
+                    font-family: $font-mono;
+                    font-size: 0.6875rem;
+                    font-weight: 700;
+                    color: #A5B4FC;
+                    text-transform: uppercase;
+                    letter-spacing: 0.06em;
+                }
+
+                .phase-title {
+                    font-family: $font-display;
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    color: #FFFFFF;
+                    margin: 0;
+                }
+            }
+        }
+
+        .phase-status-tag {
+            font-family: $font-mono;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: $ink-secondary;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+    }
+
+    .phase-description {
+        font-size: 0.875rem;
+        color: $ink-secondary;
+        line-height: 1.55;
+        margin: 0;
+    }
+
+    .phase-days-path {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding-top: 0.5rem;
+    }
+
+    .path-day-node {
+        display: grid;
+        grid-template-columns: 44px 1fr;
+        gap: 1.25rem;
+        position: relative;
+
+        @media (max-width: 600px) {
+            grid-template-columns: 34px 1fr;
+            gap: 0.85rem;
+        }
+
+        .node-connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .node-marker {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background: #141828;
+                border: 2px solid $border-strong;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2;
+                transition: all $transition-fast;
+
+                .marker-num {
+                    font-family: $font-mono;
+                    font-size: 0.6875rem;
+                    font-weight: 700;
+                    color: $ink-secondary;
+                }
+
+                .marker-check {
+                    font-size: 0.75rem;
+                    font-weight: 800;
+                    color: #10B981;
+                }
+            }
+
+            .node-line {
+                width: 2px;
+                flex: 1;
+                background: rgba(255, 255, 255, 0.08);
+                margin: 4px 0;
+                min-height: 30px;
+            }
+        }
+
+        &--done {
+            .node-connector {
+                .node-marker {
+                    background: rgba(16, 185, 129, 0.15);
+                    border-color: #10B981;
+                    box-shadow: 0 0 12px rgba(16, 185, 129, 0.35);
+                }
+
+                .node-line {
+                    background: #10B981;
+                }
+            }
+        }
+
+        .node-content-card {
+            background: #121624;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 1.2rem 1.35rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            transition: all $transition-fast;
+
+            &:hover {
+                background: #151A2B;
+                border-color: rgba(99, 102, 241, 0.3);
+            }
+
+            .node-header {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 0.85rem;
+
+                .node-title-group {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.25rem;
+
+                    .day-pill {
+                        font-family: $font-mono;
+                        font-size: 0.6875rem;
+                        font-weight: 700;
+                        color: #93C5FD;
+                        background: rgba(59, 130, 246, 0.12);
+                        border: 1px solid rgba(59, 130, 246, 0.3);
+                        padding: 0.1rem 0.45rem;
+                        border-radius: 4px;
+                        width: fit-content;
+                    }
+
+                    .node-focus-title {
+                        font-family: $font-body;
+                        font-size: 1rem;
+                        font-weight: 700;
+                        color: #FFFFFF;
+                        line-height: 1.35;
+                        margin: 0;
+                    }
+                }
+
+                .node-progress-tag {
+                    font-family: $font-mono;
+                    font-size: 0.6875rem;
+                    font-weight: 600;
+                    color: $ink-secondary;
+                    background: rgba(255, 255, 255, 0.04);
+                    border: 1px solid rgba(255, 255, 255, 0.06);
+                    padding: 0.15rem 0.45rem;
+                    border-radius: 4px;
+                    flex-shrink: 0;
+                }
+            }
+
+            .node-checklist {
+                list-style: none;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0;
+                margin: 0;
+
+                .task-item {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 0.65rem;
+                    padding: 0.45rem 0.6rem;
+                    border-radius: 6px;
+                    background: rgba(255, 255, 255, 0.02);
+                    border: 1px solid rgba(255, 255, 255, 0.04);
+                    cursor: pointer;
+                    user-select: none;
+                    transition: all $transition-fast;
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.05);
+                        border-color: rgba(255, 255, 255, 0.1);
+                    }
+
+                    .task-checkbox {
+                        width: 18px;
+                        height: 18px;
+                        border-radius: 4px;
+                        border: 1.5px solid $border-strong;
+                        background: transparent;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-top: 0.1rem;
+                        flex-shrink: 0;
+                        cursor: pointer;
+                        transition: all $transition-fast;
+                        font-size: 0.75rem;
+                        color: #FFFFFF;
+
+                        &--checked {
+                            background: #10B981;
+                            border-color: #10B981;
+                            box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+                        }
+                    }
+
+                    .task-text {
+                        font-size: 0.84rem;
+                        color: $ink-primary;
+                        line-height: 1.45;
+                        transition: all $transition-fast;
+                    }
+
+                    &--checked {
+                        background: rgba(16, 185, 129, 0.04);
+                        border-color: rgba(16, 185, 129, 0.15);
+
+                        .task-text {
+                            color: $ink-tertiary;
+                            text-decoration: line-through;
+                        }
+                    }
+                }
             }
         }
     }
