@@ -210,6 +210,404 @@ Return ONLY valid JSON with this exact structure:
     return interviewReportSchema.parse(sanitized);
 }
 
+// ── High-Standard Harvard ATS Resume Schema & HTML Compiler ───────────────────
+
+const structuredResumeSchema = z.object({
+    fullName: z.string().default("Candidate Name"),
+    contact: z.object({
+        email: z.string().optional().default(""),
+        phone: z.string().optional().default(""),
+        location: z.string().optional().default(""),
+        linkedin: z.string().optional().default(""),
+        github: z.string().optional().default(""),
+        portfolio: z.string().optional().default("")
+    }).default({}),
+    targetTitle: z.string().default(""),
+    summary: z.string().default(""),
+    skills: z.array(z.object({
+        category: z.string(),
+        items: z.union([z.array(z.string()), z.string()])
+    })).default([]),
+    experience: z.array(z.object({
+        role: z.string(),
+        company: z.string(),
+        location: z.string().optional().default(""),
+        dates: z.string().optional().default(""),
+        highlights: z.array(z.string()).default([])
+    })).default([]),
+    projects: z.array(z.object({
+        title: z.string(),
+        techStack: z.string().optional().default(""),
+        dates: z.string().optional().default(""),
+        highlights: z.array(z.string()).default([])
+    })).optional().default([]),
+    education: z.array(z.object({
+        degree: z.string(),
+        institution: z.string(),
+        dates: z.string().optional().default(""),
+        details: z.string().optional().default("")
+    })).default([]),
+    certifications: z.array(z.string()).optional().default([])
+});
+
+function renderAtsResumeHtml(data) {
+    const fullName = data.fullName || "Candidate Name";
+    const contact = data.contact || {};
+    const targetTitle = data.targetTitle || "";
+    const summary = data.summary || "";
+    const skills = Array.isArray(data.skills) ? data.skills : [];
+    const experience = Array.isArray(data.experience) ? data.experience : [];
+    const projects = Array.isArray(data.projects) ? data.projects : [];
+    const education = Array.isArray(data.education) ? data.education : [];
+    const certifications = Array.isArray(data.certifications) ? data.certifications : [];
+
+    const contactParts = [
+        contact.email,
+        contact.phone,
+        contact.location,
+        contact.linkedin ? contact.linkedin.replace(/^https?:\/\/(www\.)?/, '') : null,
+        contact.github ? contact.github.replace(/^https?:\/\/(www\.)?/, '') : null,
+        contact.portfolio ? contact.portfolio.replace(/^https?:\/\/(www\.)?/, '') : null
+    ].filter(Boolean);
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${fullName} - ATS Tailored Resume</title>
+<style>
+  @page {
+    size: A4;
+    margin: 12mm 15mm;
+  }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #111827;
+    background: #FFFFFF;
+    font-size: 9.5pt;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+  .resume-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4px 0;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .name {
+    font-size: 19pt;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #0F172A;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .target-title {
+    font-size: 10.5pt;
+    font-weight: 600;
+    color: #2563EB;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .contact-bar {
+    font-size: 8.5pt;
+    color: #475569;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .contact-item:not(:last-child)::after {
+    content: " • ";
+    color: #94A3B8;
+    margin-left: 6px;
+  }
+  .section {
+    margin-top: 9px;
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #0F172A;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1.5px solid #0F172A;
+    padding-bottom: 2px;
+    margin-bottom: 5px;
+  }
+  .summary-text {
+    font-size: 9pt;
+    color: #334155;
+    line-height: 1.45;
+    text-align: justify;
+  }
+  .skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .skills-row {
+    font-size: 9pt;
+    color: #334155;
+    line-height: 1.35;
+  }
+  .skills-row strong {
+    color: #0F172A;
+    font-weight: 600;
+  }
+  .entry {
+    margin-bottom: 7px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1px;
+  }
+  .entry-title {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #0F172A;
+  }
+  .entry-company {
+    font-size: 9pt;
+    font-weight: 600;
+    color: #334155;
+  }
+  .entry-meta {
+    font-size: 8.5pt;
+    font-weight: 500;
+    color: #64748B;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .bullets {
+    list-style-type: disc;
+    margin-left: 16px;
+    margin-top: 2px;
+  }
+  .bullets li {
+    font-size: 8.8pt;
+    color: #334155;
+    line-height: 1.38;
+    margin-bottom: 2px;
+  }
+  .bullets li strong {
+    color: #0F172A;
+  }
+  @media print {
+    body {
+      background: transparent;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="resume-container">
+  <header class="header">
+    <h1 class="name">${fullName}</h1>
+    ${targetTitle ? `<div class="target-title">${targetTitle}</div>` : ''}
+    <div class="contact-bar">
+      ${contactParts.map(p => `<span class="contact-item">${p}</span>`).join('')}
+    </div>
+  </header>
+
+  ${summary ? `
+  <section class="section">
+    <h2 class="section-title">Professional Summary</h2>
+    <p class="summary-text">${summary}</p>
+  </section>
+  ` : ''}
+
+  ${skills.length > 0 ? `
+  <section class="section">
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="skills-list">
+      ${skills.map(s => `
+        <div class="skills-row">
+          <strong>${s.category || 'Competencies'}:</strong> ${Array.isArray(s.items) ? s.items.join(', ') : s.items}
+        </div>
+      `).join('')}
+    </div>
+  </section>
+  ` : ''}
+
+  ${experience.length > 0 ? `
+  <section class="section">
+    <h2 class="section-title">Professional Experience</h2>
+    ${experience.map(exp => `
+      <article class="entry">
+        <div class="entry-header">
+          <span class="entry-title">${exp.role} <span class="entry-company">&bull; ${exp.company}</span></span>
+          <span class="entry-meta">${exp.location ? `${exp.location} | ` : ''}${exp.dates || ''}</span>
+        </div>
+        ${exp.highlights && exp.highlights.length > 0 ? `
+          <ul class="bullets">
+            ${exp.highlights.map(h => `<li>${h}</li>`).join('')}
+          </ul>
+        ` : ''}
+      </article>
+    `).join('')}
+  </section>
+  ` : ''}
+
+  ${projects.length > 0 ? `
+  <section class="section">
+    <h2 class="section-title">Key Projects &amp; Systems</h2>
+    ${projects.map(proj => `
+      <article class="entry">
+        <div class="entry-header">
+          <span class="entry-title">${proj.title} ${proj.techStack ? `<span style="font-weight: 500; font-size: 8.5pt; color: #64748B;">(${proj.techStack})</span>` : ''}</span>
+          ${proj.dates ? `<span class="entry-meta">${proj.dates}</span>` : ''}
+        </div>
+        ${proj.highlights && proj.highlights.length > 0 ? `
+          <ul class="bullets">
+            ${proj.highlights.map(h => `<li>${h}</li>`).join('')}
+          </ul>
+        ` : ''}
+      </article>
+    `).join('')}
+  </section>
+  ` : ''}
+
+  ${education.length > 0 ? `
+  <section class="section">
+    <h2 class="section-title">Education</h2>
+    ${education.map(edu => `
+      <article class="entry">
+        <div class="entry-header">
+          <span class="entry-title">${edu.degree}</span>
+          <span class="entry-meta">${edu.dates || ''}</span>
+        </div>
+        <div class="entry-company">${edu.institution}${edu.details ? ` &bull; ${edu.details}` : ''}</div>
+      </article>
+    `).join('')}
+  </section>
+  ` : ''}
+
+  ${certifications.length > 0 ? `
+  <section class="section">
+    <h2 class="section-title">Certifications &amp; Achievements</h2>
+    <ul class="bullets">
+      ${certifications.map(c => `<li>${c}</li>`).join('')}
+    </ul>
+  </section>
+  ` : ''}
+</div>
+</body>
+</html>`;
+}
+
+async function generateStructuredResume({ resume, selfDescription, jobDescription }) {
+    const prompt = `You are a world-class executive resume writer and ATS optimization specialist.
+Generate a TAILORED, HIGH-IMPACT resume for this candidate specifically optimized for the target job description.
+
+CANDIDATE BACKGROUND:
+Existing Resume Text: ${resume || "Not provided"}
+Self Description / Profile: ${selfDescription || "Not provided"}
+
+TARGET JOB DESCRIPTION:
+${jobDescription}
+
+REQUIREMENTS:
+1. Extract candidate's name or create an authoritative professional name.
+2. Provide a compelling 2-3 sentence Professional Summary tightly matching the target role keywords.
+3. Categorize Technical Skills (e.g. "Languages & Runtimes", "Frameworks & Libraries", "Cloud & DevOps", "Databases & Storage").
+4. Reframe Professional Experience into 3-4 bullet points per role using the Google X-Y-Z formula: "Accomplished [X] as measured by [Y], by doing [Z]".
+5. Highlight quantified metrics (e.g., "reduced P99 latency by 45%", "scaled throughput to 50k req/s", "improved test coverage from 60% to 92%").
+6. Include relevant Projects, Education, and Certifications.
+
+Return ONLY a valid JSON object strictly matching this schema:
+{
+  "fullName": "First Last",
+  "contact": {
+    "email": "email@example.com",
+    "phone": "+1 (555) 000-0000",
+    "location": "City, State / Remote",
+    "linkedin": "linkedin.com/in/profile",
+    "github": "github.com/profile"
+  },
+  "targetTitle": "Target Job Title",
+  "summary": "Tailored executive summary...",
+  "skills": [
+    { "category": "Languages", "items": ["TypeScript", "Python", "Go"] },
+    { "category": "Backend & Cloud", "items": ["Node.js", "PostgreSQL", "Redis", "Docker", "AWS"] }
+  ],
+  "experience": [
+    {
+      "role": "Role Title",
+      "company": "Company Name",
+      "location": "City, State",
+      "dates": "2022 - Present",
+      "highlights": [
+        "Architected and deployed distributed event pipeline processing 40M+ events daily with 99.99% uptime.",
+        "Optimized PostgreSQL database queries and shard indexing, reducing median response times from 340ms to 48ms."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Project Name",
+      "techStack": "Next.js, Tailwind, Redis, Groq API",
+      "dates": "2024",
+      "highlights": ["Designed low-latency streaming pipeline with sub-100ms response times."]
+    }
+  ],
+  "education": [
+    {
+      "degree": "B.S. in Computer Science",
+      "institution": "University Name",
+      "dates": "Graduated 2022",
+      "details": "GPA 3.8 / Dean's List"
+    }
+  ],
+  "certifications": ["AWS Certified Solutions Architect"]
+}`;
+
+    const raw = await callGroqWithFallback({
+        temperature: 0.35,
+        messages: [
+            {
+                role: "system",
+                content: "You are an expert ATS resume writer. Return strictly valid JSON conforming to the structured resume schema."
+            },
+            {
+                role: "user",
+                content: prompt
+            }
+        ]
+    });
+
+    let parsed;
+    try {
+        parsed = JSON.parse(raw);
+    } catch (e) {
+        const match = raw.match(/\{[\s\S]*\}/);
+        if (match) {
+            parsed = JSON.parse(match[0]);
+        } else {
+            throw new Error(`Failed to parse resume JSON: ${e.message}`);
+        }
+    }
+
+    return structuredResumeSchema.parse(parsed);
+}
+
 // ── PDF Generation Functions ───────────────────────────────────────────────────
 
 async function generatePdfFromHtml(htmlContent) {
@@ -222,7 +620,16 @@ async function generatePdfFromHtml(htmlContent) {
         console.log("Launching Puppeteer browser...");
         browser = await puppeteer.launch({
             headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-accelerated-2d-canvas',
+                '--no-first-run',
+                '--no-zygote',
+                '--single-process',
+                '--disable-gpu'
+            ]
         });
         
         const page = await browser.newPage();
@@ -232,11 +639,12 @@ async function generatePdfFromHtml(htmlContent) {
         console.log("Generating PDF...");
         const pdfBuffer = await page.pdf({
             format: "A4",
+            printBackground: true,
             margin: {
-                top: "20mm",
-                bottom: "20mm",
-                left: "15mm",
-                right: "15mm"
+                top: "12mm",
+                bottom: "12mm",
+                left: "14mm",
+                right: "14mm"
             }
         });
 
@@ -263,130 +671,26 @@ async function generateResumePdf({ resume, selfDescription, jobDescription }) {
             throw new Error("Missing GROQ_API_KEY in environment variables");
         }
 
-        const resumePdfSchema = z.object({
-            html: z.string().describe("The HTML content of the resume which can be converted to PDF using puppeteer")
-        });
+        console.log("Generating structured resume data from AI...");
+        const resumeData = await generateStructuredResume({ resume, selfDescription, jobDescription });
 
-        const prompt = `You are an expert professional resume writer with deep knowledge of ATS systems and hiring practices. Generate a TAILORED resume for this candidate.
+        console.log("Rendering Harvard ATS HTML template...");
+        const html = renderAtsResumeHtml(resumeData);
 
-CANDIDATE PROFILE:
-Current Resume/Experience: ${resume}
-Self Description: ${selfDescription}
+        console.log("Converting HTML to PDF via Puppeteer...");
+        const pdfBuffer = await generatePdfFromHtml(html);
 
-TARGET JOB:
-${jobDescription}
-
-CRITICAL INSTRUCTIONS for Resume Generation:
-
-1. ANALYSIS & TAILORING:
-   - Analyze the job description thoroughly for key requirements, skills, and responsibilities
-   - Identify which of the candidate's experiences are most relevant
-   - Reframe and highlight achievements that match the job
-   - Use keywords from the job description naturally throughout the resume
-
-2. RESUME STRUCTURE (in order):
-   - Header: Full Name, Email, Phone, LinkedIn URL (if available)
-   - Professional Summary: 2-3 lines tailored to the target role, highlighting key strengths
-   - Key Skills: 6-8 relevant skills matching the job requirements (organized by category if applicable)
-   - Professional Experience: 3-5 most relevant positions with:
-     * Company name, job title, duration
-     * 4-5 achievement-focused bullet points using action verbs
-     * Quantifiable results where possible (metrics, percentages, numbers)
-     * Focus on accomplishments over responsibilities
-   - Education: Degree, University, Graduation year, relevant coursework/certifications
-   - Certifications/Achievements (if any relevant ones exist)
-   - Optional: Projects or Portfolio links
-
-3. CONTENT QUALITY:
-   - Use strong action verbs: "Designed", "Implemented", "Optimized", "Led", "Architected"
-   - Quantify achievements: percentages, numbers, time improvements
-   - Focus on impact and value delivered, not just duties
-   - Make it human-written, not robotic or AI-sounding
-   - Tailor all experiences to highlight job-relevant skills
-   - Keep to 1-2 pages maximum but prioritize quality
-
-4. ATS OPTIMIZATION:
-   - Use standard section headings (Professional Summary, Skills, Experience, Education)
-   - Include relevant keywords from job description naturally
-   - Use simple, clean formatting without images, tables, or special characters
-   - Use bullet points with consistent formatting
-   - Spell out abbreviations on first mention
-   - Include technical skills that match the job
-
-5. STYLING & FORMAT:
-   - Professional color scheme (dark headings, clean layout)
-   - Clear visual hierarchy with distinct sections
-   - Use HTML semantic tags and simple CSS
-   - Readable fonts (Arial, Calibri, etc.)
-   - Proper spacing and margins for visual appeal
-   - Bold for job titles and company names
-   - Italics for dates and locations
-   - Clean borders or dividers between sections
-
-6. CRITICAL REQUIREMENTS:
-   - No images, logos, or graphics (ATS incompatible)
-   - No tables or complex layouts
-   - Complete, valid, well-formatted HTML
-   - Responsive and printer-friendly
-   - All text must be selectable (important for ATS)
-   - Include ALL necessary content fields
-
-Return ONLY valid JSON with complete, production-ready HTML:
-{
-  "html": "<!DOCTYPE html><html>...</html>"
-}
-
-REMEMBER:
-- This resume will be parsed by ATS systems - keep it clean and simple
-- Focus on achievements and metrics, not duties
-- Tailor heavily to the job description
-- Make it look professional but natural
-- Include all relevant information that matches the job requirements`;
-
-        console.log("Calling Groq API for resume generation...");
-        const raw = await callGroqWithFallback({
-            temperature: 0.4,
-            messages: [
-                {
-                    role: "system",
-                    content: "You are an expert professional resume writer and ATS specialist. Generate only valid JSON with comprehensive, tailored, achievement-focused resume HTML. Ensure the resume is ATS-friendly, professional, and tailored to the specific job description. Include detailed content with strong achievements and metrics."
-                },
-                {
-                    role: "user",
-                    content: prompt
-                }
-            ]
-        });
-
-        console.log("Parsing Groq response...");
-        let parsed;
-        try {
-            parsed = JSON.parse(raw);
-        } catch (e) {
-            console.error("JSON parse error. Raw response:", raw.substring(0, 500));
-            throw new Error(`Failed to parse Groq response as JSON: ${e.message}`);
-        }
-
-        const validated = resumePdfSchema.parse(parsed);
-
-        if (!validated.html) {
-            throw new Error("Resume HTML is empty or not provided");
-        }
-
-        console.log("HTML validated. Converting to PDF...");
-        const pdfBuffer = await generatePdfFromHtml(validated.html);
-
-        if (!pdfBuffer || pdfBuffer.length === 0) {
-            throw new Error("PDF buffer is empty after generation");
-        }
-
-        return pdfBuffer;
+        return { pdfBuffer, html, resumeData };
     } catch (error) {
         console.error("Error in generateResumePdf:", error);
         throw error;
     }
 }
 
-
-
-module.exports = { generateInterviewReport, generateResumePdf, generatePdfFromHtml };
+module.exports = {
+    generateInterviewReport,
+    generateStructuredResume,
+    renderAtsResumeHtml,
+    generateResumePdf,
+    generatePdfFromHtml
+};

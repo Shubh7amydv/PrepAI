@@ -95,23 +95,32 @@ async function generateResumePdfController(req, res) {
         }
 
         console.log("Generating tailored resume PDF...");
-        const pdfBuffer = await generateResumePdf({
+        const result = await generateResumePdf({
             resume: resumeContent,
             jobDescription,
             selfDescription,
         });
 
-        if (!pdfBuffer || pdfBuffer.length === 0) {
-            return res.status(500).json({ message: "Error: PDF buffer is empty" });
+        const pdfBuffer = result?.pdfBuffer || (Buffer.isBuffer(result) ? result : null);
+
+        if (pdfBuffer && pdfBuffer.length > 0) {
+            res.set({
+                'Content-Type': 'application/pdf',
+                'Content-Disposition': 'attachment; filename="tailored-resume.pdf"',
+                'Content-Length': pdfBuffer.length
+            });
+            return res.send(pdfBuffer);
         }
 
-        res.set({
-            'Content-Type': 'application/pdf',
-            'Content-Disposition': 'attachment; filename="tailored-resume.pdf"',
-            'Content-Length': pdfBuffer.length
-        });
+        if (result?.html) {
+            return res.status(200).json({
+                message: "Resume generated as HTML",
+                html: result.html,
+                resumeData: result.resumeData
+            });
+        }
 
-        res.send(pdfBuffer);
+        return res.status(500).json({ message: "Error: PDF buffer is empty" });
     } catch (error) {
         console.error("Error generating resume PDF:", error);
         res.status(500).json({ 
