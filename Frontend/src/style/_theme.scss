@@ -1,39 +1,41 @@
 @use "sass:color";
 
-// ── PrepAI Design System Tokens (BillFlow Warm Linen & Coral Editorial Theme) ──
+// ── PrepAI Design System Tokens (Dark Obsidian Cyber-Luxe Theme) ──
 
 // Core Palette
-$color-bg-page: #EAE7DC;         // Signature warm linen/sand canvas
-$color-bg-surface: #FAF8F5;      // Soft warm off-white surface
-$color-bg-raised: #FFFFFF;       // Crisp white raised cards / inputs
-$color-bg-overlay: #F2EFE8;      // Ivory layered surface
-$color-bg-sand: #D8C3A5;         // Rich warm sand for headers / subtle strips
+$color-bg-page: #08090E;         // Deep space obsidian canvas
+$color-bg-surface: #0F121C;      // Premium dark glass surface
+$color-bg-raised: #161A28;       // Raised panels, cards & inputs
+$color-bg-overlay: #1E2335;      // Layered modal / dropdown overlay
+$color-bg-accent-subtle: rgba(99, 102, 241, 0.08);
 
-$color-ink-primary: #2B2824;     // Deep obsidian warm charcoal text
-$color-ink-secondary: #6B6864;   // Elegant muted slate warm gray
-$color-ink-tertiary: #8E8D8A;    // Muted placeholder / label text
+$color-ink-primary: #F8FAFC;     // Crisp bright white
+$color-ink-secondary: #94A3B8;   // Silver slate
+$color-ink-tertiary: #64748B;    // Muted slate / placeholder
 
-$color-accent-primary: #E85A4F;  // Signature vibrant coral terracotta
-$color-accent-primary-hover: #D44A3F;
-$color-accent-primary-active: #C03D32;
-$color-accent-secondary: #E98074;// Warm rose salmon
-$color-accent-secondary-hover: #D86F63;
-$color-accent-blue: #0055FF;     // Tech cobalt blue for tags / badge highlights
+$color-accent-primary: #6366F1;  // Electric Indigo
+$color-accent-primary-hover: #4F46E5;
+$color-accent-primary-active: #4338CA;
+$color-accent-purple: #8B5CF6;   // Neon Violet
+$color-accent-pink: #EC4899;     // Neon Rose
+$color-accent-cyan: #06B6D4;     // Cyber Cyan
+$color-accent-emerald: #10B981;  // Vibrant Mint Emerald
 
-$color-border-subtle: rgba(216, 195, 165, 0.45);
-$color-border-strong: rgba(216, 195, 165, 0.85);
-$color-border-card: rgba(216, 195, 165, 0.7);
+$color-border-subtle: rgba(255, 255, 255, 0.07);
+$color-border-strong: rgba(255, 255, 255, 0.14);
+$color-border-glow: rgba(99, 102, 241, 0.35);
+$color-border-card: rgba(255, 255, 255, 0.09);
 
-$color-success: #00A86B;         // BillFlow emerald green
-$color-danger: #E85A4F;          // Coral danger
-$color-warning: #F5B82E;         // Warm amber yellow
+$color-success: #10B981;
+$color-danger: #F43F5E;
+$color-warning: #F59E0B;
 
 // Semantic Token Mappings
 $bg-page: $color-bg-page;
 $bg-surface: $color-bg-surface;
 $bg-surface-raised: $color-bg-raised;
 $bg-surface-overlay: $color-bg-overlay;
-$bg-sand: $color-bg-sand;
+$bg-accent-subtle: $color-bg-accent-subtle;
 
 $ink-primary: $color-ink-primary;
 $ink-secondary: $color-ink-secondary;
@@ -42,38 +44,42 @@ $ink-tertiary: $color-ink-tertiary;
 $accent-primary: $color-accent-primary;
 $accent-primary-hover: $color-accent-primary-hover;
 $accent-primary-active: $color-accent-primary-active;
-$accent-secondary: $color-accent-secondary;
-$accent-secondary-hover: $color-accent-secondary-hover;
-$accent-blue: $color-accent-blue;
+$accent-purple: $color-accent-purple;
+$accent-pink: $color-accent-pink;
+$accent-cyan: $color-accent-cyan;
+$accent-emerald: $color-accent-emerald;
 
 $border-subtle: $color-border-subtle;
 $border-strong: $color-border-strong;
+$border-glow: $color-border-glow;
 $border-card: $color-border-card;
 
 $success: $color-success;
 $danger: $color-danger;
 $warning: $color-warning;
 
-// Typography (Display: Playfair Display serif, Body: Plus Jakarta Sans)
-$font-display: 'Playfair Display', Georgia, serif;
+// Typography (Display: Outfit tech-forward, Body: Plus Jakarta Sans)
+$font-display: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 $font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-mono: 'JetBrains Mono', monospace;
 
 // Radii
 $radius-sm: 6px;
-$radius-button: 999px;
+$radius-button: 10px;
 $radius-input: 10px;
 $radius-card: 16px;
 $radius-pill: 999px;
 
-// Shadows
-$shadow-xs: 0 1px 2px rgba(43, 40, 36, 0.05);
-$shadow-sm: 0 2px 8px rgba(43, 40, 36, 0.06);
-$shadow-md: 0 8px 24px rgba(43, 40, 36, 0.08);
-$shadow-card: 0 16px 40px -12px rgba(43, 40, 36, 0.12);
-$shadow-accent: 0 10px 25px -5px rgba(232, 90, 79, 0.35);
+// Shadows & Glows
+$shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+$shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
+$shadow-md: 0 8px 28px rgba(0, 0, 0, 0.65);
+$shadow-card: 0 20px 50px -10px rgba(0, 0, 0, 0.7);
+$shadow-glow: 0 0 30px -5px rgba(99, 102, 241, 0.35);
+$shadow-glow-cyan: 0 0 30px -5px rgba(6, 182, 212, 0.35);
 $shadow-subtle: $shadow-sm;
 
 // Transitions
-$transition-fast: 150ms ease;
+$transition-fast: 140ms ease;
 $transition-smooth: 220ms ease;
 $transition-normal: $transition-smooth;

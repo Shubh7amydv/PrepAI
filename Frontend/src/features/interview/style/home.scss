@@ -9,19 +9,34 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    overflow-x: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        filter: blur(120px);
+        pointer-events: none;
+    }
 }
 
 // ── Top Navigation Bar ───────────────────────────────────────────────────────
 .app-nav {
     width: 100%;
-    height: 70px;
+    height: 72px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 2rem;
     border-bottom: 1px solid $border-subtle;
-    background-color: rgba($bg-page, 0.9);
-    backdrop-filter: blur(16px);
+    background-color: rgba(8, 9, 14, 0.85);
+    backdrop-filter: blur(20px);
     position: sticky;
     top: 0;
     z-index: 50;
@@ -34,26 +49,27 @@
         color: $ink-primary;
 
         &__mark {
-            width: 32px;
-            height: 32px;
-            background-color: $accent-primary;
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(139, 92, 246, 0.35));
+            border: 1px solid rgba(99, 102, 241, 0.4);
             color: #FFFFFF;
-            border-radius: 8px;
+            border-radius: 9px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: $font-display;
             font-weight: 800;
             font-size: 1.1rem;
-            box-shadow: 0 2px 8px rgba(232, 90, 79, 0.3);
+            box-shadow: 0 0 16px rgba(99, 102, 241, 0.35);
         }
 
         &__name {
-            font-family: $font-body;
-            font-size: 1.25rem;
+            font-family: $font-display;
+            font-size: 1.3rem;
             font-weight: 800;
             letter-spacing: -0.02em;
-            color: $ink-primary;
+            color: #FFFFFF;
         }
     }
 
@@ -63,25 +79,25 @@
         gap: 1rem;
 
         .user-name {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             font-weight: 600;
             color: $ink-secondary;
             max-width: 180px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            background: $bg-surface;
-            padding: 0.3rem 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.35rem 0.85rem;
             border-radius: 999px;
             border: 1px solid $border-strong;
         }
 
         .logout-btn {
-            background: #FFFFFF;
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid $border-strong;
             color: $ink-primary;
             padding: 0.4rem 0.95rem;
-            border-radius: 999px;
+            border-radius: 8px;
             font-family: $font-body;
             font-size: 0.8125rem;
             font-weight: 600;
@@ -89,9 +105,9 @@
             transition: all $transition-fast;
 
             &:hover {
-                background-color: $bg-page;
-                color: $accent-primary;
-                border-color: $accent-primary;
+                background-color: rgba(244, 63, 94, 0.15);
+                border-color: rgba(244, 63, 94, 0.4);
+                color: #FCA5A5;
             }
         }
     }
@@ -104,11 +120,13 @@
 // ── Main Content Area ─────────────────────────────────────────────────────────
 .home-content {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1120px;
     padding: 3.5rem 1.5rem 5rem;
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
+    position: relative;
+    z-index: 1;
 
     @media (max-width: 768px) {
         padding: 2rem 1rem 4rem;
@@ -125,8 +143,8 @@
         font-family: $font-display;
         font-size: clamp(2rem, 3.5vw, 2.75rem);
         font-weight: 800;
-        color: $ink-primary;
-        letter-spacing: -0.015em;
+        color: #FFFFFF;
+        letter-spacing: -0.02em;
         line-height: 1.15;
     }
 
@@ -134,16 +152,16 @@
         font-size: 1rem;
         color: $ink-secondary;
         line-height: 1.6;
-        max-width: 680px;
+        max-width: 720px;
     }
 }
 
 // ── Strategy Form Card ────────────────────────────────────────────────────────
 .strategy-card {
-    background-color: #FFFFFF;
-    border: 1px solid rgba(216, 195, 165, 0.85);
+    background: #0E121E;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
-    box-shadow: 0 16px 45px -12px rgba(43, 40, 36, 0.1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(99, 102, 241, 0.1);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -151,7 +169,7 @@
     &__grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        border-bottom: 1px solid rgba(216, 195, 165, 0.6);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
         @media (max-width: 860px) {
             grid-template-columns: 1fr;
@@ -165,16 +183,16 @@
         gap: 1.25rem;
 
         &--job {
-            border-right: 1px solid rgba(216, 195, 165, 0.6);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
 
             @media (max-width: 860px) {
                 border-right: none;
-                border-bottom: 1px solid rgba(216, 195, 165, 0.6);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             }
         }
 
         &--profile {
-            background-color: $bg-surface;
+            background-color: rgba(18, 22, 36, 0.6);
         }
 
         @media (max-width: 600px) {
@@ -191,15 +209,15 @@
             font-family: $font-display;
             font-size: 1.25rem;
             font-weight: 700;
-            color: $ink-primary;
+            color: #FFFFFF;
         }
 
         .label-required {
             font-size: 0.6875rem;
             font-weight: 700;
-            color: $accent-primary;
-            background: rgba($accent-primary, 0.1);
-            border: 1px solid rgba($accent-primary, 0.25);
+            color: #A5B4FC;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.35);
             padding: 0.2rem 0.55rem;
             border-radius: 999px;
             text-transform: uppercase;
@@ -216,17 +234,17 @@
 
     .custom-textarea {
         width: 100%;
-        background-color: #FFFFFF;
-        border: 1px solid $border-strong;
+        background-color: #121626;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 12px;
         padding: 1rem;
         font-family: $font-body;
         font-size: 0.9375rem;
-        color: $ink-primary;
+        color: #FFFFFF;
         line-height: 1.6;
         resize: vertical;
         outline: none;
-        transition: border-color $transition-fast, box-shadow $transition-fast;
+        transition: all $transition-fast;
 
         &::placeholder {
             color: $ink-tertiary;
@@ -234,7 +252,8 @@
 
         &:focus {
             border-color: $accent-primary;
-            box-shadow: 0 0 0 3px rgba(232, 90, 79, 0.15);
+            box-shadow: 0 0 16px rgba(99, 102, 241, 0.35);
+            background-color: #161B30;
         }
 
         &--tall {
@@ -278,17 +297,17 @@
             .chip-tag {
                 font-size: 0.6875rem;
                 font-weight: 700;
-                color: $success;
-                background: rgba(0, 168, 107, 0.1);
-                border: 1px solid rgba(0, 168, 107, 0.25);
+                color: $accent-emerald;
+                background: rgba(16, 185, 129, 0.12);
+                border: 1px solid rgba(16, 185, 129, 0.3);
                 padding: 0.15rem 0.5rem;
                 border-radius: 999px;
             }
         }
 
         .dropzone-box {
-            border: 2px dashed $border-strong;
-            background-color: #FFFFFF;
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            background-color: rgba(18, 22, 36, 0.8);
             border-radius: 12px;
             padding: 1.5rem;
             display: flex;
@@ -301,13 +320,14 @@
 
             &:hover {
                 border-color: $accent-primary;
-                background-color: rgba(232, 90, 79, 0.02);
+                background-color: rgba(99, 102, 241, 0.08);
+                box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
             }
 
             .dropzone-text {
                 font-size: 0.875rem;
                 font-weight: 700;
-                color: $ink-primary;
+                color: #FFFFFF;
             }
 
             .dropzone-hint {
@@ -323,29 +343,28 @@
             border-radius: 6px;
 
             &--success {
-                color: $success;
-                background: rgba(0, 168, 107, 0.08);
-                border: 1px solid rgba(0, 168, 107, 0.25);
+                color: $accent-emerald;
+                background: rgba(16, 185, 129, 0.1);
+                border: 1px solid rgba(16, 185, 129, 0.3);
             }
 
             &--error {
                 color: $danger;
-                background: rgba(232, 90, 79, 0.08);
-                border: 1px solid rgba(232, 90, 79, 0.25);
+                background: rgba(244, 63, 94, 0.1);
+                border: 1px solid rgba(244, 63, 94, 0.3);
             }
         }
 
         .file-pill {
-            background: #FFFFFF;
-            border: 1px solid $border-strong;
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.35);
             border-radius: 8px;
             padding: 0.5rem 0.85rem;
             display: flex;
             align-items: center;
             font-size: 0.8125rem;
             font-weight: 600;
-            color: $ink-primary;
-            box-shadow: $shadow-xs;
+            color: #A5B4FC;
         }
     }
 
@@ -363,12 +382,12 @@
             right: 0;
             top: 50%;
             height: 1px;
-            background: rgba(216, 195, 165, 0.6);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         span {
             position: relative;
-            background-color: $bg-surface;
+            background-color: #111524;
             padding: 0 0.75rem;
             font-size: 0.75rem;
             color: $ink-tertiary;
@@ -393,19 +412,20 @@
         font-size: 0.75rem;
         color: $ink-secondary;
         line-height: 1.4;
-        background: rgba(216, 195, 165, 0.25);
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
         padding: 0.55rem 0.85rem;
         border-radius: 8px;
 
         strong {
-            color: $ink-primary;
+            color: #FFFFFF;
         }
     }
 
     // ── Footer Action Bar ─────────────────────────────────────────────────────
     &__footer {
         padding: 1.25rem 2rem;
-        background-color: #FFFFFF;
+        background-color: #0E121E;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -427,10 +447,10 @@
             .btn-secondary-action {
                 height: 44px;
                 padding: 0 1.25rem;
-                background-color: $bg-surface;
+                background-color: rgba(255, 255, 255, 0.05);
                 color: $ink-primary;
                 border: 1px solid $border-strong;
-                border-radius: 999px;
+                border-radius: 8px;
                 font-family: $font-body;
                 font-size: 0.875rem;
                 font-weight: 700;
@@ -438,9 +458,9 @@
                 transition: all $transition-fast;
 
                 &:hover:not(:disabled) {
-                    background-color: $bg-page;
-                    color: $accent-primary;
-                    border-color: $accent-primary;
+                    background-color: rgba(255, 255, 255, 0.1);
+                    border-color: rgba(99, 102, 241, 0.4);
+                    color: #FFFFFF;
                 }
 
                 &:disabled {
@@ -452,20 +472,19 @@
             .btn-primary-action {
                 height: 44px;
                 padding: 0 1.75rem;
-                background-color: $accent-primary;
+                background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
                 color: #FFFFFF;
-                border: none;
-                border-radius: 999px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 8px;
                 font-family: $font-body;
                 font-size: 0.9375rem;
                 font-weight: 700;
                 cursor: pointer;
-                box-shadow: 0 4px 14px rgba(232, 90, 79, 0.28);
+                box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
                 transition: all $transition-fast;
 
                 &:hover:not(:disabled) {
-                    background-color: $accent-primary-hover;
-                    box-shadow: 0 6px 20px rgba(232, 90, 79, 0.4);
+                    box-shadow: 0 0 30px rgba(99, 102, 241, 0.7);
                     transform: translateY(-1px);
                 }
 
@@ -512,17 +531,17 @@
             font-family: $font-display;
             font-size: 1.5rem;
             font-weight: 700;
-            color: $ink-primary;
+            color: #FFFFFF;
         }
 
         .recent-count {
             font-size: 0.8125rem;
             font-weight: 600;
-            color: $ink-secondary;
-            background: $bg-surface;
+            color: #A5B4FC;
+            background: rgba(99, 102, 241, 0.12);
             padding: 0.2rem 0.65rem;
             border-radius: 999px;
-            border: 1px solid $border-strong;
+            border: 1px solid rgba(99, 102, 241, 0.3);
         }
     }
 
@@ -533,8 +552,8 @@
     }
 
     .recent-row {
-        background-color: #FFFFFF;
-        border: 1px solid rgba(216, 195, 165, 0.8);
+        background-color: #0E121E;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 14px;
         padding: 1.25rem 1.5rem;
         display: flex;
@@ -545,9 +564,9 @@
         transition: all $transition-fast;
 
         &:hover {
-            border-color: $accent-primary;
+            border-color: rgba(99, 102, 241, 0.5);
             transform: translateY(-2px);
-            box-shadow: $shadow-sm;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
         }
 
         &__info {
@@ -559,7 +578,7 @@
                 font-family: $font-display;
                 font-size: 1.1rem;
                 font-weight: 700;
-                color: $ink-primary;
+                color: #FFFFFF;
             }
 
             .recent-row__date {
@@ -572,9 +591,9 @@
             .score-badge {
                 font-size: 0.8125rem;
                 font-weight: 700;
-                color: $accent-primary;
-                background: rgba($accent-primary, 0.1);
-                border: 1px solid rgba($accent-primary, 0.3);
+                color: $accent-emerald;
+                background: rgba(16, 185, 129, 0.12);
+                border: 1px solid rgba(16, 185, 129, 0.3);
                 padding: 0.3rem 0.75rem;
                 border-radius: 999px;
             }

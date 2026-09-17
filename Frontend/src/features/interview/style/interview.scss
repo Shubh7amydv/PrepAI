@@ -10,6 +10,20 @@
     flex-direction: column;
     align-items: center;
     padding: 0 2rem 5rem;
+    position: relative;
+    overflow-x: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+        top: 0;
+        right: 10%;
+        filter: blur(120px);
+        pointer-events: none;
+    }
 
     @media (max-width: 768px) {
         padding: 0 1rem 3rem;
@@ -27,6 +41,8 @@
     margin-bottom: 2rem;
     border-bottom: 1px solid $border-subtle;
     gap: 1.25rem;
+    position: relative;
+    z-index: 1;
 
     &__left {
         display: flex;
@@ -39,9 +55,9 @@
             display: inline-flex;
             align-items: center;
             gap: 0.45rem;
-            background: #FFFFFF;
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid $border-strong;
-            border-radius: 999px;
+            border-radius: 8px;
             padding: 0.45rem 0.95rem;
             color: $ink-primary;
             font-family: $font-body;
@@ -50,12 +66,11 @@
             cursor: pointer;
             transition: all $transition-fast;
             flex-shrink: 0;
-            box-shadow: $shadow-xs;
 
             &:hover {
-                background-color: $bg-page;
-                color: $accent-primary;
-                border-color: $accent-primary;
+                background-color: rgba(99, 102, 241, 0.15);
+                border-color: rgba(99, 102, 241, 0.4);
+                color: #FFFFFF;
             }
         }
 
@@ -69,7 +84,7 @@
             font-family: $font-display;
             font-size: 1.5rem;
             font-weight: 800;
-            color: $ink-primary;
+            color: #FFFFFF;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -87,20 +102,19 @@
         gap: 0.55rem;
         height: 42px;
         padding: 0 1.25rem;
-        background-color: $accent-primary;
+        background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
         color: #FFFFFF;
-        border: none;
-        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 8px;
         font-family: $font-body;
         font-size: 0.875rem;
         font-weight: 700;
         cursor: pointer;
-        box-shadow: 0 4px 14px rgba(232, 90, 79, 0.28);
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
         transition: all $transition-fast;
 
         &:hover:not(:disabled) {
-            background-color: $accent-primary-hover;
-            box-shadow: 0 6px 20px rgba(232, 90, 79, 0.4);
+            box-shadow: 0 0 28px rgba(99, 102, 241, 0.7);
             transform: translateY(-1px);
         }
 
@@ -137,6 +151,8 @@
     grid-template-columns: 220px 1fr 300px;
     gap: 2rem;
     align-items: start;
+    position: relative;
+    z-index: 1;
 
     @media (max-width: 1100px) {
         grid-template-columns: 1fr 300px;
@@ -165,7 +181,7 @@
         grid-template-columns: 1fr;
 
         .interview-aside {
-            order: -1; // Show match score first on mobile
+            order: -1;
         }
     }
 }
@@ -196,9 +212,9 @@
         align-items: center;
         gap: 0.65rem;
         padding: 0.65rem 0.85rem;
-        border: none;
+        border: 1px solid transparent;
         background: transparent;
-        border-radius: 10px;
+        border-radius: 8px;
         color: $ink-secondary;
         font-family: $font-body;
         font-size: 0.875rem;
@@ -214,23 +230,22 @@
         }
 
         &:hover {
-            background-color: rgba(216, 195, 165, 0.3);
-            color: $ink-primary;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #FFFFFF;
 
             .nav-link__icon {
-                color: $ink-primary;
+                color: #FFFFFF;
             }
         }
 
         &--active {
-            background-color: #FFFFFF;
-            color: $accent-primary;
+            background-color: rgba(99, 102, 241, 0.15);
+            color: #A5B4FC;
             font-weight: 700;
-            box-shadow: $shadow-xs;
-            border: 1px solid rgba(216, 195, 165, 0.7);
+            border-color: rgba(99, 102, 241, 0.35);
 
             .nav-link__icon {
-                color: $accent-primary;
+                color: #A5B4FC;
             }
         }
     }
@@ -257,15 +272,15 @@
                 font-family: $font-display;
                 font-size: 1.625rem;
                 font-weight: 800;
-                color: $ink-primary;
+                color: #FFFFFF;
             }
 
             .count-chip {
                 font-size: 0.75rem;
                 font-weight: 700;
-                color: $accent-primary;
-                background: rgba($accent-primary, 0.1);
-                border: 1px solid rgba($accent-primary, 0.25);
+                color: #A5B4FC;
+                background: rgba(99, 102, 241, 0.15);
+                border: 1px solid rgba(99, 102, 241, 0.35);
                 padding: 0.25rem 0.65rem;
                 border-radius: 999px;
             }
@@ -287,20 +302,20 @@
 
 // ── Question Card Sub-component ───────────────────────────────────────────────
 .q-card {
-    background-color: #FFFFFF;
-    border: 1px solid rgba(216, 195, 165, 0.8);
+    background-color: #0E121E;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     box-shadow: $shadow-xs;
     overflow: hidden;
     transition: all $transition-fast;
 
     &:hover {
-        border-color: $accent-secondary;
+        border-color: rgba(99, 102, 241, 0.4);
     }
 
     &--open {
-        border-color: $accent-primary;
-        box-shadow: $shadow-sm;
+        border-color: rgba(99, 102, 241, 0.6);
+        box-shadow: 0 0 25px rgba(99, 102, 241, 0.15);
     }
 
     &__header {
@@ -315,8 +330,9 @@
     &__num {
         font-size: 0.75rem;
         font-weight: 800;
-        color: $accent-primary;
-        background: rgba($accent-primary, 0.1);
+        color: #A5B4FC;
+        background: rgba(99, 102, 241, 0.15);
+        border: 1px solid rgba(99, 102, 241, 0.35);
         padding: 0.2rem 0.55rem;
         border-radius: 6px;
         flex-shrink: 0;
@@ -326,7 +342,7 @@
         font-family: $font-body;
         font-size: 0.95rem;
         font-weight: 700;
-        color: $ink-primary;
+        color: #FFFFFF;
         line-height: 1.4;
         flex: 1;
     }
@@ -338,7 +354,7 @@
         flex-shrink: 0;
 
         .copy-btn {
-            background: $bg-surface;
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid $border-strong;
             border-radius: 6px;
             padding: 0.3rem 0.6rem;
@@ -352,15 +368,15 @@
             transition: all $transition-fast;
 
             &:hover {
-                background: $bg-page;
-                color: $accent-primary;
-                border-color: $accent-primary;
+                background: rgba(99, 102, 241, 0.15);
+                color: #FFFFFF;
+                border-color: rgba(99, 102, 241, 0.4);
             }
 
             &--copied {
-                background: rgba(0, 168, 107, 0.1);
-                color: $success;
-                border-color: $success;
+                background: rgba(16, 185, 129, 0.15);
+                color: $accent-emerald;
+                border-color: rgba(16, 185, 129, 0.4);
             }
         }
 
@@ -372,7 +388,7 @@
 
             &--rotated {
                 transform: rotate(180deg);
-                color: $accent-primary;
+                color: #A5B4FC;
             }
         }
     }
@@ -381,8 +397,8 @@
         padding: 0 1.5rem 1.5rem;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
-        border-top: 1px solid rgba(216, 195, 165, 0.4);
+        gap: 1.25rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
         padding-top: 1.25rem;
 
         .q-card__section {
@@ -397,11 +413,11 @@
                 letter-spacing: 0.05em;
 
                 &--intention {
-                    color: $accent-blue;
+                    color: $accent-cyan;
                 }
 
                 &--answer {
-                    color: $success;
+                    color: $accent-emerald;
                 }
             }
 
@@ -417,8 +433,8 @@
 
 // ── Road Map Day Card ─────────────────────────────────────────────────────────
 .roadmap-card {
-    background-color: #FFFFFF;
-    border: 1px solid rgba(216, 195, 165, 0.8);
+    background-color: #0E121E;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     padding: 1.5rem;
     box-shadow: $shadow-xs;
@@ -432,7 +448,7 @@
         gap: 0.75rem;
 
         .roadmap-card__badge {
-            background-color: $accent-primary;
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
             color: #FFFFFF;
             font-size: 0.75rem;
             font-weight: 800;
@@ -445,7 +461,7 @@
             font-family: $font-display;
             font-size: 1.15rem;
             font-weight: 700;
-            color: $ink-primary;
+            color: #FFFFFF;
         }
     }
 
@@ -468,7 +484,8 @@
                 width: 6px;
                 height: 6px;
                 border-radius: 999px;
-                background-color: $accent-secondary;
+                background-color: $accent-primary;
+                box-shadow: 0 0 8px rgba(99, 102, 241, 0.7);
                 margin-top: 0.5rem;
                 flex-shrink: 0;
             }
@@ -483,8 +500,8 @@
     gap: 1.25rem;
 
     .aside-card {
-        background-color: #FFFFFF;
-        border: 1px solid rgba(216, 195, 165, 0.85);
+        background-color: #0E121E;
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 16px;
         padding: 1.5rem;
         box-shadow: $shadow-xs;
@@ -518,15 +535,16 @@
 
                 .score-track {
                     fill: transparent;
-                    stroke: $bg-surface;
+                    stroke: rgba(255, 255, 255, 0.06);
                     stroke-width: 8;
                 }
 
                 .score-fill {
                     fill: transparent;
-                    stroke: $accent-primary;
+                    stroke: $accent-emerald;
                     stroke-width: 8;
                     stroke-linecap: round;
+                    filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.6));
                     transition: stroke-dashoffset 0.8s ease;
                 }
             }
@@ -542,14 +560,14 @@
                     font-family: $font-display;
                     font-size: 2.25rem;
                     font-weight: 800;
-                    color: $ink-primary;
+                    color: #FFFFFF;
                     line-height: 1;
                 }
 
                 .score-percent {
                     font-size: 1rem;
                     font-weight: 700;
-                    color: $accent-primary;
+                    color: $accent-emerald;
                     margin-top: -0.75rem;
                 }
             }
@@ -567,7 +585,8 @@
                 width: 7px;
                 height: 7px;
                 border-radius: 999px;
-                background-color: $success;
+                background-color: $accent-emerald;
+                box-shadow: 0 0 8px $accent-emerald;
             }
         }
     }
@@ -584,9 +603,9 @@
             align-items: center;
             justify-content: space-between;
             padding: 0.55rem 0.75rem;
-            background-color: $bg-surface;
+            background-color: rgba(255, 255, 255, 0.03);
             border-radius: 8px;
-            border: 1px solid rgba(216, 195, 165, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.06);
 
             .gap-left {
                 display: flex;
@@ -598,15 +617,24 @@
                     height: 7px;
                     border-radius: 999px;
 
-                    &--high { background-color: $danger; }
-                    &--medium { background-color: $warning; }
-                    &--low { background-color: $success; }
+                    &--high {
+                        background-color: $danger;
+                        box-shadow: 0 0 8px $danger;
+                    }
+                    &--medium {
+                        background-color: $warning;
+                        box-shadow: 0 0 8px $warning;
+                    }
+                    &--low {
+                        background-color: $accent-emerald;
+                        box-shadow: 0 0 8px $accent-emerald;
+                    }
                 }
 
                 .gap-name {
                     font-size: 0.8125rem;
                     font-weight: 600;
-                    color: $ink-primary;
+                    color: #FFFFFF;
                 }
             }
 
@@ -617,8 +645,8 @@
                 letter-spacing: 0.03em;
 
                 &--high { color: $danger; }
-                &--medium { color: #B45309; }
-                &--low { color: $success; }
+                &--medium { color: $warning; }
+                &--low { color: $accent-emerald; }
             }
         }
     }
@@ -634,19 +662,20 @@
     gap: 1.5rem;
 
     .loading-spinner {
-        width: 44px;
-        height: 44px;
-        border: 3px solid rgba(216, 195, 165, 0.6);
+        width: 48px;
+        height: 48px;
+        border: 3px solid rgba(255, 255, 255, 0.1);
         border-top-color: $accent-primary;
         border-radius: 50%;
         animation: spin 0.8s linear infinite;
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
     }
 
     p {
         font-family: $font-display;
         font-size: 1.25rem;
         font-weight: 600;
-        color: $ink-primary;
+        color: #FFFFFF;
     }
 }
 

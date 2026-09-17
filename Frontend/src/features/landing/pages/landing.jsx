@@ -8,21 +8,21 @@ const testimonials = [
         name: 'David Zhao',
         role: 'Senior Staff Engineer at Stripe',
         image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80',
-        text: 'The interviewer intention breakdown is pure gold. I knew exactly why they asked specific concurrency questions and structured my STAR answers seamlessly.',
+        text: 'The interviewer intention breakdown is pure gold. I understood the exact distributed locking rubrics they were testing for and structured my STAR answers flawlessly.',
         company: 'Stripe'
     },
     {
         name: 'Elena Rostova',
         role: 'Lead Frontend Architect at Netflix',
         image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&h=150&q=80',
-        text: 'PrepAI tailored my resume for 4 different target jobs in minutes. Landed interviews at 3 tier-1 tech companies on my first attempt.',
+        text: 'PrepAI tailored my resume to match 4 different Staff roles with zero fluff. Landed technical interviews at all 4 companies within a week.',
         company: 'Netflix'
     },
     {
         name: 'Marcus Vance',
         role: 'Engineering Manager at Meta',
         image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=150&h=150&q=80',
-        text: 'The 10-day roadmap took all the anxiety out of interview preparation. Instead of guessing what to study, I had a daily checklist.',
+        text: 'The milestone preparation plan eliminated all uncertainty. Instead of aimlessly reading random docs, I had an actionable daily roadmap.',
         company: 'Meta'
     }
 ]
@@ -30,7 +30,7 @@ const testimonials = [
 const faqs = [
     {
         q: 'How does PrepAI analyze my resume and target job description?',
-        a: 'PrepAI uses advanced LLM intelligence to cross-reference every requirement, skill, and expectation in the job description against your background. It calculates a compatibility score, isolates specific skill gaps, and generates targeted questions.'
+        a: 'PrepAI uses advanced multi-model LLMs to cross-reference every requirement, skill, and architectural demand in the job description against your background. It calculates a compatibility score, isolates specific skill gaps, and generates targeted technical questions.'
     },
     {
         q: 'Can I download the tailored resume as a PDF?',
@@ -49,7 +49,6 @@ const faqs = [
 const Landing = () => {
     const { user, handleDemoLogin } = useAuth()
     const navigate = useNavigate()
-    const [ bannerDismissed, setBannerDismissed ] = useState(false)
     const [ mobileMenuOpen, setMobileMenuOpen ] = useState(false)
     const [ activeTab, setActiveTab ] = useState('dashboard')
     const [ openFaq, setOpenFaq ] = useState(null)
@@ -76,49 +75,27 @@ const Landing = () => {
 
     return (
         <div className="landing-page">
-            {/* Top Announcement Banner */}
-            {!bannerDismissed && (
-                <div className="top-announcement-banner">
-                    <div className="banner-content">
-                        <span>🎉 PrepAI is now live — Generate targeted interview prep plans & tailored ATS resumes in seconds.</span>
-                        <button type="button" onClick={handleQuickDemo} className="banner-link">
-                            Try 1-Click Demo →
-                        </button>
-                    </div>
-                    <button
-                        type="button"
-                        className="banner-close-btn"
-                        onClick={() => setBannerDismissed(true)}
-                        aria-label="Dismiss banner"
-                    >
-                        ✕
-                    </button>
-                </div>
-            )}
+            {/* Ambient Background Glow Mesh */}
+            <div className="ambient-glow ambient-glow--1"></div>
+            <div className="ambient-glow ambient-glow--2"></div>
+            <div className="ambient-glow ambient-glow--3"></div>
 
-            {/* Sticky Editorial Header */}
+            {/* Sticky Header */}
             <header className="landing-nav">
                 <div className="landing-nav__inner">
                     <div className="landing-nav__left">
                         <Link to="/" className="landing-brand">
                             <div className="landing-brand__icon">
-                                <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="brand-svg">
-                                    <rect x="5" y="3" width="22" height="28" rx="4" fill="#E85A4F" opacity="0.18" />
-                                    <rect x="5" y="3" width="22" height="28" rx="4" stroke="#E85A4F" strokeWidth="2.2" />
-                                    <line x1="10" y1="11" x2="22" y2="11" stroke="#E85A4F" strokeWidth="2" strokeLinecap="round" />
-                                    <line x1="10" y1="16" x2="19" y2="16" stroke="#E85A4F" strokeWidth="2" strokeLinecap="round" />
-                                    <line x1="10" y1="21" x2="22" y2="21" stroke="#E85A4F" strokeWidth="2" strokeLinecap="round" />
-                                    <path d="M22 3.5L16.5 19H21L14 32.5L20.5 17H16L22 3.5Z" fill="#E85A4F" />
-                                </svg>
+                                <span className="brand-symbol">⚡</span>
                             </div>
-                            <span className="landing-brand__text">PrepAI</span>
+                            <span className="landing-brand__text">Prep<span className="text-gradient">AI</span></span>
                         </Link>
 
                         <nav className="landing-nav__links">
-                            <a href="#features">Features</a>
+                            <a href="#features">Capabilities</a>
                             <a href="#preview">Interactive Workspace</a>
                             <a href="#testimonials">Candidates</a>
-                            <a href="#faqs">Resources & FAQ</a>
+                            <a href="#faqs">FAQ</a>
                         </nav>
                     </div>
 
@@ -126,16 +103,16 @@ const Landing = () => {
                         {!user ? (
                             <>
                                 <button type="button" onClick={handleQuickDemo} className="btn-nav-demo">
-                                    {demoLoading ? 'Connecting...' : '⚡ Demo Access'}
+                                    {demoLoading ? 'Connecting...' : '⚡ 1-Click Demo'}
                                 </button>
                                 <Link to="/login" className="btn-nav-ghost">Sign In</Link>
                                 <button type="button" className="btn-nav-primary" onClick={handlePrimaryAction}>
-                                    Get started free
+                                    Get Started
                                 </button>
                             </>
                         ) : (
                             <button type="button" className="btn-nav-primary" onClick={handlePrimaryAction}>
-                                Open Dashboard
+                                Open Workspace
                             </button>
                         )}
                         <button
@@ -165,10 +142,10 @@ const Landing = () => {
                 {/* Mobile Menu Dropdown */}
                 {mobileMenuOpen && (
                     <div className="mobile-dropdown">
-                        <a href="#features" onClick={() => setMobileMenuOpen(false)}>Features</a>
+                        <a href="#features" onClick={() => setMobileMenuOpen(false)}>Capabilities</a>
                         <a href="#preview" onClick={() => setMobileMenuOpen(false)}>Interactive Workspace</a>
                         <a href="#testimonials" onClick={() => setMobileMenuOpen(false)}>Candidates</a>
-                        <a href="#faqs" onClick={() => setMobileMenuOpen(false)}>Resources & FAQ</a>
+                        <a href="#faqs" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
                         <div className="mobile-dropdown__actions">
                             <button type="button" onClick={handleQuickDemo} className="btn-nav-demo mobile-btn">
                                 ⚡ 1-Click Demo Login
@@ -190,47 +167,28 @@ const Landing = () => {
                 )}
             </header>
 
-            {/* Sub-banner Highlight */}
-            <div className="feature-strip">
-                <div className="feature-strip__inner">
-                    <div className="strip-badge-wrap">
-                        <span className="strip-badge">NEW //</span>
-                        <p className="strip-text">
-                            <strong>Instant ATS Resume Generation:</strong> Tailor your resume to match exact recruiter keywords in under 60 seconds.
-                        </p>
-                    </div>
-                    <div className="strip-tags">
-                        <span className="tag-pill">System Design</span>
-                        <span className="tag-pill">STAR Method</span>
-                        <span className="tag-pill">ATS Scoring</span>
-                    </div>
-                </div>
-            </div>
-
             {/* Hero Section */}
             <section className="hero">
                 <div className="hero__inner">
                     <div className="hero__content">
-                        {/* Rating pill */}
-                        <div className="rating-pill">
-                            <div className="stars">
-                                {'★'.repeat(5)}
-                            </div>
-                            <span>Rated 4.9/5 by 12,000+ candidates & engineers</span>
+                        {/* Rating Pill */}
+                        <div className="hero-badge">
+                            <span className="badge-pulse"></span>
+                            <span className="badge-text">Next-Gen Interview Intelligence Platform</span>
                         </div>
 
                         <h1 className="hero__headline">
-                            Master your next interview. <br />
-                            <em>Get hired faster.</em>
+                            Master Technical Interviews. <br />
+                            <span className="gradient-text">Outsmart The Rubric.</span>
                         </h1>
 
                         <p className="hero__subhead">
-                            PrepAI gives candidates and engineers a complete interview intelligence platform — generate tailored technical & behavioral questions, decode interviewer intentions, and export an ATS-matched resume in seconds.
+                            PrepAI parses target job descriptions, isolates critical skill gaps, decodes interviewer scoring rubrics, and generates ATS-tailored resumes in seconds.
                         </p>
 
                         <div className="hero__actions">
                             <button type="button" className="btn-hero-primary" onClick={handlePrimaryAction}>
-                                <span>{user ? 'Open Dashboard' : 'Get started free'}</span>
+                                <span>{user ? 'Open Workspace' : 'Start Preparing Free'}</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                     <line x1="5" y1="12" x2="19" y2="12" />
                                     <polyline points="12 5 19 12 12 19" />
@@ -245,201 +203,186 @@ const Landing = () => {
                         {/* Feature Badges List */}
                         <div className="hero-benefits">
                             <div className="benefit-item">
-                                <span className="dot dot--green"></span>
-                                <span>No credit card required</span>
+                                <span className="icon-check">✓</span>
+                                <span>Zero Setup Required</span>
                             </div>
                             <div className="benefit-item">
-                                <span className="dot dot--coral"></span>
-                                <span>1-minute setup</span>
+                                <span className="icon-check">✓</span>
+                                <span>AI Intention Breakdown</span>
                             </div>
                             <div className="benefit-item">
-                                <span className="dot dot--rose"></span>
+                                <span className="icon-check">✓</span>
                                 <span>Instant ATS Resume PDF</span>
                             </div>
                         </div>
                     </div>
 
-                    {/* Interactive Mockup (BillFlow Style) */}
+                    {/* Interactive Workspace Mockup */}
                     <div className="hero__preview" id="preview">
-                        <div className="mockup-glow"></div>
-                        <div className="mockup-card">
-                            {/* Mockup Header */}
-                            <div className="mockup-topbar">
-                                <div className="mockup-brand">
-                                    <span className="mockup-slash">//</span>
-                                    <strong>prepai</strong>
+                        <div className="mockup-window">
+                            {/* Window Header */}
+                            <div className="mockup-header">
+                                <div className="window-dots">
+                                    <span className="dot dot--red"></span>
+                                    <span className="dot dot--yellow"></span>
+                                    <span className="dot dot--green"></span>
                                 </div>
-                                <div className="mockup-topbar-right">
+                                <div className="mockup-tabs">
                                     <button
-                                        type="button"
-                                        className="mockup-create-btn"
-                                        onClick={() => navigate('/app')}
+                                        className={`tab-btn ${activeTab === 'dashboard' ? 'tab-btn--active' : ''}`}
+                                        onClick={() => setActiveTab('dashboard')}
                                     >
-                                        + New Prep Plan
+                                        Role Compatibility
                                     </button>
-                                    <div className="mockup-user-pill">
-                                        <span>Alex Chen</span>
-                                        <span className="pro-badge">PRO</span>
-                                    </div>
+                                    <button
+                                        className={`tab-btn ${activeTab === 'technical' ? 'tab-btn--active' : ''}`}
+                                        onClick={() => setActiveTab('technical')}
+                                    >
+                                        Technical Deep-Dive
+                                    </button>
+                                    <button
+                                        className={`tab-btn ${activeTab === 'roadmap' ? 'tab-btn--active' : ''}`}
+                                        onClick={() => setActiveTab('roadmap')}
+                                    >
+                                        10-Day Execution Plan
+                                    </button>
                                 </div>
                             </div>
 
-                            {/* Mockup Window Workspace */}
-                            <div className="mockup-split">
-                                {/* Left Mini Sidebar */}
-                                <aside className="mockup-sidebar">
-                                    <button
-                                        className={`sidebar-link ${activeTab === 'dashboard' ? 'sidebar-link--active' : ''}`}
-                                        onClick={() => setActiveTab('dashboard')}
-                                    >
-                                        <span>📊 Dashboard</span>
-                                    </button>
-                                    <button
-                                        className={`sidebar-link ${activeTab === 'technical' ? 'sidebar-link--active' : ''}`}
-                                        onClick={() => setActiveTab('technical')}
-                                    >
-                                        <span>💻 Technical Qs</span>
-                                    </button>
-                                    <button
-                                        className={`sidebar-link ${activeTab === 'behavioral' ? 'sidebar-link--active' : ''}`}
-                                        onClick={() => setActiveTab('behavioral')}
-                                    >
-                                        <span>🗣️ Behavioral Qs</span>
-                                    </button>
-                                    <button
-                                        className={`sidebar-link ${activeTab === 'roadmap' ? 'sidebar-link--active' : ''}`}
-                                        onClick={() => setActiveTab('roadmap')}
-                                    >
-                                        <span>🗺️ 10-Day Plan</span>
-                                    </button>
-                                    <button
-                                        className={`sidebar-link ${activeTab === 'resume' ? 'sidebar-link--active' : ''}`}
-                                        onClick={() => setActiveTab('resume')}
-                                    >
-                                        <span>📄 ATS Resume</span>
-                                    </button>
-                                </aside>
-
-                                {/* Mockup Main Viewport */}
-                                <div className="mockup-viewport">
-                                    <div className="viewport-greeting">
-                                        <h2>Good morning, Alex</h2>
-                                        <p>Target Position: <strong>Senior Full Stack Engineer @ Stripe</strong></p>
-                                    </div>
-
-                                    {/* Action Chips */}
-                                    <div className="quick-action-chips">
-                                        <div className="chip chip--emerald">
-                                            <span>📄 Tailored Resume Ready</span>
-                                        </div>
-                                        <div className="chip chip--sky">
-                                            <span>⚡ 88% Match Score</span>
-                                        </div>
-                                        <div className="chip chip--purple">
-                                            <span>🎯 8 Technical Focus Qs</span>
-                                        </div>
-                                        <div className="chip chip--amber">
-                                            <span>🗓️ Day 3 of 10 Roadmap</span>
-                                        </div>
-                                    </div>
-
-                                    {/* Stats Grid */}
-                                    <div className="viewport-stats-grid">
-                                        {/* Match Score Gauge Card */}
-                                        <div className="stat-card">
-                                            <div className="stat-card__head">
-                                                <h4>Compatibility breakdown</h4>
-                                                <span className="stat-badge">High Fit</span>
-                                            </div>
-                                            <div className="dial-wrap">
-                                                <div className="dial-circle">
-                                                    <svg viewBox="0 0 100 100" className="dial-svg">
-                                                        <circle cx="50" cy="50" r="38" className="dial-bg" />
-                                                        <circle cx="50" cy="50" r="38" className="dial-fill" strokeDasharray="238.7" strokeDashoffset="28" />
-                                                    </svg>
-                                                    <div className="dial-label">
-                                                        <span className="dial-num">88%</span>
-                                                        <span className="dial-sub">Match</span>
-                                                    </div>
+                            {/* Mockup Body */}
+                            <div className="mockup-body">
+                                {activeTab === 'dashboard' && (
+                                    <div className="tab-pane">
+                                        <div className="metric-header-card">
+                                            <div className="gauge-box">
+                                                <svg viewBox="0 0 100 100" className="gauge-svg">
+                                                    <circle cx="50" cy="50" r="40" className="gauge-track" />
+                                                    <circle cx="50" cy="50" r="40" className="gauge-fill" strokeDasharray="251.2" strokeDashoffset="30" />
+                                                </svg>
+                                                <div className="gauge-value">
+                                                    <strong>88%</strong>
+                                                    <span>MATCH</span>
                                                 </div>
-                                                <div className="dial-skills">
-                                                    <div className="skill-row">
-                                                        <span className="sq sq--amber"></span>
-                                                        <span>System Design (94%)</span>
-                                                    </div>
-                                                    <div className="skill-row">
-                                                        <span className="sq sq--coral"></span>
-                                                        <span>React & Node (89%)</span>
-                                                    </div>
-                                                    <div className="skill-row">
-                                                        <span className="sq sq--purple"></span>
-                                                        <span>Concurrency (82%)</span>
-                                                    </div>
+                                            </div>
+                                            <div className="role-meta">
+                                                <span className="pill-status">High Role Compatibility</span>
+                                                <h3>Senior Full Stack / Platform Engineer</h3>
+                                                <p>Strong alignment with distributed Node.js microservices, React 19 architecture, and high-throughput PostgreSQL query optimization.</p>
+                                            </div>
+                                        </div>
+
+                                        <div className="breakdown-columns">
+                                            <div className="breakdown-card">
+                                                <span className="card-label card-label--green">Verified Strengths</span>
+                                                <div className="tags-wrap">
+                                                    <span className="tag-item">React Fiber internals</span>
+                                                    <span className="tag-item">Distributed Locking</span>
+                                                    <span className="tag-item">TypeScript</span>
+                                                    <span className="tag-item">GraphQL Schemas</span>
+                                                </div>
+                                            </div>
+                                            <div className="breakdown-card">
+                                                <span className="card-label card-label--rose">Target Skill Gaps</span>
+                                                <div className="tags-wrap">
+                                                    <span className="tag-item tag-item--gap">Kafka Partitioning</span>
+                                                    <span className="tag-item tag-item--gap">Distributed Tracing</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {activeTab === 'technical' && (
+                                    <div className="tab-pane">
+                                        <div className="q-preview-card">
+                                            <div className="q-preview-head">
+                                                <span className="q-badge">Question 01 • Distributed Systems</span>
+                                                <h4>How would you engineer an idempotent webhook ingest pipeline handling 50k req/sec?</h4>
+                                            </div>
+                                            <div className="q-preview-body">
+                                                <div className="rubric-box">
+                                                    <span className="rubric-tag">Interviewer Intention:</span>
+                                                    <p>Testing atomic Redis locks (`SETNX`), dead-letter queue backpressure, and exactly-once transaction boundaries under network partitions.</p>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        {/* Question Preview Card */}
-                                        <div className="stat-card">
-                                            <div className="stat-card__head">
-                                                <h4>Sample Interviewer Intention</h4>
-                                                <span className="stat-tag">STAR Rubric</span>
-                                            </div>
-                                            <div className="intention-box">
-                                                <strong>Q: "How do you handle distributed race conditions in payment processing?"</strong>
-                                                <p className="intention-text">
-                                                    <em>Interviewer Intention:</em> Evaluates idempotent locking (`SETNX`), state machine validation, and safe retry policies under network partition.
-                                                </p>
-                                                <span className="answer-pill">✓ Model Answer Included</span>
+                                        <div className="q-preview-card">
+                                            <div className="q-preview-head">
+                                                <span className="q-badge">Question 02 • Architecture</span>
+                                                <h4>Explain how React 19 Concurrent Mode &amp; Server Actions prevent main-thread UI lag.</h4>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                )}
+
+                                {activeTab === 'roadmap' && (
+                                    <div className="tab-pane">
+                                        <div className="roadmap-preview-card">
+                                            <div className="roadmap-day-tag">Days 01–03</div>
+                                            <div className="roadmap-day-info">
+                                                <strong>Distributed Caching &amp; Idempotency Mechanisms</strong>
+                                                <p>Master cache stampede prevention, write-through vs write-behind, and Redis atomic locking.</p>
+                                            </div>
+                                        </div>
+                                        <div className="roadmap-preview-card">
+                                            <div className="roadmap-day-tag">Days 04–07</div>
+                                            <div className="roadmap-day-info">
+                                                <strong>Database Sharding, Read Replicas &amp; Indexing</strong>
+                                                <p>Deep-dive into partition key selection, connection pooling, and eventual consistency trade-offs.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Features Section */}
+            {/* Capabilities Bento Grid */}
             <section className="features-section" id="features">
                 <div className="features-section__inner">
-                    <div className="section-head">
-                        <span className="section-pill">TAILORED FOR YOUR WORKFLOW</span>
-                        <h2 className="section-title">Built for candidates & engineers like you</h2>
+                    <div className="section-header">
+                        <span className="section-pill">CORE CAPABILITIES</span>
+                        <h2 className="section-title">Built for Engineering Excellence</h2>
                         <p className="section-subtitle">
-                            Whether you are preparing for your first technical round or negotiating a Staff-level offer, PrepAI gives you the exact tools you need to excel.
+                            Every feature is designed to give you unfair clarity before walking into technical and architectural interview rounds.
                         </p>
                     </div>
 
-                    <div className="features-grid">
-                        <div className="feature-card">
-                            <div className="feature-card__badge">01 // PARSING</div>
-                            <h3>Role & JD Deconstruction</h3>
-                            <p>Paste any job posting. PrepAI extracts core technical proficiencies, architectural demands, and team expectations directly into structured insights.</p>
-                            <div className="feature-card__footer">
-                                <span className="feature-tag">Keyword Extraction</span>
-                                <span className="feature-tag">Seniority Calibration</span>
+                    <div className="bento-grid">
+                        <div className="bento-card bento-card--featured">
+                            <div className="bento-card__glow"></div>
+                            <span className="bento-step">01 // PARSING</span>
+                            <h3>Deep Job &amp; Role Deconstruction</h3>
+                            <p>Paste any job posting. PrepAI decomposes requirements, stack expectations, and seniority bars into structured evaluation targets.</p>
+                            <div className="bento-chips">
+                                <span>Requirements Matrix</span>
+                                <span>Seniority Calibration</span>
+                                <span>Domain Isolation</span>
                             </div>
                         </div>
 
-                        <div className="feature-card">
-                            <div className="feature-card__badge">02 // STRATEGY</div>
-                            <h3>Interviewer Intention Decoding</h3>
-                            <p>Never guess what an interviewer is really asking. PrepAI reveals the exact evaluation criteria behind every question and provides bulletproof model answers.</p>
-                            <div className="feature-card__footer">
-                                <span className="feature-tag">STAR Formatting</span>
-                                <span className="feature-tag">Technical Depth</span>
+                        <div className="bento-card">
+                            <div className="bento-card__glow"></div>
+                            <span className="bento-step">02 // DECODING</span>
+                            <h3>Interviewer Intention Rubrics</h3>
+                            <p>Never wonder what interviewers are testing for. PrepAI surfaces the underlying evaluation checklist and provides model STAR responses.</p>
+                            <div className="bento-chips">
+                                <span>STAR Framework</span>
+                                <span>Edge Case Prep</span>
                             </div>
                         </div>
 
-                        <div className="feature-card">
-                            <div className="feature-card__badge">03 // EXECUTION</div>
-                            <h3>Day-by-Day Roadmap & ATS PDF</h3>
-                            <p>Follow a customized milestone timeline to close identified skill gaps, then download a beautifully crafted ATS-tailored resume to maximize callbacks.</p>
-                            <div className="feature-card__footer">
-                                <span className="feature-tag">Daily Tasks</span>
-                                <span className="feature-tag">Instant PDF Export</span>
+                        <div className="bento-card">
+                            <div className="bento-card__glow"></div>
+                            <span className="bento-step">03 // EXECUTION</span>
+                            <h3>Milestone Plan &amp; Tailored Resume</h3>
+                            <p>Follow a customized day-by-day roadmap and export an ATS-tailored resume designed to pass screening filters instantly.</p>
+                            <div className="bento-chips">
+                                <span>Day-by-Day Tasks</span>
+                                <span>Instant PDF Export</span>
                             </div>
                         </div>
                     </div>
@@ -449,9 +392,9 @@ const Landing = () => {
             {/* Testimonials */}
             <section className="testimonials-section" id="testimonials">
                 <div className="testimonials-section__inner">
-                    <div className="section-head text-center">
-                        <span className="section-pill">REAL RESULTS</span>
-                        <h2 className="section-title">Trusted by candidates who landed top offers</h2>
+                    <div className="section-header text-center">
+                        <span className="section-pill">TESTIMONIALS</span>
+                        <h2 className="section-title">Candidates Landing Top-Tier Offers</h2>
                     </div>
 
                     <div className="testimonials-grid">
@@ -475,7 +418,7 @@ const Landing = () => {
             {/* FAQ Section */}
             <section className="faq-section" id="faqs">
                 <div className="faq-section__inner">
-                    <div className="section-head text-center">
+                    <div className="section-header text-center">
                         <span className="section-pill">FAQ</span>
                         <h2 className="section-title">Frequently Asked Questions</h2>
                     </div>
@@ -508,11 +451,12 @@ const Landing = () => {
             {/* Final CTA Banner */}
             <section className="cta-banner">
                 <div className="cta-banner__inner">
-                    <h2>Master your next interview. <br />Step into the room prepared.</h2>
-                    <p>Join thousands of engineers who use PrepAI to decode interview rubrics and land top offers.</p>
+                    <div className="cta-glow"></div>
+                    <h2>Master Your Next Interview. <br /><span className="gradient-text">Get Hired Faster.</span></h2>
+                    <p>Join thousands of software engineers and leaders using PrepAI to prepare with clarity.</p>
                     <div className="cta-banner__actions">
                         <button type="button" className="btn-hero-primary" onClick={handlePrimaryAction}>
-                            {user ? 'Open Dashboard' : 'Get started free →'}
+                            {user ? 'Open Workspace' : 'Get Started Free →'}
                         </button>
                         <button type="button" className="btn-hero-secondary" onClick={handleQuickDemo}>
                             ⚡ Try 1-Click Demo
@@ -521,23 +465,23 @@ const Landing = () => {
                 </div>
             </section>
 
-            {/* Warm Editorial Footer */}
+            {/* Footer */}
             <footer className="landing-footer">
                 <div className="landing-footer__inner">
                     <div className="footer-brand">
                         <div className="footer-logo">
-                            <span className="brand-dot"></span>
-                            <strong>PrepAI</strong>
+                            <span className="brand-symbol">⚡</span>
+                            <strong>Prep<span className="text-gradient">AI</span></strong>
                         </div>
-                        <p>Intelligent Interview Preparation & Strategy Platform.</p>
+                        <p>AI-Powered Interview Strategy &amp; Intelligence Platform.</p>
                     </div>
 
                     <div className="footer-links">
                         <div className="footer-col">
                             <strong>Platform</strong>
-                            <a href="#features">Features</a>
+                            <a href="#features">Capabilities</a>
                             <a href="#preview">Workspace</a>
-                            <a href="#testimonials">Testimonials</a>
+                            <a href="#testimonials">Candidates</a>
                         </div>
                         <div className="footer-col">
                             <strong>Resources</strong>
@@ -548,7 +492,7 @@ const Landing = () => {
                     </div>
                 </div>
                 <div className="footer-bottom">
-                    <p>&copy; {new Date().getFullYear()} PrepAI. Built for candidates & engineering leaders.</p>
+                    <p>&copy; {new Date().getFullYear()} PrepAI. Engineered for ambitious engineers.</p>
                 </div>
             </footer>
         </div>
