@@ -4,6 +4,7 @@ import { useInterview } from '../hooks/useInterview.js'
 import { useAuth } from '../../auth/hooks/useAuth.js'
 import { useNavigate, Link } from 'react-router'
 import { generateResumePdf } from '../services/interview.api.js'
+import { LogoIcon } from '../../../components/Logo.jsx'
 
 const Home = () => {
     const { user, logout } = useAuth()
@@ -93,8 +94,8 @@ const Home = () => {
             {/* Top Workspace Header */}
             <header className='app-nav'>
                 <Link to='/' className='app-brand'>
-                    <div className='app-brand__mark'>P</div>
-                    <span className='app-brand__name'>PrepAI</span>
+                    <LogoIcon size={30} />
+                    <span className='app-brand__name'>Prep<span style={{ color: '#E8622C' }}>AI</span></span>
                 </Link>
 
                 <div className='app-nav__user'>

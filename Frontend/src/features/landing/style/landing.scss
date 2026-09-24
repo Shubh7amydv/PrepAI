@@ -93,22 +93,6 @@
         text-decoration: none;
         color: $ink-primary;
 
-        &__icon {
-            width: 32px;
-            height: 32px;
-            border-radius: $radius-sm;
-            background: $bg-accent-subtle;
-            border: 1px solid $border-strong;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            .brand-symbol {
-                font-size: 1rem;
-                color: $accent-primary;
-            }
-        }
-
         &__text {
             font-family: $font-display;
             font-size: 1.3rem;
@@ -1197,16 +1181,11 @@
             .footer-logo {
                 display: flex;
                 align-items: center;
-                gap: 0.45rem;
+                gap: 0.65rem;
                 font-family: $font-display;
                 font-size: 1.2rem;
                 font-weight: 700;
                 color: $ink-primary;
-
-                .brand-symbol {
-                    font-size: 1rem;
-                    color: $accent-primary;
-                }
             }
 
             p {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { useAuth } from '../../auth/hooks/useAuth'
+import { LogoIcon } from '../../../components/Logo'
 import '../style/landing.scss'
 
 const technicalQuestions = [
@@ -99,9 +100,7 @@ const Landing = () => {
                 <div className="landing-nav__inner">
                     <div className="landing-nav__left">
                         <Link to="/" className="landing-brand">
-                            <div className="landing-brand__icon">
-                                <span className="brand-symbol">⚡</span>
-                            </div>
+                            <LogoIcon size={32} />
                             <span className="landing-brand__text">Prep<span className="text-gradient">AI</span></span>
                         </Link>
 
@@ -495,7 +494,7 @@ const Landing = () => {
                 <div className="landing-footer__inner">
                     <div className="footer-brand">
                         <div className="footer-logo">
-                            <span className="brand-symbol">⚡</span>
+                            <LogoIcon size={28} />
                             <strong>PrepAI</strong>
                         </div>
                         <p>Technical Interview Intelligence &amp; Rubric Decoder Platform.</p>
