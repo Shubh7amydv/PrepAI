@@ -123,11 +123,11 @@ const Register = () => {
                 </section>
 
                 <aside className='register-quote'>
-                    <p className='register-quote__label'>Key to Success</p>
+                    <p className='register-quote__label'>Targeted Preparation</p>
                     <blockquote>
-                        "Preparation is the key to success. Practice, learn, and excel."
+                        "Decode interviewer rubrics, isolate JD skill gaps, and practice architecture questions with high signal."
                     </blockquote>
-                    <p className='register-quote__author'>- Allan Poe</p>
+                    <p className='register-quote__author'>PrepAI Platform</p>
                 </aside>
             </div>
         </main>

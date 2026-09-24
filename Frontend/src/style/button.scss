@@ -9,7 +9,7 @@
     border-radius: $radius-button;
     font-family: $font-body;
     font-size: 0.9375rem;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -0.01em;
     cursor: pointer;
     display: inline-flex;
@@ -21,14 +21,13 @@
     text-decoration: none;
 
     &.primary-button {
-        background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
-        color: #FFFFFF;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 0 20px -2px rgba(99, 102, 241, 0.45);
+        background-color: $accent-primary;
+        color: $ink-primary;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: none;
 
         &:hover:not(:disabled) {
-            filter: brightness(1.1);
-            box-shadow: 0 0 28px -2px rgba(99, 102, 241, 0.7);
+            background-color: $accent-primary-hover;
             transform: translateY(-1px);
         }
 
@@ -37,22 +36,21 @@
         }
 
         &:disabled {
-            opacity: 0.5;
+            opacity: 0.45;
             cursor: not-allowed;
             box-shadow: none;
         }
     }
 
     &.secondary-button {
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: transparent;
         color: $ink-primary;
         border: 1px solid $border-strong;
-        backdrop-filter: blur(8px);
 
         &:hover:not(:disabled) {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.25);
-            color: #FFFFFF;
+            background-color: $bg-surface-raised;
+            border-color: $border-strong;
+            color: $ink-primary;
             transform: translateY(-1px);
         }
 
@@ -61,7 +59,7 @@
         }
 
         &:disabled {
-            opacity: 0.5;
+            opacity: 0.45;
             cursor: not-allowed;
         }
     }

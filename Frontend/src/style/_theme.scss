@@ -1,85 +1,76 @@
-@use "sass:color";
-
-// ── PrepAI Design System Tokens (Dark Obsidian Cyber-Luxe Theme) ──
+// ── PrepAI Design System Tokens (Warm-Dark Theme) ──
 
 // Core Palette
-$color-bg-page: #08090E;         // Deep space obsidian canvas
-$color-bg-surface: #0F121C;      // Premium dark glass surface
-$color-bg-raised: #161A28;       // Raised panels, cards & inputs
-$color-bg-overlay: #1E2335;      // Layered modal / dropdown overlay
-$color-bg-accent-subtle: rgba(99, 102, 241, 0.08);
+$color-bg-primary: #14110F;        // Main page background — warm near-black
+$color-bg-secondary: #1C1815;      // Card backgrounds, nav bar, elevated surfaces
+$color-bg-tertiary: #262019;       // Hover states, input fields, nested cards
+$color-bg-overlay: #2D261F;        // Modals / dropdown overlays
 
-$color-ink-primary: #F8FAFC;     // Crisp bright white
-$color-ink-secondary: #94A3B8;   // Silver slate
-$color-ink-tertiary: #64748B;    // Muted slate / placeholder
+$color-border-subtle: #33291F;     // Default card/input borders — warm dark brown
+$color-border-strong: #4A3B2A;     // Active/focused borders, dividers
 
-$color-accent-primary: #6366F1;  // Electric Indigo
-$color-accent-primary-hover: #4F46E5;
-$color-accent-primary-active: #4338CA;
-$color-accent-purple: #8B5CF6;   // Neon Violet
-$color-accent-pink: #EC4899;     // Neon Rose
-$color-accent-cyan: #06B6D4;     // Cyber Cyan
-$color-accent-emerald: #10B981;  // Vibrant Mint Emerald
+$color-text-primary: #F5EFE6;      // Headlines, primary body text — warm off-white
+$color-text-secondary: #B8AC9C;    // Subtext, descriptions, muted labels
+$color-text-tertiary: #7A6F5F;     // Placeholder text, disabled states, timestamps
 
-$color-border-subtle: rgba(255, 255, 255, 0.07);
-$color-border-strong: rgba(255, 255, 255, 0.14);
-$color-border-glow: rgba(99, 102, 241, 0.35);
-$color-border-card: rgba(255, 255, 255, 0.09);
+$color-accent-primary: #E8622C;    // Burnt orange — THE single accent color
+$color-accent-primary-hover: #D4531F;
+$color-accent-primary-active: #BF4717;
+$color-accent-primary-muted: rgba(232, 98, 44, 0.1);
 
-$color-success: #10B981;
-$color-danger: #F43F5E;
-$color-warning: #F59E0B;
+$color-accent-secondary: #D4A24C;  // Muted amber/gold — ONLY for secondary signals (match score, stars)
+
+$color-success: #6B8E5A;           // Muted sage green — skill match / verified strengths
+$color-warning: #C4703F;           // Muted terracotta — skill gaps / areas to improve
+$color-danger: #C4703F;
 
 // Semantic Token Mappings
-$bg-page: $color-bg-page;
-$bg-surface: $color-bg-surface;
-$bg-surface-raised: $color-bg-raised;
+$bg-page: $color-bg-primary;
+$bg-surface: $color-bg-secondary;
+$bg-surface-raised: $color-bg-tertiary;
 $bg-surface-overlay: $color-bg-overlay;
-$bg-accent-subtle: $color-bg-accent-subtle;
+$bg-accent-subtle: $color-accent-primary-muted;
 
-$ink-primary: $color-ink-primary;
-$ink-secondary: $color-ink-secondary;
-$ink-tertiary: $color-ink-tertiary;
+$ink-primary: $color-text-primary;
+$ink-secondary: $color-text-secondary;
+$ink-tertiary: $color-text-tertiary;
 
 $accent-primary: $color-accent-primary;
 $accent-primary-hover: $color-accent-primary-hover;
 $accent-primary-active: $color-accent-primary-active;
-$accent-purple: $color-accent-purple;
-$accent-pink: $color-accent-pink;
-$accent-cyan: $color-accent-cyan;
-$accent-emerald: $color-accent-emerald;
+$accent-primary-muted: $color-accent-primary-muted;
+$accent-secondary: $color-accent-secondary;
 
 $border-subtle: $color-border-subtle;
 $border-strong: $color-border-strong;
-$border-glow: $color-border-glow;
-$border-card: $color-border-card;
+$border-card: $color-border-subtle;
 
 $success: $color-success;
-$danger: $color-danger;
 $warning: $color-warning;
+$danger: $color-danger;
 
-// Typography (Display: Outfit tech-forward, Body: Plus Jakarta Sans)
-$font-display: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+// Typography (Preserve existing typography)
+$font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 $font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 $font-mono: 'JetBrains Mono', monospace;
 
-// Radii
+// Radii (sharper corners: 8-10px)
 $radius-sm: 6px;
-$radius-button: 10px;
-$radius-input: 10px;
-$radius-card: 16px;
+$radius-button: 8px;
+$radius-input: 8px;
+$radius-card: 10px;
 $radius-pill: 999px;
 
-// Shadows & Glows
-$shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
-$shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
-$shadow-md: 0 8px 28px rgba(0, 0, 0, 0.65);
-$shadow-card: 0 20px 50px -10px rgba(0, 0, 0, 0.7);
-$shadow-glow: 0 0 30px -5px rgba(99, 102, 241, 0.35);
-$shadow-glow-cyan: 0 0 30px -5px rgba(6, 182, 212, 0.35);
+// Shadows & Glows (flat/minimal shadows, no heavy neon glows)
+$shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+$shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+$shadow-md: 0 4px 14px rgba(0, 0, 0, 0.3);
+$shadow-card: 0 4px 20px rgba(0, 0, 0, 0.25);
+$shadow-glow: none;
+$shadow-glow-cyan: none;
 $shadow-subtle: $shadow-sm;
 
 // Transitions
 $transition-fast: 140ms ease;
-$transition-smooth: 220ms ease;
+$transition-smooth: 200ms ease;
 $transition-normal: $transition-smooth;

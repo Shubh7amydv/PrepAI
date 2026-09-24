@@ -61,11 +61,11 @@ const Login = () => {
         <main className='login-page'>
             <div className='login-page__layout'>
                 <aside className='login-quote'>
-                    <p className='login-quote__label'>Today&apos;s Momentum</p>
+                    <p className='login-quote__label'>Interview Intelligence</p>
                     <blockquote>
-                        "Success is the sum of small efforts, repeated day in and day out."
+                        "Master system design trade-offs and walk into technical loops with structured confidence."
                     </blockquote>
-                    <p className='login-quote__author'>- Robert Collier</p>
+                    <p className='login-quote__author'>PrepAI Platform</p>
                 </aside>
 
                 <section className='glass-card'>
