@@ -45,24 +45,39 @@
     }
 }
 
-// ── Sticky Header ─────────────────────────────────────────────────────────────
+// ── Sticky Header (Floating, Rounded, Visible on Scroll) ──────────────────────
 .landing-nav {
     width: 100%;
     position: sticky;
-    top: 0;
+    top: 1rem;
     z-index: 100;
-    background-color: rgba(20, 17, 15, 0.92);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid $border-subtle;
+    padding: 0 1.5rem;
+    display: flex;
+    justify-content: center;
+
+    @media (max-width: 768px) {
+        padding: 0 0.75rem;
+        top: 0.75rem;
+    }
 
     &__inner {
+        width: 100%;
         max-width: 1240px;
-        margin: 0 auto;
-        height: 72px;
+        height: 64px;
         padding: 0 1.5rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        background-color: rgba(28, 24, 21, 0.92);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid $border-strong;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+
+        @media (max-width: 768px) {
+            padding: 0 1rem;
+        }
     }
 
     &__left {
